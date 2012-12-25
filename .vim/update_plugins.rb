@@ -10,11 +10,16 @@ git_bundles = [
   "git://github.com/tpope/vim-surround.git",
   "git://github.com/ervandew/supertab.git",
   "git://github.com/godlygeek/tabular.git",
-  "git://github.com/hallison/vim-rdoc.git",
   "git://github.com/tpope/vim-markdown.git",
   "git://github.com/tpope/vim-repeat.git",
   "git://github.com/jimenezrick/vimerl.git",
   "git://github.com/tsaleh/vim-matchit.git",
+  "git://github.com/tpope/vim-commentary.git",
+  "git://github.com/tpope/vim-endwise.git",
+  "git://github.com/tpope/vim-rvm.git",
+  "git://github.com/vim-scripts/YankRing.vim.git",
+  "git://github.com/Lokaltog/vim-easymotion.git",
+  "git://github.com/uguu-org/vim-matrix-screensaver.git",
 ]
 
 vim_org_scripts = [

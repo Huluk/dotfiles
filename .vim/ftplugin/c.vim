@@ -6,9 +6,6 @@
 :map α :!./%:.:r 
 "run with valgrind on S-A-s"
 :map σ :Valgrind %:.:r<CR>
-"comment and uncomment (ctrl-k and shift-alt-k)
-:map <C-k> :s/^\(\s*\)/\1\/\/ /<CR>
-:map κ :s/^\(\s*\)\/\/ \?/\1/<CR>
 
 "use valgrind"
 command! -complete=file -nargs=* Valgrind Shell valgrind <q-args>

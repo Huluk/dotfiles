@@ -9,6 +9,3 @@
 :map β :w<CR>:Javac<CR>
 "run on S-A-r"
 :map ρ :Java<CR>
-"comment and uncomment (ctrl-k and shift-alt-k)
-:map <C-k> :s/^\(\s*\)/\1\/\/ /<CR>
-:map κ :s/^\(\s*\)\/\/ \?/\1/<CR>
