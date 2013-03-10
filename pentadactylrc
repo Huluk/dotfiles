@@ -1,0 +1,94 @@
+" show url-bar "
+set guioptions+=T
+" hide addon-bar "
+set guioptions-=addons
+
+" tab navigation "
+map <M-A-{> :tabprevious<CR>
+map <M-A-}> :tabnext<CR>
+
+" history navigation "
+map <A-(> :back<CR>
+map <A-)> :forward<CR>
+
+" visual mode access "
+map v iv
+vmap i <Esc>
+
+" zoom in and out "
+map <A-+> <z><S-i>
+map <A--> <z><S-o>
+
+" crtl-ß/q for esc "
+map <C-q> <Esc>
+vmap <C-q> <Esc><Esc>
+imap <C-q> <Esc>
+cmap <C-q> <Esc>
+tmap <C-q> <Esc>
+caretmap <C-q> <Esc>
+map <C-ß> <Esc>
+vmap <C-ß> <Esc><Esc>
+imap <C-ß> <Esc>
+cmap <C-ß> <Esc>
+tmap <C-ß> <Esc>
+caretmap <C-ß> <Esc>
+
+" noscript temporary allow javascript for a page "
+map <C-t> :set noscript-tempsites=<A-Tab>
+
+" neo-layout compability "
+command NeoNRemap -nargs=1 :nmap <A-<args>> <args>
+command NeoVRemap -nargs=1 :vmap <A-<args>> <args>
+command NeoCaretRemap -nargs=1 :caretmap <A-<args>> <args>
+
+NeoNRemap :
+NeoVRemap :
+NeoCaretRemap :
+
+NeoNRemap /
+NeoVRemap /
+NeoCaretRemap /
+
+NeoNRemap ?
+NeoVRemap ?
+NeoCaretRemap ?
+
+NeoNRemap *
+NeoVRemap *
+NeoCaretRemap *
+
+NeoNRemap #
+NeoVRemap #
+NeoCaretRemap #
+
+NeoNRemap $
+NeoVRemap $
+NeoCaretRemap $
+
+NeoNRemap @
+NeoVRemap @
+NeoCaretRemap @
+
+NeoNRemap [
+NeoVRemap [
+NeoCaretRemap [
+
+NeoNRemap ]
+NeoVRemap ]
+NeoCaretRemap ]
+
+NeoNRemap \'
+NeoVRemap \'
+NeoCaretRemap \'
+
+NeoNRemap %
+NeoVRemap %
+NeoCaretRemap %
+
+NeoNRemap ;
+NeoVRemap ;
+NeoCaretRemap ;
+
+NeoNRemap ^
+NeoVRemap ^
+NeoCaretRemap ^
