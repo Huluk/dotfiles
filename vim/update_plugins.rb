@@ -16,7 +16,7 @@ git_bundles = [
   "git://github.com/tsaleh/vim-matchit.git",
   "git://github.com/scrooloose/syntastic.git",
   "git://github.com/tpope/vim-commentary.git",
-  "git://github.com/tpope/vim-endwise.git",
+  "git://github.com/Huluk/vim-endwise.git", # master: tpope
   "git://github.com/tpope/vim-rvm.git",
   "git://github.com/vim-scripts/YankRing.vim.git",
   "git://github.com/Lokaltog/vim-easymotion.git",

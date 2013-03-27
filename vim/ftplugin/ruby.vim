@@ -13,9 +13,6 @@ map <Leader>rb i#!/usr/bin/ruby<CR><BACKSPACE><CR><ESC>
 setlocal iskeyword-=?
 setlocal iskeyword-=!
 
-" disable mouseover
-set balloonexpr=
-
 command! RSpec !rspec %
 command! RS !rspec %
 command! RSpecDoc !rspec % --format documentation

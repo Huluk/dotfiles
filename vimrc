@@ -4,6 +4,7 @@ set nocompatible
 set number
 syn on
 set backspace=indent,eol,start
+set virtualedit=block
 filetype plugin on
 filetype plugin indent on
 
@@ -24,7 +25,7 @@ color solarized " previous: tir_black
 set mouse=a
 
 " allow <D-v> for pasting
-set clipboard=unnamed
+" set clipboard=unnamed
 
 " set relativenumber
 
@@ -32,6 +33,12 @@ set scrolloff=4 " keep three lines visible above and below
 set ignorecase
 set smartcase   " unless search uses uppercase letters
 " set gdefault    " always replace with /g
+
+" folding
+set foldmethod=syntax
+set nofoldenable
+" open all folds in file (shift-alt-f)
+map φ :%foldopen!<CR>:set nofoldenable<CR>
 
 " make current file's directory default for window (shift-alt-d in neo)
 map δ :lcd %:p:h<CR>
@@ -134,6 +141,12 @@ endfunction
 
 command! -nargs=* P call ProjectWideSearch( '<args>' )
 command! -nargs=* Ps call ProjectWideSearchWithPath( '<args>' )
+
+" if has('ruby')
+"     " Unicode normalization (NFC)
+"     command NFC !ruby ~/.vim/nfc_normalize.rb %
+"     command Normalize NFC
+" endif
 
 " maximise
 function! Max()

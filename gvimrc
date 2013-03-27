@@ -17,8 +17,4 @@ map Y y$
 
 " disable mouse-over
 :set noballooneval
-
-" Unicode normalization (NFC)
-rubydo require 'unicode'
-command NFC rubydo $_ = Unicode::nfc($_)
-command Normalize NFC
+set balloonexpr=

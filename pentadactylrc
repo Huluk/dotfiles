@@ -36,6 +36,9 @@ caretmap <C-ß> <Esc>
 " noscript temporary allow javascript for a page "
 map <C-t> :set noscript-tempsites=<A-Tab>
 
+" passkeys
+set passkeys+=memrise.com:123456789<Left><Right><Up><Down><CR>
+
 " neo-layout compability "
 command NeoNRemap -nargs=1 :nmap <A-<args>> <args>
 command NeoVRemap -nargs=1 :vmap <A-<args>> <args>
