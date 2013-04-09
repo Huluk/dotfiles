@@ -1501,7 +1501,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
+<<<<<<< HEAD
+	<date>2013-03-27T23:26:04Z</date>
+=======
 	<date>2013-03-25T14:00:17Z</date>
+>>>>>>> f8bc925... mvim opens files in existing vim; minor changes
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>

@@ -21,6 +21,7 @@ git_bundles = [
   "git://github.com/vim-scripts/YankRing.vim.git",
   "git://github.com/Lokaltog/vim-easymotion.git",
   "git://github.com/uguu-org/vim-matrix-screensaver.git",
+  "git://github.com/vim-jp/cpp-vim.git",
 ]
 
 vim_org_scripts = [

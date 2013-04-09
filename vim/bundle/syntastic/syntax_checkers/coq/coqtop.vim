@@ -1,7 +1,7 @@
 "============================================================================
-"File:        nasm.vim
+"File:        coqtop.vim
 "Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Håvard Pettersson <haavard.pettersson at gmail dot com>
+"Maintainer:  Matvey Aksenov <matvey.aksenov at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
 "             to the extent permitted by applicable law. You can redistribute
 "             it and/or modify it under the terms of the Do What The Fuck You
@@ -9,30 +9,26 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("g:loaded_syntastic_nasm_nasm_checker")
+
+if exists("g:loaded_syntastic_coq_coqtop_checker")
     finish
 endif
-let g:loaded_syntastic_nasm_nasm_checker=1
+let g:loaded_syntastic_coq_coqtop_checker=1
 
-function! SyntaxCheckers_nasm_nasm_IsAvailable()
-    return executable("nasm")
+function! SyntaxCheckers_coq_coqtop_IsAvailable()
+    return executable('coqtop')
 endfunction
 
-function! SyntaxCheckers_nasm_nasm_GetLocList()
-    if has("win32")
-        let outfile="NUL"
-    else
-        let outfile="/dev/null"
-    endif
-    let wd = shellescape(expand("%:p:h") . "/")
+function! SyntaxCheckers_coq_coqtop_GetLocList()
     let makeprg = syntastic#makeprg#build({
-                \ 'exe': 'nasm',
-                \ 'args': '-X gnu -f elf -I ' . wd . ' -o ' . outfile,
-                \ 'subchecker': 'nasm' })
-    let errorformat = '%f:%l: %t%*[^:]: %m'
+                \ 'exe': 'coqtop',
+                \ 'args': '-noglob -batch -load-vernac-source',
+                \ 'subchecker': 'coqtop' })
+    let errorformat = '%AFile \"%f\"\, line %l\, characters %c\-%.%#\:,%C%m'
+
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
-    \ 'filetype': 'nasm',
-    \ 'name': 'nasm'})
+    \ 'filetype': 'coq',
+    \ 'name': 'coqtop'})

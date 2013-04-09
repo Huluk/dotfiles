@@ -128,7 +128,7 @@ map τ g]1<CR><CR>
 " manually generate ctags
 noremap <Leader>gc :GenerateCtags<CR>
 " autogenerate ctags for ruby, java, c
-au BufWritePost *.rb,*.py,*.java,*.c,*.h AfterSave
+au BufWritePost *.rb,*.py,*.java,*.c,*.h,*.cpp AfterSave
 
 " Project-wide search
 function! ProjectWideSearch(str)

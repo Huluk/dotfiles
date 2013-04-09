@@ -1,7 +1,7 @@
 "============================================================================
-"File:        ycm.vim
+"File:        phpcs.vim
 "Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Val Markovic <val at markovic dot io>
+"Maintainer:  LCD 47 <lcd047 at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
 "             to the extent permitted by applicable law. You can redistribute
 "             it and/or modify it under the terms of the Do What The Fuck You
@@ -9,26 +9,25 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-
-if exists("loaded_ycm_objc_syntax_checker")
+"
+" See here for details of phpcs
+"    - phpcs (see http://pear.php.net/package/PHP_CodeSniffer)
+"
+if exists("g:loaded_syntastic_css_phpcs_checker")
     finish
 endif
-let loaded_ycm_objc_syntax_checker = 1
+let g:loaded_syntastic_css_phpcs_checker=1
 
-runtime syntax_checkers/c/ycm.vim
+runtime syntax_checkers/php/phpcs.vim
 
-function! SyntaxCheckers_objc_ycm_IsAvailable()
-    return SyntaxCheckers_c_ycm_IsAvailable()
+function! SyntaxCheckers_css_phpcs_IsAvailable()
+    return SyntaxCheckers_php_phpcs_IsAvailable()
 endfunction
 
-if !exists('g:loaded_youcompleteme')
-    finish
-endif
-
-function! SyntaxCheckers_objc_ycm_GetLocList()
-    return SyntaxCheckers_c_ycm_GetLocList()
+function! SyntaxCheckers_css_phpcs_GetLocList()
+    return SyntaxCheckers_php_phpcs_GetLocList()
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
-    \ 'filetype': 'objc',
-    \ 'name': 'ycm'})
+    \ 'filetype': 'css',
+    \ 'name': 'phpcs'})
