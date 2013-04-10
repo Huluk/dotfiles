@@ -38,12 +38,13 @@ set smartcase   " unless search uses uppercase letters
 set foldmethod=syntax
 set nofoldenable
 " open all folds in file (shift-alt-f)
-map φ :%foldopen!<CR>:set nofoldenable<CR>
+map φ :set nofoldenable<CR>
+" previous: :%foldopen!<CR>
 
 " make current file's directory default for window (shift-alt-d in neo)
 map δ :lcd %:p:h<CR>
 " make on shift-alt-m
-map μ :!make<CR>
+map μ :call ProjectDirectoryDo("!make", "build")<CR>
 
 " decrease/increase number
 noremap + <c-a>
@@ -95,14 +96,43 @@ au FocusLost * :silent! w
 au TabLeave * :silent! wa
 au BufLeave * :silent! w
 
+" dirname
+function! Dirname()
+    return expand("%:p:h:t")
+endfunction
+
+function! RelativePath()
+    return expand("%:.:h")
+endfunction
+
+function! IsSourceDirectory()
+    return (RelativePath() == '.' && Dirname() == "src")
+endfunction
+
+" project
+function! IsProject()
+    return filereadable("Makefile") || IsSourceDirectory()
+endfunction
+
+function! ProjectDirectoryDo(str, directory)
+    if IsProject() && IsSourceDirectory() && finddir(a:directory, '..') != ""
+        let working_directory = getcwd()
+        execute "lcd ../".a:directory
+        execute a:str
+        execute "lcd ".working_directory
+    else
+        execute a:str
+    endif
+endfunction
+
 " ctags
 function! GenerateCtags()
-   if filereadable("Makefile")
+   if IsProject()
        silent !ctags -R &
        echo "Generated Ctags for project!"
    else
        lcd %:p:h
-       if filereadable("Makefile")
+       if IsProject()
            GenerateCtags
        else
            silent! !ctags -R %

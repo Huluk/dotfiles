@@ -3,6 +3,7 @@
 tags
 *.swp
 *.swo
+Session.vim
 
 # Compiled source #
 ###################

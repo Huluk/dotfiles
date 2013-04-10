@@ -1,5 +1,5 @@
 set go -=T
-color ir_black
+color solarized
 set guifont=Source\ Code\ Pro:h13 "old: Menlo:h13, default: Menlo:h11
 " :set hls
 " :nnoremap <C-q> :nohlsearch<CR>
