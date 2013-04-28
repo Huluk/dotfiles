@@ -1,3 +1,3 @@
 " cmake (shift-alt-c)
-map χ :call ProjectDirectoryDo("!cmake .. && mv Makefile ../Makefile", "build")<CR>
+map χ :call ProjectDirectoryDo("!cmake ..", "build")<CR>
 
