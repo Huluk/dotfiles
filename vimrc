@@ -29,7 +29,7 @@ set mouse=a
 
 " set relativenumber
 
-set scrolloff=4 " keep three lines visible above and below
+set scrolloff=4 " keep x lines visible above and below
 set ignorecase
 set smartcase   " unless search uses uppercase letters
 " set gdefault    " always replace with /g
@@ -63,7 +63,7 @@ nmap <F2> :w<CR>
 " map <C-o> \p
 " Ctrl-s for swap case of first Letter of previous word
 map <C-s> m`b~``
-imap <C-s> <Esc>m`b~``
+imap <C-s> <Esc>m`b~``a
 " Y works as D
 noremap Y y$
 
@@ -92,9 +92,12 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " save on losing focus
-au FocusLost * :silent! w
-au TabLeave * :silent! wa
-au BufLeave * :silent! w
+au FocusLost,Tableave,BufLeave * :call Autosave()
+function! Autosave()
+    if filereadable(expand("%:p"))
+        silent! write
+    endif
+endfunction
 
 " dirname
 function! Dirname()
@@ -115,15 +118,37 @@ function! IsProject()
 endfunction
 
 function! ProjectDirectoryDo(str, directory)
-    if IsProject() && IsSourceDirectory() && finddir(a:directory, '..') != ""
+    if IsSourceDirectory() && finddir(a:directory, '..') != ""
         let working_directory = getcwd()
-        execute "lcd ../".a:directory
+        execute "lcd ../".fnameescape(a:directory)
         execute a:str
-        execute "lcd ".working_directory
+        execute "lcd ".fnameescape(working_directory)
     else
         execute a:str
     endif
 endfunction
+
+function! ProjectRun()
+    if IsSourceDirectory() && filereadable("../Makefile")
+        call ProjectDirectoryDo("!make run", ".")
+    else
+        throw "No Makefile!"
+    endif
+endfunction
+command! -nargs=0 ProjectRun call ProjectRun()
+
+function! ProjectMakefile(name)
+    if IsSourceDirectory()
+        let fname = fnameescape(a:name)
+        let text = "run:\\\\n\\\\tbin/".fname
+        " ."\\\\n\\\\n"    Valgrind part does not work
+        " let text = text."valgrind:\\\\n\\\\tvalgrind bin/".fname
+        let text = '!echo '.text.' >> ../Makefile'
+        execute text
+    endif
+endfunction
+command! -nargs=1 -complete=file Pmk call ProjectMakefile('<args>')
+nnoremap <Leader>pmk :Pmk %:t:r<CR>
 
 " ctags
 function! GenerateCtags()
@@ -148,7 +173,7 @@ command! -nargs=0 GenerateCtags call GenerateCtags()
 
 " after save
 function! AfterSave()
-    silent! SyntasticCheck
+    " silent! SyntasticCheck
     silent! GenerateCtags
 endfunction
 command! -nargs=0 AfterSave call AfterSave()
@@ -158,7 +183,7 @@ map τ g]1<CR><CR>
 " manually generate ctags
 noremap <Leader>gc :GenerateCtags<CR>
 " autogenerate ctags for ruby, java, c
-au BufWritePost *.rb,*.py,*.java,*.c,*.h,*.cpp AfterSave
+au BufWritePost *.rb,*.py,*.java,*.c,*.cpp,*.h,*.hpp AfterSave
 
 " Project-wide search
 function! ProjectWideSearch(str)
