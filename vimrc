@@ -1,5 +1,7 @@
 call pathogen#infect()
 
+call pathogen#infect('after_bundle{}')
+
 set nocompatible
 set number
 syn on
@@ -30,8 +32,10 @@ set mouse=a
 " set relativenumber
 
 set scrolloff=4 " keep x lines visible above and below
-set ignorecase
+
+set ignorecase  " case insensitive search
 set smartcase   " unless search uses uppercase letters
+set wildignorecase " ignore file case on all systems
 " set gdefault    " always replace with /g
 
 " folding
@@ -45,18 +49,25 @@ map φ :set nofoldenable<CR>
 map δ :lcd %:p:h<CR>
 " make on shift-alt-m
 map μ :call ProjectDirectoryDo("!make", "build")<CR>
+map <leader>m μ
 
 " decrease/increase number
 noremap + <c-a>
 noremap - <c-x>
 
 " ctrl-q/ß to esc
+map ſ <Esc>
+imap ſ <Esc>
+vmap ſ <Esc>
 map <C-ß> <Esc>
 imap <C-ß> <Esc>
+vmap <C-ß> <Esc>
 smap <C-ß> <Esc>
 map <C-q> <Esc>
 imap <C-q> <Esc>
+vmap <C-q> <Esc>
 smap <C-q> <Esc>
+
 " f2 to write
 nmap <F2> :w<CR>
 " Ctrl-o for PeepOpen
@@ -78,6 +89,13 @@ nnoremap <leader>h :split<CR><C-w>j
 nnoremap <leader>v :vsplit<CR><C-w>l
 " list yanks on \y
 nnoremap <leader>y :YRShow<CR>
+
+" tab
+map <leader>t :tabnew<CR>
+map <Tab> gt
+map <S-Tab> gT
+
+map <leader>r ρ
 
 " insert mode navigation
 imap <S-A-CR> <Esc>jA
@@ -211,7 +229,7 @@ endfunction
 command! -nargs=0 Max call Max()
 
 " toggle navigation for texts with wrapped lines:
-let g:wrappedLineNavigation = 0
+let g:wrappedLineNavigation = 1
 function! WrappedLineNavigationToggle()
     if g:wrappedLineNavigation == 0
         unmap j
@@ -232,6 +250,7 @@ endfunction
 noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
 
 let g:EasyMotion_leader_key = '<Leader>'
+let g:SuperTabNoCompleteAfter = ['^', ',', ';', '\s']
 let g:yankring_history_dir = '$HOME'
 let g:yankring_history_file = '.yankring_history'
 

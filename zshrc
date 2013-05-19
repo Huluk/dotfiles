@@ -48,7 +48,7 @@ plugins=(osx history vi-mode)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/texbin:/Users/huluk/.rvm/bin:$PATH
+export PATH=/usr/local/include:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/texbin:/Users/huluk/.rvm/bin:$PATH
 
 bindkey -v
 

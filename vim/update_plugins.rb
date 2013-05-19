@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 exclude = [
-  "snipmate.vim",
+  "_ultisnips",
   "eclim",
   "vim-peepopen",
 ]
@@ -55,6 +55,6 @@ vim_org_scripts.each do |name, script_id, script_type|
   end
 end
 
-puts "\nDone. Please update snapmate.vim and eclim manually!"
+puts "\nDone. Please update ultisnip and eclim manually!"
 puts "Eclim Paths:\n~/.vim/bundle/eclim\n/Applications/Eclipse"
-puts "Please check snapmate.vim's syntax folder for custom syntax!"
+puts "Please check ultisnip's syntax folder for custom syntax!"
