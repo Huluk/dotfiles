@@ -1,6 +1,4 @@
-call pathogen#infect()
-
-call pathogen#infect('after_bundle{}')
+execute pathogen#infect()
 
 set nocompatible
 set number
@@ -17,7 +15,7 @@ set shiftround
 set autoindent
 
 set encoding=utf-8
-set spelllang=de_de
+set spelllang=de_20
 
 " terminal color support
 set t_Co=256
@@ -249,8 +247,11 @@ function! WrappedLineNavigationToggle()
 endfunction
 noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
 
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+
 let g:EasyMotion_leader_key = '<Leader>'
-let g:SuperTabNoCompleteAfter = ['^', ',', ';', '\s']
+" let g:SuperTabNoCompleteAfter = ['^', ',', ';', '\s']
 let g:yankring_history_dir = '$HOME'
 let g:yankring_history_file = '.yankring_history'
 

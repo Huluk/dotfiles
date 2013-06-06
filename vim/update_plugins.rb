@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 
 exclude = [
-  "_ultisnips",
+  "ultisnips",
   "eclim",
   "vim-peepopen",
 ]
 
 git_bundles = [ 
   "git://github.com/tpope/vim-surround.git",
-  "git://github.com/ervandew/supertab.git",
+  # "git://github.com/ervandew/supertab.git",
   "git://github.com/godlygeek/tabular.git",
   "git://github.com/tpope/vim-markdown.git",
   "git://github.com/tpope/vim-repeat.git",
@@ -16,10 +16,10 @@ git_bundles = [
   "git://github.com/tsaleh/vim-matchit.git",
   "git://github.com/scrooloose/syntastic.git",
   "git://github.com/tpope/vim-commentary.git",
-  "git://github.com/Huluk/vim-endwise.git", # master: tpope
+  "git://github.com/tpope/vim-endwise.git",
   "git://github.com/tpope/vim-rvm.git",
   "git://github.com/vim-scripts/YankRing.vim.git",
-  "git://github.com/Lokaltog/vim-easymotion.git",
+  # "git://github.com/Lokaltog/vim-easymotion.git",
   "git://github.com/uguu-org/vim-matrix-screensaver.git",
   "git://github.com/vim-jp/cpp-vim.git",
 ]

@@ -3,7 +3,7 @@ map β :w<CR>:!make %:r<CR>
 "run on S-A-r"
 map ρ :call ProjectDirectoryDo("!".FindExecutable(), "bin")<CR>
 "run with valgrind on S-A-s"
-map σ :execute ProjectDirectoryDo("Valgrind ".FindExecutable(), "src")<CR>d10d
+map σ :execute ProjectDirectoryDo("Valgrind ".FindExecutable(), "bin")<CR>
 
 "use valgrind"
 command! -complete=file -nargs=* Valgrind Shell valgrind <q-args>

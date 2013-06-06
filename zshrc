@@ -66,3 +66,6 @@ rb(){
 }
 
 rvm use default
+
+clear
+fortune -s
