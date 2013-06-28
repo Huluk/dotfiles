@@ -6,6 +6,11 @@ map ρ :w<CR>:!ruby %:gs? ?\\ ?<CR>
 " run current file in rspec (σ is shift-alt-r in neo layout
 map σ :w<CR>:!rspec %:gs? ?\\ ?<CR>
 
+" print output behind #=>
+map <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
+xmap <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
+imap <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
+
 " make runable
 map <Leader>rb i#!/usr/bin/ruby<CR><BACKSPACE><CR><ESC>
 

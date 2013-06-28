@@ -22,6 +22,7 @@ git_bundles = [
   # "git://github.com/Lokaltog/vim-easymotion.git",
   "git://github.com/uguu-org/vim-matrix-screensaver.git",
   "git://github.com/vim-jp/cpp-vim.git",
+  "git://github.com/t9md/vim-ruby-xmpfilter",
 ]
 
 vim_org_scripts = [

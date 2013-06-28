@@ -33,7 +33,6 @@ set scrolloff=4 " keep x lines visible above and below
 
 set ignorecase  " case insensitive search
 set smartcase   " unless search uses uppercase letters
-set wildignorecase " ignore file case on all systems
 " set gdefault    " always replace with /g
 
 " folding
@@ -156,9 +155,9 @@ command! -nargs=0 ProjectRun call ProjectRun()
 function! ProjectMakefile(name)
     if IsSourceDirectory()
         let fname = fnameescape(a:name)
-        let text = "run:\\\\n\\\\tbin/".fname
-        " ."\\\\n\\\\n"    Valgrind part does not work
-        " let text = text."valgrind:\\\\n\\\\tvalgrind bin/".fname
+        let text = "run:\\\\n\\\\tbin/".fname."\\\\n\\\\n"
+        " Valgrind part does not work
+        let text = text."valgrind:\\\\n\\\\tvalgrind bin/".fname
         let text = '!echo '.text.' >> ../Makefile'
         execute text
     endif

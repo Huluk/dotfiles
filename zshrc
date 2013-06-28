@@ -43,9 +43,10 @@ ZSH_THEME="xtrv_lars"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # old plugins: plugins=(git github heroku osx history ruby rvm brew vi-mode)
-plugins=(osx history vi-mode)
+plugins=(osx history vi-mode ruby)
 
 source $ZSH/oh-my-zsh.sh
+source /huluk.rvm/scripts/rvm
 
 # Customize to your needs...
 export PATH=/usr/local/include:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/texbin:/Users/huluk/.rvm/bin:$PATH
@@ -64,6 +65,8 @@ alias v=mvim
 rb(){
     open -a /Applications/Firefox.app/ "http://ruby-doc.org/core/classes/$1.html"
 }
+
+reload(){clear && fortune $1}
 
 rvm use default
 
