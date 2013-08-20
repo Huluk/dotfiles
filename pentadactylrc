@@ -38,6 +38,7 @@ map <C-t> :set noscript-tempsites=<A-Tab>
 
 " passkeys
 set passkeys+=memrise.com:123456789<Left><Right><Up><Down><CR>
+set passkeys+=kongregate.com:wasd<Space><Left><Right><Up><Down>
 
 " neo-layout compability "
 command NeoNRemap -nargs=1 :nmap <A-<args>> <args>

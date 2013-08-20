@@ -43,3 +43,6 @@ Session.vim
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# rbenv #
+vendor/bundle/

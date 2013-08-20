@@ -43,17 +43,16 @@ ZSH_THEME="xtrv_lars"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # old plugins: plugins=(git github heroku osx history ruby rvm brew vi-mode)
-plugins=(osx history vi-mode ruby)
+plugins=(osx history vi-mode ruby rbenv irb)
 
 source $ZSH/oh-my-zsh.sh
-source /huluk.rvm/scripts/rvm
 
 # Customize to your needs...
-export PATH=/usr/local/include:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/texbin:/Users/huluk/.rvm/bin:$PATH
+export PATH=/usr/local/include:/usr/local/bin:/usr/local/lib:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/texbin:$PATH
 
 bindkey -v
 
-mvim() {
+mvim(){
     stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v $*
 }
 # this and stty stop '' -ixoff; make that ctrl is not intercepted by terminal
@@ -66,9 +65,16 @@ rb(){
     open -a /Applications/Firefox.app/ "http://ruby-doc.org/core/classes/$1.html"
 }
 
-reload(){clear && fortune $1}
+countlines(){
+    find . -name $1 |
+    xargs wc -l 2>/dev/null |
+    grep total |
+    awk '{print $1}'
+}
 
-rvm use default
+reload(){clear && fortune $*}
+
+eval "$(rbenv init -)"
 
 clear
 fortune -s

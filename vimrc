@@ -21,6 +21,9 @@ set spelllang=de_20
 set t_Co=256
 color solarized " previous: tir_black
 
+set listchars=eol:¬,precedes:←,extends:→,tab:▶\
+set showbreak=↪
+
 " terminal mouse support
 set mouse=a
 

@@ -12,7 +12,7 @@ git_bundles = [
   "git://github.com/godlygeek/tabular.git",
   "git://github.com/tpope/vim-markdown.git",
   "git://github.com/tpope/vim-repeat.git",
-  "git://github.com/jimenezrick/vimerl.git",
+  # "git://github.com/jimenezrick/vimerl.git",
   "git://github.com/tsaleh/vim-matchit.git",
   "git://github.com/scrooloose/syntastic.git",
   "git://github.com/tpope/vim-commentary.git",
