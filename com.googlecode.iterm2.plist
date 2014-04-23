@@ -476,12 +476,26 @@
 			<key>Text</key>
 			<string>gT</string>
 		</dict>
+		<key>0x61-0x40000</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Text</key>
+			<string>a</string>
+		</dict>
 		<key>0x65-0x180000</key>
 		<dict>
 			<key>Action</key>
 			<integer>12</integer>
 			<key>Text</key>
 			<string>gt</string>
+		</dict>
+		<key>0x65-0x40000</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Text</key>
+			<string>e</string>
 		</dict>
 		<key>0x71-0x40000</key>
 		<dict>
@@ -528,28 +542,28 @@
 		<key>0xf702-0x300000</key>
 		<dict>
 			<key>Action</key>
-			<integer>2</integer>
+			<integer>10</integer>
 			<key>Text</key>
-			<string></string>
+			<string>a</string>
 		</dict>
 		<key>0xf702-0x320000</key>
 		<dict>
 			<key>Action</key>
-			<integer>33</integer>
+			<integer>2</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
 		<key>0xf703-0x300000</key>
 		<dict>
 			<key>Action</key>
-			<integer>0</integer>
+			<integer>10</integer>
 			<key>Text</key>
-			<string></string>
+			<string>e</string>
 		</dict>
 		<key>0xf703-0x320000</key>
 		<dict>
 			<key>Action</key>
-			<integer>34</integer>
+			<integer>0</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
@@ -602,6 +616,8 @@
 	<false/>
 	<key>HideActivityIndicator</key>
 	<false/>
+	<key>HideMenuBarInFullscreen</key>
+	<true/>
 	<key>HideScrollbar</key>
 	<false/>
 	<key>HideTab</key>
@@ -662,9 +678,9 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>283 248 924 485 0 0 1280 778 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
-	<string>587 616 384 129 0 0 1280 778 </string>
+	<string>-804 981 384 129 -1920 169 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>630 327 650 451 0 0 1280 778 </string>
+	<string>0 327 650 451 0 0 1280 778 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1498,7 +1514,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-08-13T16:11:20Z</date>
+	<date>2014-03-17T10:17:54Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -1542,6 +1558,6 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>1.0.0.20130624</string>
+	<string>1.0.0.20140112</string>
 </dict>
 </plist>

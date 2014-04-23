@@ -43,37 +43,59 @@ ZSH_THEME="xtrv_lars"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # old plugins: plugins=(git github heroku osx history ruby rvm brew vi-mode)
-plugins=(osx history vi-mode ruby rbenv irb)
+# old plugins: plugins=(osx history vi-mode ruby rbenv irb)
+plugins=(osx history vi-mode git)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/local/include:/usr/local/bin:/usr/local/lib:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/texbin:$PATH
+export PATH=/usr/local/include:/usr/local/bin:/usr/local/lib:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/usr/local/k/bin:$PATH
+
+# bindkey "[D" backward-word
+# bindkey "[C" forward-word
+bindkey "^[a" beginning-of-line
+bindkey "^[e" end-of-line
+bindkey "^[w" backward-kill-word
 
 bindkey -v
 
 mvim(){
     stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v $*
 }
-# this and stty stop '' -ixoff; make that ctrl is not intercepted by terminal
+# stty stop '' -ixoff; - ctrl is not intercepted by terminal
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
 
 alias v=mvim
 
 rb(){
-    open -a /Applications/Firefox.app/ "http://ruby-doc.org/core/classes/$1.html"
+    open -a /Applications/Firefox.app/ \
+    "http://ruby-doc.org/core/classes/$1.html"
 }
 
+cdun() {cd /Volumes/BoxCryptor/Text\ und\ Schrift/Uni/}
+cdb() {cd ~/Documents/Programmieren/gitblog/}
+
+alias d="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/d.md"
+
 countlines(){
-    find . -name $1 |
-    xargs wc -l 2>/dev/null |
-    grep total |
-    awk '{print $1}'
+    [ $# -eq 1 ] && 2="."
+    find $2 -name $1 -print0 |
+    xargs -0 cat 2>/dev/null |
+    wc -l | awk '{print $1}'
 }
+
+passgen(){
+    [ $# -eq 0 ] && 1="16"
+    tr -dc "[[:alnum:]!\"#$%&'()*+,./:;<=>?@\\_{|}~-]" < /dev/random |
+    head -c $1; echo
+}
+# deliberately not using :print: for ease of input (think ^ or `)
 
 reload(){clear && fortune $*}
 
+# rbenv
+export RBENV_ROOT=/usr/local/var/rbenv
 eval "$(rbenv init -)"
 
 clear

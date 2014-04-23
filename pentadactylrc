@@ -19,6 +19,9 @@ vmap i <Esc>
 map <A-+> <z><S-i>
 map <A--> <z><S-o>
 
+" tab groups
+map e <M-S-e>
+
 " crtl-ß/q for esc "
 map <C-q> <Esc>
 vmap <C-q> <Esc><Esc>

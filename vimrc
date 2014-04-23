@@ -16,6 +16,9 @@ set autoindent
 
 set encoding=utf-8
 set spelllang=de_20
+set textwidth=76
+
+set shell=/bin/sh
 
 " terminal color support
 set t_Co=256
@@ -252,6 +255,10 @@ noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
 let g:EasyMotion_leader_key = '<Leader>'
 " let g:SuperTabNoCompleteAfter = ['^', ',', ';', '\s']
 let g:yankring_history_dir = '$HOME'
@@ -262,8 +269,9 @@ cnoreabbrev cdmg lcd ~/Dropbox/Lars\ und\ Nino/spiel/maingame\ 2/
 cnoreabbrev cdln lcd ~/Dropbox/Lars\ und\ Nino/
 cnoreabbrev cdpr lcd /Volumes/BoxCryptor/Programmieren/
 cnoreabbrev cdrb lcd /Volumes/BoxCryptor/Programmieren/Ruby/
-cnoreabbrev cdun lcd /Volumes/BoxCryptor/Text\ und\ Schrift/Uni/Notizen/
+cnoreabbrev cdun lcd /Volumes/BoxCryptor/Text\ und\ Schrift/Uni/
 cnoreabbrev cdws lcd ~/Documents/workspace/
+cnoreabbrev cdb lcd ~/Documents/Programmieren/gitblog/
 
 " open shell command in buffer with :Shell or :shell
 function! s:ExecuteInShell(command)

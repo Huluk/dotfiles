@@ -12,27 +12,24 @@
 " Specify additional options to csslint with this option. e.g. to disable
 " warnings:
 "
-"   let g:syntastic_csslint_options = "--warnings=none"
+"   let g:syntastic_csslint_options = '--warnings=none'
 
-if exists("g:loaded_syntastic_css_csslint_checker")
+if exists('g:loaded_syntastic_css_csslint_checker')
     finish
 endif
-let g:loaded_syntastic_css_csslint_checker=1
+let g:loaded_syntastic_css_csslint_checker = 1
 
 if !exists('g:syntastic_csslint_options')
-    let g:syntastic_csslint_options = ""
+    let g:syntastic_csslint_options = ''
 endif
 
-function! SyntaxCheckers_css_csslint_IsAvailable()
-    return executable('csslint')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_css_csslint_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'csslint',
-        \ 'args': '--format=compact ' . g:syntastic_csslint_options,
-        \ 'filetype': 'css',
-        \ 'subchecker': 'csslint' })
+function! SyntaxCheckers_css_csslint_GetLocList() dict
+    let makeprg = self.makeprgBuild({
+        \ 'args': g:syntastic_csslint_options,
+        \ 'args_after': '--format=compact' })
 
     " Print CSS Lint's error/warning messages from compact format. Ignores blank lines.
     let errorformat =
@@ -52,3 +49,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'css',
     \ 'name': 'csslint'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:
