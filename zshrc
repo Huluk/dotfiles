@@ -77,6 +77,7 @@ cdun() {cd /Volumes/BoxCryptor/Text\ und\ Schrift/Uni/}
 cdb() {cd ~/Documents/Programmieren/gitblog/}
 
 alias d="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/d.md"
+alias t="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/todo.md"
 
 countlines(){
     [ $# -eq 1 ] && 2="."
