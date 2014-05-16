@@ -79,6 +79,7 @@ cdb() {cd ~/Documents/Programmieren/gitblog/}
 alias d="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/d.md"
 alias t="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/todo.md"
 
+# count lines matching $1 in directory $2 (defaults to .)
 countlines(){
     [ $# -eq 1 ] && 2="."
     find $2 -name $1 -print0 |
@@ -86,6 +87,7 @@ countlines(){
     wc -l | awk '{print $1}'
 }
 
+# generate passwort of length $1
 passgen(){
     [ $# -eq 0 ] && 1="16"
     tr -dc "[[:alnum:]!\"#$%&'()*+,./:;<=>?@\\_{|}~-]" < /dev/random |

@@ -1,7 +1,10 @@
+# encoding: UTF-8
+
 require_relative 'entry.rb'
 require_relative 'entry_array.rb'
 
 COMMAND_SEPARATOR = /[\n;]/
+COUNT_STRING = "- counting result: " # TODO pass as command
 
 def weekplan_parse(lines)
   lines = lines.drop_while{|line| not line =~ TITLE_REGEX}
@@ -21,18 +24,31 @@ def weekplan_parse(lines)
 end
 
 def command_parse(command)
-  result = ''
+  result = ['']
   current_esc = nil; backslash = false
   command.each_char do |c|
-    if c =~ /[[:alnum:]]/ or (current_esc.nil? and c==' ') 
-      result << c
-    elsif c == current_esc && !backslash then current_esc=nil
-    elsif c =~ /["']/ and current_esc.nil? then current_esc=c
-    elsif c == '\\' then backslash=true; next
+    if backslash
+      result.last << '\\' unless c == current_esc or current_esc.nil?
+      result.last << c
+      backslash = false
+    elsif c == '\\'
+      backslash = true
+    elsif current_esc.nil?
+      case c
+      when ' ' then result << ''
+      when /["']/ then current_esc = c
+      else result.last << c
+      end
+    elsif c == current_esc
+      current_esc = nil
+    else
+      result.last << c
     end
-    backslash = false
   end
-  return result.split
+  unless current_esc.nil?
+    raise(ArgumentError, "not correctly terminated: #{current_esc}")
+  end
+  return result
 end
 
 TITLE_REGEX = Regexp.new(ARGV.shift)

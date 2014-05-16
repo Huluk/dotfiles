@@ -24,6 +24,15 @@ class Entry
     @lines.clear
   end
 
+  def count(regex)
+    result = 0
+    @lines.each do |line|
+      match = line.match(regex)
+      result += match['result'].to_f unless match.nil?
+    end
+    return result
+  end
+
   def title
     self.class.title_escape(@title)
   end

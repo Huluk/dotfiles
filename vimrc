@@ -16,7 +16,7 @@ set autoindent
 
 set encoding=utf-8
 set spelllang=de_20
-set textwidth=76
+set textwidth=75
 
 set shell=/bin/sh
 
@@ -98,6 +98,7 @@ map <leader>t :tabnew<CR>
 map <Tab> gt
 map <S-Tab> gT
 
+map ρ :call ProjectDirectoryDo("!make", "run")<CR>
 map <leader>r ρ
 
 " insert mode navigation
@@ -119,6 +120,32 @@ function! Autosave()
         silent! write
     endif
 endfunction
+
+" close all tabs to direction
+" TODO keeps non-saved buffers in background, even with bang
+function! TabCloseRight(bang)
+    let l:cur = tabpagenr('$')
+    while l:cur > tabpagenr()
+        exe 'tabclose' . a:bang . ' ' . l:cur
+        let l:cur = l:cur - 1
+    endwhile
+endfunction
+
+function! TabCloseLeft(bang)
+    let l:cur = tabpagenr() - 1
+    while l:cur >= 1
+        exe 'tabclose' . a:bang . l:cur
+        let l:cur = l:cur - 1
+    endwhile
+endfunction
+
+command! -bang TabcloseRight call TabCloseRight('<bang>')
+command! -bang TabcloseLeft call TabCloseLeft('<bang>')
+
+map <Leader>tcl :TabcloseLeft<CR>
+map <Leader>tcl! :TabcloseLeft!<CR>
+map <Leader>tcr :TabcloseRight<CR>
+map <Leader>tcr! :TabcloseRight!<CR>
 
 " dirname
 function! Dirname()

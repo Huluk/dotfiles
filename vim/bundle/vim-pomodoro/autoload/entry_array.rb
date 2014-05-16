@@ -29,6 +29,14 @@ class EntryArray
     @entry[target].clear unless @entry[target].nil?
   end
 
+  def count(target, regex)
+    target = Entry.title_escape(target)
+    unless @entry[target].nil? or not regex =~ /\(\s*\?\s*<\s*result\s*>/
+      regex = Regexp.new(regex)
+      @entry[target].add(COUNT_STRING + @entry[target].count(regex).to_s + "\n")
+    end
+  end
+
   def print(io)
     @entries.each {|entry| entry.print(io)}
   end
@@ -38,6 +46,7 @@ class EntryArray
     when 'copy' then self.copy(src,dest)
     when 'move' then self.move(src,dest)
     when 'clear' then self.clear(src)
+    when 'count' then self.count(src,dest)
     else warn("No such command `#{command}'")
     end
   end
