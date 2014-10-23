@@ -16,7 +16,7 @@ set autoindent
 
 set encoding=utf-8
 set spelllang=de_20
-set textwidth=75
+set textwidth=76
 
 set shell=/bin/sh
 
@@ -33,7 +33,7 @@ set mouse=a
 " allow <D-v> for pasting
 " set clipboard=unnamed
 
-" set relativenumber
+set relativenumber
 
 set scrolloff=4 " keep x lines visible above and below
 
@@ -81,9 +81,14 @@ imap <C-s> <Esc>m`b~``a
 " Y works as D
 noremap Y y$
 
-" set second leader
-map , \
+" set leaders
+let mapleader = ","
+let maplocalleader = "\\"
 
+" add execution environment
+nnoremap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
+" convert current file to unix executable on \o
+nnoremap <leader>o :!chmod a+x %<CR>l
 " select pasted text on \s
 nnoremap <leader>s V`]
 " horizontal split on \h
@@ -95,8 +100,10 @@ nnoremap <leader>y :YRShow<CR>
 
 " tab
 map <leader>t :tabnew<CR>
-map <Tab> gt
-map <S-Tab> gT
+noremap <Tab> gt
+noremap <S-Tab> gT
+" restore ctrl-i for position change (aliased omikron, map also in iterm)
+nnoremap ο <C-i>
 
 map ρ :call ProjectDirectoryDo("!make", "run")<CR>
 map <leader>r ρ
@@ -250,13 +257,6 @@ command! -nargs=* Ps call ProjectWideSearchWithPath( '<args>' )
 "     command NFC !ruby ~/.vim/nfc_normalize.rb %
 "     command Normalize NFC
 " endif
-
-" maximise
-function! Max()
-    set columns=1000
-    set lines=100
-endfunction
-command! -nargs=0 Max call Max()
 
 " toggle navigation for texts with wrapped lines:
 let g:wrappedLineNavigation = 1

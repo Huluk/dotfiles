@@ -1,10 +1,10 @@
-syn match pomoAll   "\v---? (\d+\.?\d?\/)?\d+(\.\d)?$"
-syn match pomoZero  "\v---? (\d+\.?\d?\/)?(0\.?0?|\?+)$"
-syn match pomoHalf  "\v---? (\d\.?\d?\/)?0?\.[1-9]$"
-syn match pomoOne   "\v---? (\d\.?\d?\/)?1(\.\d)?$"
-syn match pomoTwo   "\v---? (\d\.?\d?\/)?2(\.\d)?$"
-syn match pomoThree "\v---? (\d\.?\d?\/)?3(\.\d)?$"
-syn match pomoFour  "\v---? (\d\.?\d?\/)?4(\.\d)?$"
+syn match pomoAll   "\v---? (\d*\.?\d?\/)?\d+(\.\d)?$"
+syn match pomoZero  "\v---? (\d*\.?\d?\/)?(0\.?0?|\?+)$"
+syn match pomoHalf  "\v---? (\d*\.?\d?\/)?0?\.[1-9]$"
+syn match pomoOne   "\v---? (\d*\.?\d?\/)?1(\.\d)?$"
+syn match pomoTwo   "\v---? (\d*\.?\d?\/)?2(\.\d)?$"
+syn match pomoThree "\v---? (\d*\.?\d?\/)?3(\.\d)?$"
+syn match pomoFour  "\v---? (\d*\.?\d?\/)?4(\.\d)?$"
 
 " blue
 hi pomoOne ctermbg=4 ctermfg=8

@@ -497,6 +497,13 @@
 			<key>Text</key>
 			<string>e</string>
 		</dict>
+		<key>0x69-0x40000</key>
+		<dict>
+			<key>Action</key>
+			<integer>12</integer>
+			<key>Text</key>
+			<string>ο</string>
+		</dict>
 		<key>0x71-0x40000</key>
 		<dict>
 			<key>Action</key>
@@ -667,7 +674,7 @@
 		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
 		hAErATGG
 		</data>
-		<string>302</string>
+		<string>287</string>
 	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
@@ -680,7 +687,7 @@
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>421 486 384 129 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>388 273 650 451 0 0 1280 778 </string>
+	<string>502 280 721 451 0 0 1280 778 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1514,7 +1521,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-05-03T16:17:03Z</date>
+	<date>2014-08-30T18:22:33Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -1557,7 +1564,11 @@
 	<integer>0</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
+	<key>findIgnoreCase_iTerm</key>
+	<true/>
+	<key>findRegex_iTerm</key>
+	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20140421</string>
+	<string>2.0</string>
 </dict>
 </plist>

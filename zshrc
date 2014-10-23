@@ -44,9 +44,13 @@ ZSH_THEME="xtrv_lars"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # old plugins: plugins=(git github heroku osx history ruby rvm brew vi-mode)
 # old plugins: plugins=(osx history vi-mode ruby rbenv irb)
-plugins=(osx history vi-mode git)
+plugins=(osx history git wd common-aliases)
 
 source $ZSH/oh-my-zsh.sh
+
+unalias run-help
+autoload run-help
+HELPDIR=/usr/local/share/zsh/help
 
 # Customize to your needs...
 export PATH=/usr/local/include:/usr/local/bin:/usr/local/lib:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/usr/local/k/bin:$PATH
@@ -79,13 +83,18 @@ cdb() {cd ~/Documents/Programmieren/gitblog/}
 alias d="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/d.md"
 alias t="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/todo.md"
 
-# count lines matching $1 in directory $2 (defaults to .)
+# count lines of files matching $1 in directory $2 (defaults to .)
 countlines(){
     [ $# -eq 1 ] && 2="."
     find $2 -name $1 -print0 |
     xargs -0 cat 2>/dev/null |
     wc -l | awk '{print $1}'
 }
+
+addclock(){
+    while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &
+}
+# quit with fg and <Ctrl-c>
 
 # generate passwort of length $1
 passgen(){
@@ -94,6 +103,14 @@ passgen(){
     head -c $1; echo
 }
 # deliberately not using :print: for ease of input (think ^ or `)
+
+# copy $1 as $2 to subdir when $3 is present
+add_when_found(){
+    find . -name $3 |
+    xargs -n 1 dirname |
+    sed 's!$!/'$2'!' |
+    xargs -I target cp $1 target
+}
 
 reload(){clear && fortune $*}
 
