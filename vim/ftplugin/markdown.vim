@@ -3,5 +3,8 @@ map ρ :w<CR>:!pandoc -o %:r:gs? ?\\ ?.pdf %:gs? ?\\ ?<CR>
 
 map <leader>c :CountDone<CR>
 
+set softtabstop=2
+set shiftwidth=2
+
 " doesn't work
 "hi markdownItalic term=standout cterm=standout

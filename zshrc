@@ -64,7 +64,7 @@ bindkey "^[w" backward-kill-word
 bindkey -v
 
 mvim(){
-    stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v $*
+    stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v -p $*
 }
 # stty stop '' -ixoff; - ctrl is not intercepted by terminal
 # `Frozing' tty, so after any command terminal settings will be restored
@@ -82,6 +82,8 @@ cdb() {cd ~/Documents/Programmieren/gitblog/}
 
 alias d="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/d.md"
 alias t="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/todo.md"
+alias umount="diskutil unmount"
+alias shuf="gshuf"
 
 # count lines of files matching $1 in directory $2 (defaults to .)
 countlines(){
@@ -99,10 +101,9 @@ addclock(){
 # generate passwort of length $1
 passgen(){
     [ $# -eq 0 ] && 1="16"
-    tr -dc "[[:alnum:]!\"#$%&'()*+,./:;<=>?@\\_{|}~-]" < /dev/random |
+    gtr -dc "[A-Za-z0-9]" < /dev/random |
     head -c $1; echo
 }
-# deliberately not using :print: for ease of input (think ^ or `)
 
 # copy $1 as $2 to subdir when $3 is present
 add_when_found(){

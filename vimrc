@@ -52,7 +52,8 @@ map φ :set nofoldenable<CR>
 map δ :lcd %:p:h<CR>
 " make on shift-alt-m
 map μ :call ProjectDirectoryDo("!make", "build")<CR>
-map <leader>m μ
+map <leader>m :make<CR>
+map <leader>x :make quick<CR>
 
 " decrease/increase number
 noremap + <c-a>
