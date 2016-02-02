@@ -77,11 +77,11 @@ rb(){
     "http://ruby-doc.org/core/classes/$1.html"
 }
 
-cdun() {cd /Volumes/BoxCryptor/Text\ und\ Schrift/Uni/}
+cdun() {cd /Volumes/BoxCryptor/Dropbox/Crypt/Text\ und\ Schrift/Uni/}
 cdb() {cd ~/Documents/Programmieren/gitblog/}
 
-alias d="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/d.md"
-alias t="mvim /Volumes/BoxCryptor/Text\ und\ Schrift/todo.md"
+alias d="mvim /Volumes/BoxCryptor/Dropbox/Crypt/Text\ und\ Schrift/d.md"
+alias t="mvim /Volumes/BoxCryptor/Dropbox/Crypt/Text\ und\ Schrift/todo.md"
 alias umount="diskutil unmount"
 alias shuf="gshuf"
 
@@ -114,6 +114,28 @@ add_when_found(){
 }
 
 reload(){clear && fortune $*}
+
+dice(){
+    # kinit s1520582@INF.ED.AC.UK
+    ssh -Y student.ssh.inf.ed.ac.uk -t 'ssh student.login; bash -l'
+}
+
+pdfunite(){
+    echo "sejda merge -o outfile -f infiles"
+}
+santander(){
+    getspwd $(pass 'uk/santander/1679031081') $*
+}
+santander-online(){
+    getspwd $(pass 'uk/santander/online') $*
+}
+getspwd(){
+    PWD=$1
+    i1=$2; ((--i1))
+    i2=$3; ((--i2))
+    i3=$4; ((--i3))
+    echo "${PWD:$i1:1}${PWD:$i2:1}${PWD:$i3:1}"
+}
 
 # rbenv
 export RBENV_ROOT=/usr/local/var/rbenv

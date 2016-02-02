@@ -1,3 +1,3 @@
 " cmake (shift-alt-c)
-map χ :call ProjectDirectoryDo("!cmake ..", "build")<CR>
+map <buffer> χ :call ProjectDirectoryDo("!cmake ..", "build")<CR>
 

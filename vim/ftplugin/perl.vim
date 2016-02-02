@@ -1,2 +1,2 @@
 " run current file (ρ is shift-alt-r in neo layout
-map ρ :w<CR>:!perl %:gs? ?\\ ?<CR>
+map <buffer> ρ :w<CR>:!perl %:gs? ?\\ ?<CR>

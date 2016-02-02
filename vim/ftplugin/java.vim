@@ -6,6 +6,6 @@ let java_highlight_all=1
 let java_highlight_functions="style"
 let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
 " compile on S-A-b (make bin)"
-map β :w<CR>:Javac<CR>
+map <buffer> β :w<CR>:Javac<CR>
 " run on S-A-r"
-map ρ :Java<CR>
+map <buffer> ρ :Java<CR>

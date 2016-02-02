@@ -13,7 +13,7 @@ git_bundles = [
   "git://github.com/tpope/vim-markdown.git",
   "git://github.com/tpope/vim-repeat.git",
   # "git://github.com/jimenezrick/vimerl.git",
-  "git://github.com/tsaleh/vim-matchit.git", # not found?
+  # "git://github.com/tsaleh/vim-matchit.git", # included in vim distr
   "git://github.com/scrooloose/syntastic.git",
   "git://github.com/tpope/vim-commentary.git",
   "git://github.com/tpope/vim-endwise.git",

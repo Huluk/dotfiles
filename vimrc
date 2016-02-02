@@ -121,6 +121,9 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" comments for R
+autocmd FileType R set commentstring=#\ %s
+
 " save on losing focus
 au FocusLost,Tableave,BufLeave * :call Autosave()
 function! Autosave()

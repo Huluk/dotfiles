@@ -2,9 +2,9 @@ setlocal expandtab
 setlocal softtabstop=2
 setlocal shiftwidth=2
 " run current file (ρ is shift-alt-r in neo layout
-map ρ :w<CR>:!ruby %:gs? ?\\ ?<CR>
+map <buffer> ρ :w<CR>:!ruby %:gs? ?\\ ?<CR>
 " run current file in rspec (σ is shift-alt-r in neo layout
-map σ :w<CR>:!rspec %:gs? ?\\ ?<CR>
+map <buffer> σ :w<CR>:!rspec %:gs? ?\\ ?<CR>
 
 " print output behind #=>
 map <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
@@ -12,7 +12,7 @@ xmap <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
 imap <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
 
 " make runable
-map <Leader>rb i#!/usr/bin/ruby<CR><BACKSPACE><CR><ESC>
+map <buffer> <Leader>rb i#!/usr/bin/ruby<CR><BACKSPACE><CR><ESC>
 
 " ctag support
 setlocal iskeyword-=?

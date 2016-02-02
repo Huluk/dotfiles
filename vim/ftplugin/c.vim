@@ -1,9 +1,9 @@
 "compile on S-A-b (make bin)"
-map β :w<CR>:!make %:r<CR>
+map <buffer> β :w<CR>:!make %:r<CR>
 "run on S-A-r"
-map ρ :call ProjectDirectoryDo("!".FindExecutable(), "bin")<CR>
+map <buffer> ρ :call ProjectDirectoryDo("!".FindExecutable(), "bin")<CR>
 "run with valgrind on S-A-s"
-map σ :execute ProjectDirectoryDo("Valgrind ".FindExecutable(), "bin")<CR>
+map <buffer> σ :execute ProjectDirectoryDo("Valgrind ".FindExecutable(), "bin")<CR>
 
 "use valgrind"
 command! -complete=file -nargs=* Valgrind Shell valgrind <q-args>
