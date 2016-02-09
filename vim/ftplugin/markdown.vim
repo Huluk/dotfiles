@@ -1,5 +1,5 @@
-" current file as pdf (ρ is shift-alt-r in neo layout
-map <buffer> ρ :w<CR>:!pandoc -o %:r:gs? ?\\ ?.pdf %:gs? ?\\ ?<CR>
+" current file as pdf
+map <buffer> <leader>r :w<CR>:!pandoc -o %:r:gs? ?\\ ?.pdf %:gs? ?\\ ?<CR>
 
 map <buffer> <leader>c :CountDone<CR>
 

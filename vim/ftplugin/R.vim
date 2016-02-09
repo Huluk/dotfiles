@@ -1,1 +1,3 @@
-map <buffer> ρ :w<CR>:!Rscript %:gs? ?\\ ?<CR>
+setlocal commentstring=#\ %s
+
+map <buffer> <leader>r :w<CR>:!Rscript %:gs? ?\\ ?<CR>

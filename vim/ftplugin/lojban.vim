@@ -1,5 +1,4 @@
-" Vim filetype plugin file
-" Language:     Lojban
+" Vim filetype plugin file " Language:     Lojban
 " Maintainer:   Cyril Slobin <slobin@ice.ru>
 " URL:          http://45.free.net/~slobin/vim/lojban.zip
 " Last Change:  2007 Feb 27

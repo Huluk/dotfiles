@@ -1,21 +1,39 @@
 execute pathogen#infect()
 
 set nocompatible
-set number
-syn on
+syntax on
 set backspace=indent,eol,start
 set virtualedit=block
+set encoding=utf-8
+
 filetype plugin on
 filetype plugin indent on
 
+set number " show line number at position
+set relativenumber " use relative line numbers
+
+set scrolloff=4 " keep x lines visible above and below position
+
+set ignorecase  " case insensitive search
+set smartcase   " unless search uses uppercase letters
+" set gdefault    " always replace with /g
+
+" always use soft tabstops of width 4
 set expandtab
 set softtabstop=4
+set tabstop=4
 set shiftwidth=4
 set shiftround
 set autoindent
 
-set encoding=utf-8
+" activate with :spell
 set spelllang=de_20
+" other useful spelllangs (concat by space):
+" en (all regions), en_gb, en_us
+" eo_l3
+" nl_NL
+
+" leaves enough space for line numbers
 set textwidth=76
 
 set shell=/bin/sh
@@ -24,22 +42,24 @@ set shell=/bin/sh
 set t_Co=256
 color solarized " previous: tir_black
 
+" enable with :set list
 set listchars=eol:¬,precedes:←,extends:→,tab:▶\
+
+" shows symbol on line wrap
 set showbreak=↪
 
 " terminal mouse support
 set mouse=a
 
-" allow <D-v> for pasting
+" allow <D-v> for pasting and sync with system paste
 " set clipboard=unnamed
 
-set relativenumber
+" Y works like D
+noremap Y y$
 
-set scrolloff=4 " keep x lines visible above and below
-
-set ignorecase  " case insensitive search
-set smartcase   " unless search uses uppercase letters
-" set gdefault    " always replace with /g
+" set leaders
+let mapleader = ","
+let maplocalleader = "\\"
 
 " folding
 set foldmethod=syntax
@@ -50,10 +70,6 @@ map φ :set nofoldenable<CR>
 
 " make current file's directory default for window (shift-alt-d in neo)
 map δ :lcd %:p:h<CR>
-" make on shift-alt-m
-map μ :call ProjectDirectoryDo("!make", "build")<CR>
-map <leader>m :make<CR>
-map <leader>x :make quick<CR>
 
 " decrease/increase number
 noremap + <c-a>
@@ -79,24 +95,18 @@ nmap <F2> :w<CR>
 " Ctrl-s for swap case of first Letter of previous word
 map <C-s> m`b~``
 imap <C-s> <Esc>m`b~``a
-" Y works as D
-noremap Y y$
 
-" set leaders
-let mapleader = ","
-let maplocalleader = "\\"
-
-" add execution environment
+" add execution environment comment to top of file
 nnoremap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
-" convert current file to unix executable on \o
-nnoremap <leader>o :!chmod a+x %<CR>l
-" select pasted text on \s
+" convert current file to unix executable on
+nnoremap <leader>o :!chmod +x %<CR>l
+" select pasted text
 nnoremap <leader>s V`]
-" horizontal split on \h
+" horizontal split
 nnoremap <leader>h :split<CR><C-w>j
-" vertical split on \v
+" vertical split on
 nnoremap <leader>v :vsplit<CR><C-w>l
-" list yanks on \y
+" list yanks on
 nnoremap <leader>y :YRShow<CR>
 
 " tab
@@ -105,9 +115,6 @@ noremap <Tab> gt
 noremap <S-Tab> gT
 " restore ctrl-i for position change (aliased omikron, map also in iterm)
 nnoremap ο <C-i>
-
-map ρ :call ProjectDirectoryDo("!make", "run")<CR>
-map <leader>r ρ
 
 " insert mode navigation
 imap <S-A-CR> <Esc>jA
@@ -121,8 +128,12 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" comments for R
-autocmd FileType R set commentstring=#\ %s
+" various make commands
+map μ :call ProjectDirectoryDo("!make", "build")<CR>
+map ρ :call ProjectDirectoryDo("!make", "run")<CR>
+map <leader>m :make<CR>
+map <leader>x :make quick<CR>
+map <leader>r :make run<CR>
 
 " save on losing focus
 au FocusLost,Tableave,BufLeave * :call Autosave()
@@ -283,9 +294,6 @@ function! WrappedLineNavigationToggle()
 endfunction
 noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
 
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
@@ -294,15 +302,6 @@ let g:EasyMotion_leader_key = '<Leader>'
 " let g:SuperTabNoCompleteAfter = ['^', ',', ';', '\s']
 let g:yankring_history_dir = '$HOME'
 let g:yankring_history_file = '.yankring_history'
-
-" temporary short access for directory
-cnoreabbrev cdmg lcd ~/Dropbox/Lars\ und\ Nino/spiel/maingame\ 2/
-cnoreabbrev cdln lcd ~/Dropbox/Lars\ und\ Nino/
-cnoreabbrev cdpr lcd /Volumes/BoxCryptor/Programmieren/
-cnoreabbrev cdrb lcd /Volumes/BoxCryptor/Programmieren/Ruby/
-cnoreabbrev cdun lcd /Volumes/BoxCryptor/Text\ und\ Schrift/Uni/
-cnoreabbrev cdws lcd ~/Documents/workspace/
-cnoreabbrev cdb lcd ~/Documents/Programmieren/gitblog/
 
 " open shell command in buffer with :Shell or :shell
 function! s:ExecuteInShell(command)

@@ -1,2 +1,2 @@
-" run current file (ρ is shift-alt-r in neo layout
-map ρ :w<CR>:!python %:gs? ?\\ ?<CR>
+" run current file
+map <buffer> <leader>r :w<CR>:!python %:gs? ?\\ ?<CR>
