@@ -115,9 +115,14 @@ add_when_found(){
 
 reload(){clear && fortune $*}
 
+dice_init() {
+    kinit s1520582@INF.ED.AC.UK
+}
 dice(){
-    # kinit s1520582@INF.ED.AC.UK
     ssh -Y student.ssh.inf.ed.ac.uk -t 'ssh student.login; bash -l'
+}
+dicec(){
+    ssh -Y student.ssh.inf.ed.ac.uk -t 'ssh student.compute; bash -l'
 }
 
 pdfunite(){

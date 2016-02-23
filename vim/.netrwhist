@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Volumes/BoxCryptor/Text und Schrift/Uni/Praktikum/BA/writing/intro'
-let g:netrw_dirhist_2='/Volumes/BoxCryptor/Text und Schrift/Uni/Praktikum/BA/writing/main'
-let g:netrw_dirhist_3='/Volumes/Internal HD/BA/win/out_cooc/296719415word2vec seed0 stopWords  nGramSize 2 iterations 25 minWordFrequency 5 vectorLength 750 embedding HIERARCHICAL_SOFTMAX negativeSamples 0 subsampling 00 multithreading true'
-let g:netrw_dirhist_4='/Volumes/Internal HD/BA/win/out_cooc/296719415word2vec seed0 stopWords  nGramSize 1 iterations 25 minWordFrequency 5 vectorLength 750 embedding NEGATIVE_SAMPLING negativeSamples 5 subsampling 00 multithreading true'
-let g:netrw_dirhist_5='/Volumes/BoxCryptor/Text und Schrift/Uni/Praktikum/BA/presentation'
-let g:netrw_dirhist_6='/Users/huluk/.rstudio-desktop'
-let g:netrw_dirhist_7='/Volumes/Boxcryptor/Dropbox/Crypt/Text und Schrift/Uni/Speech Processing/assignment 1/report'

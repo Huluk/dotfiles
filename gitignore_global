@@ -29,6 +29,14 @@ Session.vim
 *.tar
 *.zip
 
+# LaTeX #
+#########
+*.aux
+*.bbl
+*.blg
+*.fff
+*.lof
+
 # Logs and databases #
 ######################
 *.log
