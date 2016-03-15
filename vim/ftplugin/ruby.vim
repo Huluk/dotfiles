@@ -9,9 +9,9 @@ map <buffer> <leader> :w<CR>:!ruby %:gs? ?\\ ?<CR>
 map <buffer> σ :w<CR>:!rspec %:gs? ?\\ ?<CR>
 
 " print output behind #=>
-map <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
-xmap <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
-imap <buffer> <Leader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
+map <buffer> <Localleader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
+xmap <buffer> <Localleader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
+imap <buffer> <Localleader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
 
 " ctag support
 setlocal iskeyword-=?

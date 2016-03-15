@@ -26,13 +26,6 @@ set shiftwidth=4
 set shiftround
 set autoindent
 
-" activate with :spell
-set spelllang=de_20
-" other useful spelllangs (concat by space):
-" en (all regions), en_gb, en_us
-" eo_l3
-" nl_NL
-
 " leaves enough space for line numbers
 set textwidth=76
 
@@ -128,12 +121,20 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" spell correction
+map <LocalLeader>d :setlocal spell spelllang=de_20<CR>
+map <LocalLeader>n :setlocal spell spelllang=nl_nl<CR>
+map <LocalLeader>eo :setlocal spell spelllang=eo_l3<CR>
+map <LocalLeader>en :setlocal spell spelllang=en<CR>
+map <LocalLeader>g :setlocal spell spelllang=en_gb<CR>
+map <LocalLeader>us :setlocal spell spelllang=en_us<CR>
+
 " various make commands
 map μ :call ProjectDirectoryDo("!make", "build")<CR>
 map ρ :call ProjectDirectoryDo("!make", "run")<CR>
 map <leader>m :make<CR>
 map <leader>x :make quick<CR>
-map <leader>r :make run<CR>
+map <leader>r :!./%<CR>
 
 " save on losing focus
 au FocusLost,Tableave,BufLeave * :call Autosave()
