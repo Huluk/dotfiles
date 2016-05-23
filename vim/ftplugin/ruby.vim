@@ -4,9 +4,9 @@ setlocal tabstop=2
 setlocal shiftwidth=2
 
 " run current file
-map <buffer> <leader> :w<CR>:!ruby %:gs? ?\\ ?<CR>
+map <buffer> <leader> :w<CR>:!ruby %:S<CR>
 " run current file in rspec (σ is shift-alt-r in neo layout)
-map <buffer> σ :w<CR>:!rspec %:gs? ?\\ ?<CR>
+map <buffer> σ :w<CR>:!rspec %:S<CR>
 
 " print output behind #=>
 map <buffer> <Localleader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)

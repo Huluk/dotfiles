@@ -13,6 +13,7 @@ set number " show line number at position
 set relativenumber " use relative line numbers
 
 set scrolloff=4 " keep x lines visible above and below position
+set ruler
 
 set ignorecase  " case insensitive search
 set smartcase   " unless search uses uppercase letters
@@ -92,7 +93,7 @@ imap <C-s> <Esc>m`b~``a
 " add execution environment comment to top of file
 nnoremap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
 " convert current file to unix executable on
-nnoremap <leader>o :!chmod +x %<CR>l
+nnoremap <leader>o :!chmod +x %:S<CR>l
 " select pasted text
 nnoremap <leader>s V`]
 " horizontal split
@@ -134,7 +135,7 @@ map μ :call ProjectDirectoryDo("!make", "build")<CR>
 map ρ :call ProjectDirectoryDo("!make", "run")<CR>
 map <leader>m :make<CR>
 map <leader>x :make quick<CR>
-map <leader>r :!./%<CR>
+map <leader>r :!%:p:S<CR>
 
 " save on losing focus
 au FocusLost,Tableave,BufLeave * :call Autosave()
@@ -169,6 +170,10 @@ map <Leader>tcl :TabcloseLeft<CR>
 map <Leader>tcl! :TabcloseLeft!<CR>
 map <Leader>tcr :TabcloseRight<CR>
 map <Leader>tcr! :TabcloseRight!<CR>
+map <Leader>tql :TabcloseLeft<CR>
+map <Leader>tql! :TabcloseLeft!<CR>
+map <Leader>tqr :TabcloseRight<CR>
+map <Leader>tqr! :TabcloseRight!<CR>
 
 " dirname
 function! Dirname()
@@ -231,7 +236,7 @@ function! GenerateCtags()
        if IsProject()
            GenerateCtags
        else
-           silent! !ctags -R %
+           silent! !ctags -R %:S
            if filereadable("tags")
                echo "Generated Ctags for file!"
            else

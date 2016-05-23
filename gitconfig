@@ -5,6 +5,8 @@
 [user]
 	email = LarsHuluk@gmail.com
 	name = LarsHuluk
+[credential]
+	helper = osxkeychain
 [push]
 	default = simple
 

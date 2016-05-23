@@ -53,7 +53,7 @@ autoload run-help
 HELPDIR=/usr/local/share/zsh/help
 
 # Customize to your needs...
-export PATH=/usr/local/include:/usr/local/bin:/usr/local/lib:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/usr/local/k/bin:$PATH
+export PATH=/usr/local/include:/usr/local/bin:/usr/local/lib:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/usr/local/k/bin:$PATH
 
 # bindkey "[D" backward-word
 # bindkey "[C" forward-word
@@ -66,11 +66,17 @@ bindkey -v
 mvim(){
     stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v -p $*
 }
+mvim_diff(){
+    stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v -d $*
+}
+
 # stty stop '' -ixoff; - ctrl is not intercepted by terminal
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
 
 alias v=mvim
+alias vdiff=mvim_diff
+alias vd=mvim_diff
 
 rb(){
     open -a /Applications/Firefox.app/ \
@@ -117,6 +123,11 @@ reload(){clear && fortune $*}
 
 dice_init() {
     kinit s1520582@INF.ED.AC.UK
+}
+dicefs() {
+    sshfs student.ssh.inf.ed.ac.uk: \
+        /Volumes/Dice \
+        -o auto_cache -o volname=dice
 }
 dice(){
     ssh -Y student.ssh.inf.ed.ac.uk -t 'ssh student.login; bash -l'

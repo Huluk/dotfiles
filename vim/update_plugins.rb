@@ -17,7 +17,7 @@ git_bundles = [
   "git://github.com/scrooloose/syntastic.git",
   "git://github.com/tpope/vim-commentary.git",
   "git://github.com/tpope/vim-endwise.git",
-  "git://github.com/vim-scripts/YankRing.vim.git",
+  # "git://github.com/vim-scripts/YankRing.vim.git", # moved to non-git
   # "git://github.com/Lokaltog/vim-easymotion.git",
   "git://github.com/uguu-org/vim-matrix-screensaver.git",
   "git://github.com/vim-jp/cpp-vim.git",
@@ -29,6 +29,7 @@ git_bundles = [
 vim_org_scripts = [
   #["IndexedSearch", "7062",  "plugin"],
   ["ListMaps", "2494", "plugin"],
+  ["YankRing", "1234", "plugin"],
 ]
 
 require 'fileutils'
