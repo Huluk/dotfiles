@@ -131,8 +131,6 @@ map <LocalLeader>g :setlocal spell spelllang=en_gb<CR>
 map <LocalLeader>us :setlocal spell spelllang=en_us<CR>
 
 " various make commands
-map μ :call ProjectDirectoryDo("!make", "build")<CR>
-map ρ :call ProjectDirectoryDo("!make", "run")<CR>
 map <leader>m :make<CR>
 map <leader>x :make quick<CR>
 map <leader>r :!%:p:S<CR>
@@ -193,39 +191,6 @@ function! IsProject()
     return filereadable("Makefile") || IsSourceDirectory()
 endfunction
 
-function! ProjectDirectoryDo(str, directory)
-    if IsSourceDirectory() && finddir(a:directory, '..') != ""
-        let working_directory = getcwd()
-        execute "lcd ../".fnameescape(a:directory)
-        execute a:str
-        execute "lcd ".fnameescape(working_directory)
-    else
-        execute a:str
-    endif
-endfunction
-
-function! ProjectRun()
-    if IsSourceDirectory() && filereadable("../Makefile")
-        call ProjectDirectoryDo("!make run", ".")
-    else
-        throw "No Makefile!"
-    endif
-endfunction
-command! -nargs=0 ProjectRun call ProjectRun()
-
-function! ProjectMakefile(name)
-    if IsSourceDirectory()
-        let fname = fnameescape(a:name)
-        let text = "run:\\\\n\\\\tbin/".fname."\\\\n\\\\n"
-        " Valgrind part does not work
-        let text = text."valgrind:\\\\n\\\\tvalgrind bin/".fname
-        let text = '!echo '.text.' >> ../Makefile'
-        execute text
-    endif
-endfunction
-command! -nargs=1 -complete=file Pmk call ProjectMakefile('<args>')
-nnoremap <Leader>pmk :Pmk %:t:r<CR>
-
 " ctags
 function! GenerateCtags()
    if IsProject()
@@ -262,22 +227,15 @@ noremap <Leader>gc :GenerateCtags<CR>
 au BufWritePost *.rb,*.py,*.java,*.c,*.cpp,*.h,*.hpp AfterSave
 
 " Project-wide search
-function! ProjectWideSearch(str)
+function! RecursiveSearch(str)
     execute "lvimgrep" . a:str . " **/*|lw"
 endfunction
-
-function! ProjectWideSearchWithPath(str)
+function! RecursiveSearchWithPath(str)
     execute "lvimgrep" . a:str . "|lw"
 endfunction
 
-command! -nargs=* P call ProjectWideSearch( '<args>' )
-command! -nargs=* Ps call ProjectWideSearchWithPath( '<args>' )
-
-" if has('ruby')
-"     " Unicode normalization (NFC)
-"     command NFC !ruby ~/.vim/nfc_normalize.rb %
-"     command Normalize NFC
-" endif
+command! -nargs=* P call RecursiveSearch( '<args>' )
+command! -nargs=* Ps call RecursiveSearchWithPath( '<args>' )
 
 " toggle navigation for texts with wrapped lines:
 let g:wrappedLineNavigation = 1

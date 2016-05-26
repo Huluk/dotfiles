@@ -125,6 +125,7 @@ dice_init() {
     kinit s1520582@INF.ED.AC.UK
 }
 dicefs() {
+    mkdir -p /Volumes/Dice
     sshfs student.ssh.inf.ed.ac.uk: \
         /Volumes/Dice \
         -o auto_cache -o volname=dice
@@ -156,6 +157,9 @@ getspwd(){
 # rbenv
 export RBENV_ROOT=/usr/local/var/rbenv
 eval "$(rbenv init -)"
+
+# eigen
+export EIGEN3_ROOT=/usr/local/lib/eigen-eigen-07105f7124f9
 
 clear
 fortune -s

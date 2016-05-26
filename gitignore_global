@@ -2,10 +2,13 @@ syntax: glob
 
 # My Files #
 ############
+*.coatidb
+*.coatiproject
 tags
 *.swp
 *.swo
 Session.vim
+*.vim.session
 
 # Compiled source #
 ###################
