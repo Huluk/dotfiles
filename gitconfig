@@ -17,3 +17,5 @@
         fsckobjects = true
 [receive]
         fsckObjects = true 
+[web]
+	browser = open

@@ -18,6 +18,12 @@ set ruler
 set ignorecase  " case insensitive search
 set smartcase   " unless search uses uppercase letters
 " set gdefault    " always replace with /g
+" ignore these files in wildcart expressions
+set wildignore=*.o,*.a,*.obj,Session.vim,*.make,*.cmake
+set wildignore+=bin/*,build/*,*/bin/*,*/build/*
+set wildignore+=*.includecache,*.internal
+" coati files
+set wildignore+=*.coatidb,*.coatiproject
 
 " always use soft tabstops of width 4
 set expandtab
