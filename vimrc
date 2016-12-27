@@ -15,21 +15,11 @@ set relativenumber " use relative line numbers
 set scrolloff=4 " keep x lines visible above and below position
 set ruler
 
-set ignorecase  " case insensitive search
-set smartcase   " unless search uses uppercase letters
-" set gdefault    " always replace with /g
-" ignore these files in wildcart expressions
-set wildignore=*.o,*.a,*.obj,Session.vim,*.make,*.cmake
-set wildignore+=bin/*,build/*,*/bin/*,*/build/*
-set wildignore+=*.includecache,*.internal
-" coati files
-set wildignore+=*.coatidb,*.coatiproject
-
-" always use soft tabstops of width 4
+" always use soft tabstops of width 2
 set expandtab
-set softtabstop=4
+set softtabstop=2
+set shiftwidth=2
 set tabstop=4
-set shiftwidth=4
 set shiftround
 set autoindent
 
@@ -37,10 +27,12 @@ set autoindent
 set textwidth=76
 
 set shell=/bin/sh
+language en_US.UTF-8
 
 " terminal color support
 set t_Co=256
 color solarized " previous: tir_black
+set background=dark
 
 " enable with :set list
 set listchars=eol:¬,precedes:←,extends:→,tab:▶\
@@ -51,6 +43,9 @@ set showbreak=↪
 " terminal mouse support
 set mouse=a
 
+" do not highlight search results
+set nohlsearch
+
 " allow <D-v> for pasting and sync with system paste
 " set clipboard=unnamed
 
@@ -60,6 +55,16 @@ noremap Y y$
 " set leaders
 let mapleader = ","
 let maplocalleader = "\\"
+
+set ignorecase  " case insensitive search
+set smartcase   " unless search uses uppercase letters
+" set gdefault    " always replace with /g
+" ignore these files in wildcart expressions
+set wildignore=*.o,*.a,*.obj,Session.vim,*.make,*.cmake
+set wildignore+=bin/*,build/*,*/bin/*,*/build/*
+set wildignore+=*.includecache,*.internal
+" coati files
+set wildignore+=*.coatidb,*.coatiproject
 
 " folding
 set foldmethod=syntax
@@ -115,12 +120,6 @@ noremap <Tab> gt
 noremap <S-Tab> gT
 " restore ctrl-i for position change (aliased omikron, map also in iterm)
 nnoremap ο <C-i>
-
-" insert mode navigation
-imap <S-A-CR> <Esc>jA
-imap <S-CR> <Esc>o
-imap <S-A-BS> <Esc>kA
-imap <S-BS> <Esc>O
 
 " split navigation
 map <C-h> <C-w>h
@@ -197,40 +196,10 @@ function! IsProject()
     return filereadable("Makefile") || IsSourceDirectory()
 endfunction
 
-" ctags
-function! GenerateCtags()
-   if IsProject()
-       silent !ctags -R &
-       echo "Generated Ctags for project!"
-   else
-       lcd %:p:h
-       if IsProject()
-           GenerateCtags
-       else
-           silent! !ctags -R %:S
-           if filereadable("tags")
-               echo "Generated Ctags for file!"
-           else
-               echo "Could not generate Ctags!"
-           endif
-       endif
-   endif
-endfunction
-command! -nargs=0 GenerateCtags call GenerateCtags()
-
-" after save
-function! AfterSave()
-    " silent! SyntasticCheck
-    silent! GenerateCtags
-endfunction
-command! -nargs=0 AfterSave call AfterSave()
-
 " jump to ctag under cursor
 map τ g]1<CR><CR> 
 " manually generate ctags
 noremap <Leader>gc :GenerateCtags<CR>
-" autogenerate ctags for ruby, java, c
-au BufWritePost *.rb,*.py,*.java,*.c,*.cpp,*.h,*.hpp AfterSave
 
 " Project-wide search
 function! RecursiveSearch(str)
@@ -264,9 +233,13 @@ function! WrappedLineNavigationToggle()
 endfunction
 noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
 
+let g:python_host_prog="/usr/local/bin/python"
+
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories+=['snips']
+let g:UltiSnipsSnippetsDir='../snips'
 
 let g:EasyMotion_leader_key = '<Leader>'
 " let g:SuperTabNoCompleteAfter = ['^', ',', ';', '\s']

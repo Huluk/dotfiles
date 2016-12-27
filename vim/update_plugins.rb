@@ -9,6 +9,7 @@ git_bundles = [
   "git://github.com/tpope/vim-surround.git",
   # "git://github.com/ervandew/supertab.git",
   "git://github.com/sirver/UltiSnips",
+  "git://github.com/honza/vim-snippets",
   "git://github.com/godlygeek/tabular.git",
   "git://github.com/tpope/vim-markdown.git",
   "git://github.com/tpope/vim-repeat.git",

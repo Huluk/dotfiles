@@ -74,20 +74,29 @@ mvim_diff(){
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
 
-alias v=mvim
-alias vdiff=mvim_diff
-alias vd=mvim_diff
+v(){ nvim -p $* }
+alias vdiff='nvim -d'
+alias vd='nvim -d'
 
 rb(){
     open -a /Applications/Firefox.app/ \
     "http://ruby-doc.org/core/classes/$1.html"
 }
 
+diary(){
+    (wd text &&
+        ARG='' &&
+        for DATE in $*; do ARG="$ARG diary/$DATE.md"; done
+        v $(echo $ARG))
+}
+d(){
+  [[ $1 -gt 0 ]] || 1=0
+  diary $(date -v-${1}d +%Y/%m-%d)
+}
+
 cdun() {cd /Volumes/BoxCryptor/Dropbox/Crypt/Text\ und\ Schrift/Uni/}
 cdb() {cd ~/Documents/Programmieren/gitblog/}
 
-alias d="mvim /Volumes/BoxCryptor/Dropbox/Crypt/Text\ und\ Schrift/d.md"
-alias t="mvim /Volumes/BoxCryptor/Dropbox/Crypt/Text\ und\ Schrift/todo.md"
 alias umount="diskutil unmount"
 alias shuf="gshuf"
 
@@ -140,18 +149,14 @@ dicec(){
 pdfunite(){
     echo "sejda merge -o outfile -f infiles"
 }
-santander(){
-    getspwd $(pass 'uk/santander/1679031081') $*
-}
-santander-online(){
-    getspwd $(pass 'uk/santander/online') $*
+diba(){
+    getspwd $(pass 'de/ing-diba/key') $*
 }
 getspwd(){
     PWD=$1
     i1=$2; ((--i1))
     i2=$3; ((--i2))
-    i3=$4; ((--i3))
-    echo "${PWD:$i1:1}${PWD:$i2:1}${PWD:$i3:1}"
+    echo "${PWD:$i1:1}${PWD:$i2:1}"
 }
 
 # rbenv
@@ -160,6 +165,9 @@ eval "$(rbenv init -)"
 
 # eigen
 export EIGEN3_ROOT=/usr/local/lib/eigen-eigen-07105f7124f9
+
+# mac-ports
+export PATH=$PATH:/opt/local/bin:/opt/local/sbin
 
 clear
 fortune -s

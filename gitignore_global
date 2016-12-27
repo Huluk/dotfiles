@@ -9,6 +9,7 @@ tags
 *.swo
 Session.vim
 *.vim.session
+.rspec
 
 # Compiled source #
 ###################
