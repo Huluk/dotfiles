@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 exclude = [
-  "ultisnips",
   "eclim",
   "vim-peepopen",
 ]
@@ -9,6 +8,7 @@ exclude = [
 git_bundles = [ 
   "git://github.com/tpope/vim-surround.git",
   # "git://github.com/ervandew/supertab.git",
+  "git://github.com/sirver/UltiSnips",
   "git://github.com/godlygeek/tabular.git",
   "git://github.com/tpope/vim-markdown.git",
   "git://github.com/tpope/vim-repeat.git",
@@ -30,7 +30,7 @@ git_bundles = [
 
 vim_org_scripts = [
   #["IndexedSearch", "7062",  "plugin"],
-  ["ListMaps", "2494", "plugin"],
+  # ["ListMaps", "2494", "plugin"],
 ]
 
 require 'fileutils'
@@ -59,6 +59,6 @@ vim_org_scripts.each do |name, script_id, script_type|
   end
 end
 
-puts "\nDone. Please update ultisnip and eclim manually!"
+puts "\nDone. Please update eclim manually!"
 puts "Eclim Paths:\n~/.vim/bundle/eclim\n/Applications/Eclipse"
-puts "Please check ultisnip's syntax folder for custom syntax!"
+# puts "Please check ultisnip's syntax folder for custom syntax!"
