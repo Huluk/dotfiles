@@ -17,7 +17,7 @@ imap <buffer> <Localleader>o <Plug>(xmpfilter-mark)<Plug>(xmpfilter-run)
 setlocal iskeyword-=?
 setlocal iskeyword-=!
 
-command! RSpec !rspec %
-command! RS !rspec %
-command! RSpecDoc !rspec % --format documentation
-command! RSD !rspec % --format documentation
+command! RSpec !rspec %:S
+command! RS !rspec %:S
+command! RSpecDoc !rspec %:S --format documentation
+command! RSD !rspec %:S --format documentation
