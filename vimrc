@@ -238,7 +238,7 @@ let g:python_host_prog="/usr/local/bin/python"
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories+=['snips']
+let g:UltiSnipsSnippetDirectories=['UltiSnips', 'snips']
 let g:UltiSnipsSnippetsDir='../snips'
 
 let g:EasyMotion_leader_key = '<Leader>'

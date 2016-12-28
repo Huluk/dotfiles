@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>381</string>
+	<string>419</string>
 	<key>AMApplicationVersion</key>
-	<string>2.4</string>
+	<string>2.6</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -51,7 +51,9 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>on run {input, parameters}	if (count of input) &gt; 0 then		tell application "System Events"			set runs to false			try				set p to application process "iTerm"				set runs to true			end try		end tell		tell application "iTerm"			activate			if (count of terminals) = 0 then				make new terminal			end if			set numItems to the count of items of input			set numTerms to the count of terminals			set launchPaths to ""			repeat with t from 0 to (numTerms - 1)				tell item (numTerms - t) of terminals					if (count of sessions) = 0 then						launch session "Default"					end if					repeat with s from 1 to count of sessions						set currentSession to item s of sessions						if name of currentSession contains "vim" then							tell currentSession								write text (":silent! tablast")								repeat with x from 1 to numItems									set filePath to quoted form of POSIX path of item x of input									write text (":execute 'tabedit '.fnameescape(" &amp; filePath &amp; ")")								end repeat								return							end tell						end if					end repeat				end tell			end repeat			tell current terminal				tell (launch session "Default")					repeat with x from 1 to numItems						set filePath to quoted form of POSIX path of item x of input						set launchPaths to launchPaths &amp; " " &amp; filePath					end repeat					write text ("mvim -p " &amp; launchPaths)				end tell			end tell		end tell	end ifend run</string>
+					<string>on run {input, parameters}
+	set vimCommand to "nvim -p "	tell application "iTerm"		activate				if (count of windows) = 0 then			set w to (create window with default profile)		else			set w to current window						try 				# raises error when all windows are minimized				tell w
+					# look for tab with open vim session					repeat with t in tabs						tell t							if name of current session contains "vim" then								set esc to character id 27								tell current session									write text (esc &amp; esc &amp; ":silent! tablast")									repeat with filename in input										set filePath to quoted form of POSIX path of filename										write text (":execute 'tabedit '.fnameescape(" &amp; filePath &amp; ")")									end repeat									select								end tell								select								return							end if						end tell					end repeat					# no existing session					create tab with default profile				end tell			on error msg				set w to (create window with default profile)			end try		end if				tell w			tell current session				set launchPaths to ""				repeat with filename in input					set filePath to quoted form of POSIX path of filename					set launchPaths to launchPaths &amp; " " &amp; filePath				end repeat				write text (vimCommand &amp; launchPaths)			end tell		end tell	end tellend run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -105,9 +107,9 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>514.000000:480.000000</string>
+				<string>421.500000:683.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
