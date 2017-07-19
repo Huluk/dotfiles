@@ -83,19 +83,17 @@ rb(){
     "http://ruby-doc.org/core/classes/$1.html"
 }
 
+diary_open(){
+    (wd text && cd diary &&
+      ARG='' &&
+      for DATE in $*; do ARG="$ARG $DATE.md"; done &&
+      v $(echo "$ARG"))
+}
 diary(){
-    (wd text &&
-        ARG='' &&
-        for DATE in $*; do ARG="$ARG diary/$DATE.md"; done
-        v $(echo $ARG))
+  [[ $# -ge 1 ]] && DIFF=$1 || DIFF=0
+  [[ $DIFF -eq 0 ]] && DIFF=-0
+  diary_open $(date -v${DIFF}d +%Y/%m-%d)
 }
-d(){
-  [[ $1 -gt 0 ]] || 1=0
-  diary $(date -v-${1}d +%Y/%m-%d)
-}
-
-cdun() {cd /Volumes/BoxCryptor/Dropbox/Crypt/Text\ und\ Schrift/Uni/}
-cdb() {cd ~/Documents/Programmieren/gitblog/}
 
 alias umount="diskutil unmount"
 alias shuf="gshuf"
@@ -163,11 +161,18 @@ getspwd(){
 export RBENV_ROOT=/usr/local/var/rbenv
 eval "$(rbenv init -)"
 
+# java-home
+export JAVA_HOME=$(/usr/libexec/java_home)
+
 # eigen
 export EIGEN3_ROOT=/usr/local/lib/eigen-eigen-07105f7124f9
 
 # mac-ports
 export PATH=$PATH:/opt/local/bin:/opt/local/sbin
+
+# python virtualenvwrapper
+export WORKON_HOME=/Users/huluk/.virtual_envs
+source /usr/local/bin/virtualenvwrapper.sh
 
 clear
 fortune -s
