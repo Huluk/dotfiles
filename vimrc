@@ -23,8 +23,7 @@ set tabstop=4
 set shiftround
 set autoindent
 
-" leaves enough space for line numbers
-set textwidth=76
+set textwidth=80
 
 set shell=/bin/sh
 language en_US.UTF-8
@@ -234,6 +233,7 @@ endfunction
 noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
 
 let g:python_host_prog="/usr/local/bin/python"
+let g:python3_host_prog="/usr/local/bin/python3"
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
