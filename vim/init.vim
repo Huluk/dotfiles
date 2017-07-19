@@ -1,1 +1,1 @@
-/Users/huluk/.vimrc
+/Users/lars.hansen1/hide/dotfiles/vimrc

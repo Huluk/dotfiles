@@ -44,7 +44,7 @@ ZSH_THEME="xtrv_lars"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # old plugins: plugins=(git github heroku osx history ruby rvm brew vi-mode)
 # old plugins: plugins=(osx history vi-mode ruby rbenv irb)
-plugins=(osx history git wd common-aliases)
+plugins=(osx history git wd common-aliases brew colored-man-pages colorize history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -63,13 +63,6 @@ bindkey "^[w" backward-kill-word
 
 bindkey -v
 
-mvim(){
-    stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v -p $*
-}
-mvim_diff(){
-    stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v -d $*
-}
-
 # stty stop '' -ixoff; - ctrl is not intercepted by terminal
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
@@ -78,27 +71,25 @@ v(){ nvim -p $* }
 alias vdiff='nvim -d'
 alias vd='nvim -d'
 
-rb(){
-    open -a /Applications/Firefox.app/ \
-    "http://ruby-doc.org/core/classes/$1.html"
-}
-
-diary(){
-    (wd text &&
-        ARG='' &&
-        for DATE in $*; do ARG="$ARG diary/$DATE.md"; done
-        v $(echo $ARG))
-}
-d(){
-  [[ $1 -gt 0 ]] || 1=0
-  diary $(date -v-${1}d +%Y/%m-%d)
-}
-
-cdun() {cd /Volumes/BoxCryptor/Dropbox/Crypt/Text\ und\ Schrift/Uni/}
-cdb() {cd ~/Documents/Programmieren/gitblog/}
-
 alias umount="diskutil unmount"
 alias shuf="gshuf"
+alias 7z="7za"
+
+# time-tracking
+alias track="~/Documents/scripts/time_tracking"
+alias todo="v ~/Documents/todo.md"
+
+# switch sierra karabiner-elements config depending on keyboard
+keyboard() {
+  ~/Documents/scripts/karabiner-elements_switch_keyboard $*
+}
+
+weather() {
+  ~/Documents/scripts/rb-forecast/weather.rb $*
+}
+osm() {
+  telnet mapscii.me
+}
 
 # count lines of files matching $1 in directory $2 (defaults to .)
 countlines(){
@@ -130,44 +121,22 @@ add_when_found(){
 
 reload(){clear && fortune $*}
 
-dice_init() {
-    kinit s1520582@INF.ED.AC.UK
-}
-dicefs() {
-    mkdir -p /Volumes/Dice
-    sshfs student.ssh.inf.ed.ac.uk: \
-        /Volumes/Dice \
-        -o auto_cache -o volname=dice
-}
-dice(){
-    ssh -Y student.ssh.inf.ed.ac.uk -t 'ssh student.login; bash -l'
-}
-dicec(){
-    ssh -Y student.ssh.inf.ed.ac.uk -t 'ssh student.compute; bash -l'
-}
-
 pdfunite(){
     echo "sejda merge -o outfile -f infiles"
-}
-diba(){
-    getspwd $(pass 'de/ing-diba/key') $*
-}
-getspwd(){
-    PWD=$1
-    i1=$2; ((--i1))
-    i2=$3; ((--i2))
-    echo "${PWD:$i1:1}${PWD:$i2:1}"
 }
 
 # rbenv
 export RBENV_ROOT=/usr/local/var/rbenv
 eval "$(rbenv init -)"
 
-# eigen
-export EIGEN3_ROOT=/usr/local/lib/eigen-eigen-07105f7124f9
+# java-home
+export JAVA_HOME=$(/usr/libexec/java_home)
+export SCALA_HOME=/Users/lars.hansen1/hide/scala-2.10.4/
+export PATH=$PATH:$SCALA_HOME/bin
 
-# mac-ports
-export PATH=$PATH:/opt/local/bin:/opt/local/sbin
+# docker
+eval $(docker-machine env)
+
+LOG_FORMAT=HUMAN
 
 clear
-fortune -s

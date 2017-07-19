@@ -1,11 +1,8 @@
 " Author:  Eric Van Dewoestine
 "
-" Description: {{{
-"   see http://eclim.org/vim/java/doc.html
+" License: {{{
 "
-" License:
-"
-" Copyright (C) 2005 - 2013  Eric Van Dewoestine
+" Copyright (C) 2005 - 2014  Eric Van Dewoestine
 "
 " This program is free software: you can redistribute it and/or modify
 " it under the terms of the GNU General Public License as published by
@@ -132,8 +129,8 @@ function! eclim#java#doc#PreviewOpen(bufnr_or_url) " {{{
   setlocal noswapfile
   setlocal nobuflisted
   setlocal buftype=nofile
-  setlocal bufhidden=delete
-  setlocal conceallevel=2 concealcursor=n
+  setlocal bufhidden=wipe
+  setlocal conceallevel=2 concealcursor=ncv
 
   set ft=javadoc_preview
   hi link javadocPreviewLink Label

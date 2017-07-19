@@ -3,8 +3,8 @@
     editor = nvim
 	mergeoptions = --no-edit
 [user]
-	email = LarsHuluk@gmail.com
-	name = LarsHuluk
+	email = Lars.Hansen1@ibm.com
+	name = Lars-Hansen1
 [credential]
 	helper = osxkeychain
 [push]
