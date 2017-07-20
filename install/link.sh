@@ -8,7 +8,6 @@ ln -s $DIR/gvimrc ~/.gvimrc
 ln -s $DIR/zprofile ~/.zprofile
 ln -s $DIR/zshrc ~/.zshrc
 ln -s $DIR/inputrc ~/.inputrc
-ln -s $DIR/oh-my-zsh ~/.oh-my-zsh
 ln -s $DIR/irbrc ~/.irbrc
 ln -s $DIR/bashrc ~/.bashrc
 ln -s $DIR/bash_profile ~/.bash_profile

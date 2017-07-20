@@ -106,11 +106,6 @@ countlines(){
     wc -l | awk '{print $1}'
 }
 
-addclock(){
-    while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &
-}
-# quit with fg and <Ctrl-c>
-
 # generate passwort of length $1
 passgen(){
     [ $# -eq 0 ] && 1="16"
@@ -127,22 +122,6 @@ add_when_found(){
 }
 
 reload(){clear && fortune $*}
-
-dice_init() {
-    kinit s1520582@INF.ED.AC.UK
-}
-dicefs() {
-    mkdir -p /Volumes/Dice
-    sshfs student.ssh.inf.ed.ac.uk: \
-        /Volumes/Dice \
-        -o auto_cache -o volname=dice
-}
-dice(){
-    ssh -Y student.ssh.inf.ed.ac.uk -t 'ssh student.login; bash -l'
-}
-dicec(){
-    ssh -Y student.ssh.inf.ed.ac.uk -t 'ssh student.compute; bash -l'
-}
 
 pdfunite(){
     echo "sejda merge -o outfile -f infiles"
@@ -162,17 +141,7 @@ export RBENV_ROOT=/usr/local/var/rbenv
 eval "$(rbenv init -)"
 
 # java-home
-export JAVA_HOME=$(/usr/libexec/java_home)
-
-# eigen
-export EIGEN3_ROOT=/usr/local/lib/eigen-eigen-07105f7124f9
-
-# mac-ports
-export PATH=$PATH:/opt/local/bin:/opt/local/sbin
-
-# python virtualenvwrapper
-export WORKON_HOME=/Users/huluk/.virtual_envs
-source /usr/local/bin/virtualenvwrapper.sh
+# export JAVA_HOME=$(/usr/libexec/java_home)
 
 clear
 fortune -s
