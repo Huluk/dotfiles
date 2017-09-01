@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-brew install smartmontools gnupg2 pass pwgen fortune wd
+brew install smartmontools gnupg2 pass pwgen fortune wd rbenv
 brew install gnu-sed --with-default-names
 
 brew install neovim
@@ -20,4 +20,4 @@ ln -s ~/hide/dotfiles/zshrc ~/.zshrc
 cp xtrv_lars.zsh-theme ~/.oh-my-zsh/themes/
 
 # gui apps
-brew cask install appcleaner dropbox skype telegram steam transmission vlc ynab tresorit ticktick calibre fluid veracrypt gpgtools
+brew cask install appcleaner dropbox skype telegram steam transmission vlc ynab tresorit ticktick calibre fluid veracrypt gpgtools torbrowser
