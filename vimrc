@@ -1,4 +1,5 @@
 execute pathogen#infect()
+" update doc with :Helptags
 
 set nocompatible
 syntax on
@@ -245,6 +246,12 @@ let g:EasyMotion_leader_key = '<Leader>'
 " let g:SuperTabNoCompleteAfter = ['^', ',', ';', '\s']
 let g:yankring_history_dir = '$HOME'
 let g:yankring_history_file = '.yankring_history'
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+
+let g:elm_syntastic_show_warnings = 1
+let g:elm_setup_keybindings = 0
 
 " open shell command in buffer with :Shell or :shell
 function! s:ExecuteInShell(command)
