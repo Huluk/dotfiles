@@ -99,11 +99,6 @@ countlines(){
     wc -l | awk '{print $1}'
 }
 
-addclock(){
-    while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &
-}
-# quit with fg and <Ctrl-c>
-
 # generate passwort of length $1
 passgen(){
     [ $# -eq 0 ] && 1="16"
