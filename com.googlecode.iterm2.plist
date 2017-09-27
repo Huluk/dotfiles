@@ -527,17 +527,17 @@
 			<key>Text</key>
 			<string>103B48B9-45B3-48C0-A69E-02DE0F4DD502</string>
 		</dict>
-		<key>0x7f-0x80000</key>
-		<dict>
-			<key>Action</key>
-			<integer>3</integer>
-			<key>Text</key>
-			<string></string>
-		</dict>
 		<key>0xd-0x80000</key>
 		<dict>
 			<key>Action</key>
 			<integer>1</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0xd-0xa0000</key>
+		<dict>
+			<key>Action</key>
+			<integer>3</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
@@ -692,7 +692,7 @@
 	gAKACoAN0xAJChEVGVdOUy5rZXlzoxITFIADgASABaMWFxiABoAHgAiACVpJZGVudGlm
 	aWVyVVdpZHRoVkhpZGRlblEwI0BowAAAAAAACNIhIiMkWiRjbGFzc25hbWVYJGNsYXNz
 	ZXNcTlNEaWN0aW9uYXJ5oiMlWE5TT2JqZWN00xAJCicrGaMSExSAA4AEgAWjLC0YgAuA
-	DIAIgAlRMSNAdCGdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
+	DIAIgAlRMSNAdKGdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
 	TlNLZXllZEFyY2hpdmVy0Tg5VUFycmF5gAEACAARABoAIwAtADIANwBGAEwAUQBcAGMA
 	ZgBoAGoAbABzAHsAfwCBAIMAhQCJAIsAjQCPAJEAnACiAKkAqwC0ALUAugDFAM4A2wDe
 	AOcA7gDyAPQA9gD4APwA/gEAAQIBBAEGAQ8BFAEjAScBLwFBAUQBSgAAAAAAAAIBAAAA
@@ -716,11 +716,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>298 664 445 103 0 0 2560 1417 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>379 363 620 392 0 0 1440 877 </string>
+	<string>382 363 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>340 347 796 473 0 0 1440 877 </string>
+	<string>178 305 796 473 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>561 97 690 452 0 0 1440 877 </string>
+	<string>302 82 914 452 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>176 70 570 452 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1056,34 +1056,6 @@
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x7f</string>
-				</dict>
-				<key>0x7f-0x20000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>O</string>
-				</dict>
-				<key>0x7f-0xa0000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>kA</string>
-				</dict>
-				<key>0xd-0x20000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>o</string>
-				</dict>
-				<key>0xd-0xa0000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>jA</string>
 				</dict>
 				<key>0xf700-0x220000</key>
 				<dict>
@@ -1542,6 +1514,8 @@
 	<false/>
 	<key>PasteTabToStringTabStopSize</key>
 	<integer>4</integer>
+	<key>PerformDNSLookups</key>
+	<false/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -1594,7 +1568,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-03T07:10:43Z</date>
+	<date>2017-09-22T22:29:12Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -1644,6 +1618,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.beta.5</string>
+	<string>3.1.beta.10</string>
 </dict>
 </plist>

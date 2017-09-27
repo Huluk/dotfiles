@@ -78,6 +78,8 @@ v(){ nvim -p $* }
 alias vdiff='nvim -d'
 alias vd='nvim -d'
 
+unalias t
+
 rb(){
     open -a /Applications/Firefox.app/ \
     "http://ruby-doc.org/core/classes/$1.html"
