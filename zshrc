@@ -76,7 +76,7 @@ alias shuf="gshuf"
 alias 7z="7za"
 
 # time-tracking
-alias track="~/Documents/scripts/time_tracking"
+unalias t # shadowing gem timetrap
 alias todo="v ~/Documents/todo.md"
 
 # switch sierra karabiner-elements config depending on keyboard
@@ -131,7 +131,7 @@ eval "$(rbenv init -)"
 
 # java-home
 export JAVA_HOME=$(/usr/libexec/java_home)
-export SCALA_HOME=/Users/lars.hansen1/hide/scala-2.10.4/
+export SCALA_HOME=/usr/local/Cellar/scala@2.11/2.11.11
 export PATH=$PATH:$SCALA_HOME/bin
 
 # docker
