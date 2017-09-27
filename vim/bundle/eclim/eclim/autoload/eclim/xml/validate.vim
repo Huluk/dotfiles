@@ -1,11 +1,8 @@
 " Author:  Eric Van Dewoestine
 "
-" Description: {{{
-"   see http://eclim.org/vim/xml/validate.html
+" License: {{{
 "
-" License:
-"
-" Copyright (C) 2005 - 2013  Eric Van Dewoestine
+" Copyright (C) 2005 - 2014  Eric Van Dewoestine
 "
 " This program is free software: you can redistribute it and/or modify
 " it under the terms of the GNU General Public License as published by
@@ -22,28 +19,24 @@
 "
 " }}}
 
-" Global Variables {{{
-if !exists("g:EclimXmlValidate")
-  let g:EclimXmlValidate = 1
-endif
-" }}}
-
 " Script Variables {{{
 let s:command_validate = '-command xml_validate -p "<project>" -f "<file>"'
 " }}}
 
-" Validate(on_save, ...) {{{
-" Validate the current file.
-function! eclim#xml#validate#Validate(on_save, ...)
+function! eclim#xml#validate#Validate(on_save, ...) " {{{
+  " Optional args:
+  "   bang: '!' or '', where '!' indicates that we should not jump to the
+  "         first error.
   if a:on_save && (!g:EclimXmlValidate || eclim#util#WillWrittenBufferClose())
     return
   endif
 
-  if eclim#EclimAvailable()
-    let project = eclim#project#util#GetCurrentProjectName()
-    if project == ""
+  if eclim#EclimAvailable(0)
+    if !eclim#project#util#IsCurrentFileInProject()
       return
     endif
+
+    let project = eclim#project#util#GetCurrentProjectName()
     let file = eclim#project#util#GetProjectRelativeFilePath()
     let command = s:command_validate
     let command = substitute(command, '<project>', project, '')

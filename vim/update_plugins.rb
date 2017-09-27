@@ -14,7 +14,7 @@ git_bundles = [
   "git://github.com/tpope/vim-markdown.git",
   "git://github.com/derekwyatt/vim-scala",
   "git://github.com/ElmCast/elm-vim",
-  "git://github.com/raichoo/purescript-vim",
+  "git://github.com/mbbill/undotree",
   "git://github.com/tpope/vim-repeat.git",
   # "git://github.com/jimenezrick/vimerl.git",
   # "git://github.com/tsaleh/vim-matchit.git", # included in vim distr

@@ -44,7 +44,7 @@ ZSH_THEME="xtrv_lars"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # old plugins: plugins=(git github heroku osx history ruby rvm brew vi-mode)
 # old plugins: plugins=(osx history vi-mode ruby rbenv irb)
-plugins=(osx history git wd common-aliases)
+plugins=(osx history git wd common-aliases brew colored-man-pages colorize history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -63,13 +63,6 @@ bindkey "^[w" backward-kill-word
 
 bindkey -v
 
-mvim(){
-    stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v -p $*
-}
-mvim_diff(){
-    stty stop '' -ixoff; /Applications/MacVim.app/Contents/MacOS/Vim -v -d $*
-}
-
 # stty stop '' -ixoff; - ctrl is not intercepted by terminal
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
@@ -77,8 +70,6 @@ ttyctl -f
 v(){ nvim -p $* }
 alias vdiff='nvim -d'
 alias vd='nvim -d'
-
-unalias t
 
 rb(){
     open -a /Applications/Firefox.app/ \
@@ -99,6 +90,16 @@ diary(){
 
 alias umount="diskutil unmount"
 alias shuf="gshuf"
+unalias t
+
+# switch sierra karabiner-elements config depending on keyboard
+keyboard() {
+  ~/Documents/scripts/karabiner-elements_switch_keyboard $*
+}
+
+osm() {
+  telnet mapscii.me
+}
 
 # count lines of files matching $1 in directory $2 (defaults to .)
 countlines(){
@@ -128,22 +129,11 @@ reload(){clear && fortune $*}
 pdfunite(){
     echo "sejda merge -o outfile -f infiles"
 }
-diba(){
-    getspwd $(pass 'de/ing-diba/key') $*
-}
-getspwd(){
-    PWD=$1
-    i1=$2; ((--i1))
-    i2=$3; ((--i2))
-    echo "${PWD:$i1:1}${PWD:$i2:1}"
-}
 
 # rbenv
 export RBENV_ROOT=/usr/local/var/rbenv
 eval "$(rbenv init -)"
 
 # java-home
-# export JAVA_HOME=$(/usr/libexec/java_home)
 
 clear
-fortune -s

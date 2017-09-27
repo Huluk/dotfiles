@@ -46,6 +46,8 @@ set mouse=a
 " do not highlight search results
 set nohlsearch
 
+Helptags
+
 " allow <D-v> for pasting and sync with system paste
 " set clipboard=unnamed
 
