@@ -142,6 +142,12 @@ map <leader>m :make<CR>
 map <leader>x :make quick<CR>
 map <leader>r :!%:p:S<CR>
 
+map <leader>u :UndotreeToggle<CR>
+if has("persistent_undo")
+  set undodir=~/.vim-undo/
+  set undofile
+endif
+
 " save on losing focus
 au FocusLost,Tableave,BufLeave * :call Autosave()
 function! Autosave()
@@ -237,6 +243,9 @@ noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
 
 let g:python_host_prog="/usr/local/bin/python"
 let g:python3_host_prog="/usr/local/bin/python3"
+
+let g:undotree_ShortIndicators = 1
+let g:undotree_SetFocusWhenToggle = 1
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
