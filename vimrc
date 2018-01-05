@@ -32,7 +32,7 @@ language en_US.UTF-8
 " terminal color support
 set t_Co=256
 color solarized " previous: tir_black
-set background=dark
+set background=light
 
 " enable with :set list
 set listchars=eol:¬,precedes:←,extends:→,tab:▶\

@@ -69,7 +69,7 @@ ttyctl -f
 
 v(){ nvim -p $* }
 alias vdiff='nvim -d'
-alias vd='nvim -d'
+alias vd='nvim -d -c "windo set wrap"'
 
 alias umount="diskutil unmount"
 alias shuf="gshuf"
@@ -78,6 +78,13 @@ alias 7z="7za"
 # time-tracking
 unalias t # shadowing gem timetrap
 alias todo="v ~/Documents/todo.md"
+
+# for git
+alias -g create-upstream='--set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
+
+alias sbt2="sbt -ivy $HOME/.ivy2_2"
+alias sbt3="sbt -ivy $HOME/.ivy2_3"
+alias spark="spark-shell --jars pipeline-common/target/pipeline-common-9999-SNAPSHOT.jar pipeline-core/target/pipeline-core-9999-SNAPSHOT.jar"
 
 # switch sierra karabiner-elements config depending on keyboard
 keyboard() {
@@ -112,6 +119,15 @@ add_when_found(){
     xargs -n 1 dirname |
     sed 's!$!/'$2'!' |
     xargs -I target cp $1 target
+}
+
+# hammerspoon
+pomo(){
+  if [ $# -eq 0 ]; then
+    open -g "hammerspoon://pomodoro"
+  else
+    open -g "hammerspoon://pomodoro?duration=$1"
+  fi
 }
 
 reload(){clear && fortune $*}

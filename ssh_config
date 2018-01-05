@@ -22,6 +22,11 @@ Host prodtunnel-toronto
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 
+Host *qc*
+  Port 22
+  User de162008
+  IdentityFile ~/.ssh/de162008-devtest-devices
+
 Host *
   AddKeysToAgent yes
   UseKeychain yes
