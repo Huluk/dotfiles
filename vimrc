@@ -142,6 +142,11 @@ map <leader>m :make<CR>
 map <leader>x :make quick<CR>
 map <leader>r :!%:p:S<CR>
 
+if has("persistent_undo")
+  set undodir=~/.vim-undo/
+  set undofile
+endif
+
 " save on losing focus
 au FocusLost,Tableave,BufLeave * :call Autosave()
 function! Autosave()

@@ -1,0 +1,41 @@
+[
+  {
+    "Constant" : [
+
+    ],
+    "submodules" : [
+
+    ],
+    "Function" : [
+
+    ],
+    "Variable" : [
+
+    ],
+    "stripped_doc" : [
+
+    ],
+    "type" : "Module",
+    "Deprecated" : [
+
+    ],
+    "desc" : "Adds a pomodoro timer to the menu bar, defaulting to 25 minutes.",
+    "Constructor" : [
+
+    ],
+    "Field" : [
+
+    ],
+    "Method" : [
+
+    ],
+    "Command" : [
+
+    ],
+    "items" : [
+
+    ],
+    "doc" : "Adds a pomodoro timer to the menu bar, defaulting to 25 minutes.\nAfter the end of the runtime, flashes the screen.",
+    "name" : "PomodoroTimer"
+  }
+]

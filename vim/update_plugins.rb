@@ -12,6 +12,7 @@ git_bundles = [
   "git://github.com/honza/vim-snippets",
   "git://github.com/godlygeek/tabular.git",
   "git://github.com/tpope/vim-markdown.git",
+  "git://github.com/asciidoc/vim-asciidoc",
   "git://github.com/derekwyatt/vim-scala",
   "git://github.com/ElmCast/elm-vim",
   "git://github.com/mbbill/undotree",
