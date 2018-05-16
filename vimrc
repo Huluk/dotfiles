@@ -241,8 +241,13 @@ function! WrappedLineNavigationToggle()
 endfunction
 noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
 
-let g:python_host_prog="/usr/local/bin/python"
-let g:python3_host_prog="/usr/local/bin/python3"
+set rtp+=/usr/local/opt/fzf
+
+let g:python_host_prog="/usr/local/bin/python2"
+let g:python3_host_prog="/Users/lars.hansen1/hide/anaconda3/bin/python"
+
+let g:syntastic_quiet_messages = { "type": "style" }
+let g:syntastic_python_checkers = ['flake8']
 
 let g:undotree_ShortIndicators = 1
 let g:undotree_SetFocusWhenToggle = 1

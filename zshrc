@@ -82,9 +82,8 @@ alias todo="v ~/Documents/todo.md"
 # for git
 alias -g create-upstream='--set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
-alias sbt2="sbt -ivy $HOME/.ivy2_2"
-alias sbt3="sbt -ivy $HOME/.ivy2_3"
 alias spark="spark-shell --jars pipeline-common/target/pipeline-common-9999-SNAPSHOT.jar pipeline-core/target/pipeline-core-9999-SNAPSHOT.jar"
+alias octave="octave --no-gui"
 
 # switch sierra karabiner-elements config depending on keyboard
 keyboard() {
@@ -148,6 +147,17 @@ export PATH=$PATH:$SCALA_HOME/bin
 # docker
 eval $(docker-machine env)
 
+# for livy
+export SPARK_HOME=/usr/local/Cellar/apache-spark/2.3.0/libexec/
+
 LOG_FORMAT=HUMAN
 
+# solve problem with spacy
+export LC_ALL=en_US.UTF-8
+
+# added by Anaconda3 installer
+export PATH="/Users/lars.hansen1/hide/anaconda3/bin:$PATH"
+
 clear
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -7,6 +7,7 @@ exclude = [
 
 git_bundles = [ 
   "git://github.com/tpope/vim-surround.git",
+  "git://github.com/mbbill/undotree",
   # "git://github.com/ervandew/supertab.git",
   "git://github.com/sirver/UltiSnips",
   "git://github.com/honza/vim-snippets",
@@ -15,8 +16,9 @@ git_bundles = [
   "git://github.com/asciidoc/vim-asciidoc",
   "git://github.com/derekwyatt/vim-scala",
   "git://github.com/tpope/vim-repeat.git",
-  # "git://github.com/jimenezrick/vimerl.git",
+  # "git://github.com/jimenezrick/vimerl.git", # erlang
   # "git://github.com/tsaleh/vim-matchit.git", # included in vim distr
+  # TODO need new syntax checker
   "git://github.com/scrooloose/syntastic.git", # syntax checker
   "git://github.com/tpope/vim-commentary.git",
   "git://github.com/tpope/vim-endwise.git",

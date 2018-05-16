@@ -27,6 +27,11 @@ Host *qc*
   User de162008
   IdentityFile ~/.ssh/de162008-devtest-devices
 
+Host *prod*
+  Port 22
+  User de162008
+  IdentityFile ~/.ssh/de162008-prodca1-devices
+
 Host *
   AddKeysToAgent yes
   UseKeychain yes
