@@ -7,6 +7,11 @@ brew install p7zip
 brew install neovim
 NEOVIM=~/.config/nvim/init.vim
 mkdir -p ~/.config/nvim
+
+# TODO download vim package manager
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 rm -f $NEOVIM
 echo 'set runtimepath^=~/.vim runtimepath+=~/.vim/after' >> $NEOVIM
 echo 'let &packpath = &runtimepath' >> $NEOVIM
