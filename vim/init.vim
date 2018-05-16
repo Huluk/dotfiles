@@ -1,1 +1,3 @@
-/Users/lars.hansen1/hide/dotfiles/vimrc
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source ~/.vimrc
