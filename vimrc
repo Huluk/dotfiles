@@ -33,19 +33,43 @@ Plug 'whatyouhide/vim-lengthmatters'
 
 Plug 'vim-scripts/YankRing.vim'
 
-call plug#end()
+Plug 'scrooloose/syntastic'
 
+if has('nvim')
+
+  Plug 'icymind/NeoSolarized'
+
+  " language server protocol client
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+  " autocomplete
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+endif
+
+call plug#end()
 
 
 " ===== SETTINGS =====
 " nvim-compatibility for vim
-if !has('nvim')
-	source ~/.vim/non-nvim.vim
+if has('nvim')
+  colorscheme NeoSolarized
+else
+  source ~/.vim/non-nvim.vim
 endif
 
 set number
 
+" allow cursor movements to empty fields for block selection
+set virtualedit=block
+
 set mouse=a
+
+" allows hidden buffers, needed for LanguageClient
+set hidden
 
 " enable with :set list
 set listchars=eol:¬,precedes:←,extends:→,tab:▶\
@@ -68,6 +92,7 @@ set lazyredraw
 " break line at specific chars
 set linebreak
 
+" round indentation to nearest multiple of shiftwidth
 set shiftround
 
 if has('persistent_undo')
@@ -79,6 +104,13 @@ endif
 set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
 set wildignore+=bin/*,build/*,*/bin/*,*/build/*
 
+" save on losing focus
+autocmd FocusLost,Tableave,BufLeave * :call Autosave()
+function! Autosave()
+    if filereadable(expand("%:p"))
+        silent! write
+    endif
+endfunction
 
 
 " ===== KEY MAPPINGS =====
@@ -87,11 +119,15 @@ let mapleader = ","
 let maplocalleader = "\\"
 
 " alt-ß (neo-layout) / ſ to esc
-noremap <silent> ſ <Esc>:nohlsearch<CR>
-noremap! ſ <Esc>
+map <silent> ſ <Esc>:nohlsearch<CR>
+map! ſ <Esc>
 
 " Y works like D (yank up to end of line)
-noremap Y y$
+map Y y$
+
+" tab switching
+nmap <Tab> gt
+nmap <S-Tab> gT
 
 " make
 map <leader>m :make<CR>
@@ -101,22 +137,36 @@ nmap δ :lcd %:p:h<CR>
 
 " fuzzyfinder open
 nmap <leader>e :FZF<CR>
-nmap <leader>t :FZF<CR>
 
 " decrement/increment number under cursor
 noremap + <c-a>
 noremap - <c-x>
 
+" split navigation
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+
 " add execution environment comment to top of file
-nnoremap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
+nmap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
 " convert current file to unix executable
-nnoremap <leader>o :!chmod +x %:S<CR>l
+nmap <leader>o :!chmod +x %:S<CR>l
 " select pasted text
-nnoremap <leader>s V`]
+nmap <leader>s V`]
 " horizontal split
-nnoremap <leader>h :split<CR><C-w>j
+nmap <leader>h :split<CR><C-w>j
 " vertical split
-nnoremap <leader>v :vsplit<CR><C-w>l
+nmap <leader>v :vsplit<CR><C-w>l
+
+" spell correction
+nmap <LocalLeader>de :setlocal spell spelllang=de_20<CR>
+nmap <LocalLeader>nl :setlocal spell spelllang=nl_nl<CR>
+nmap <LocalLeader>eo :setlocal spell spelllang=eo_l3<CR>
+nmap <LocalLeader>en :setlocal spell spelllang=en<CR>
+nmap <LocalLeader>gb :setlocal spell spelllang=en_gb<CR>
+nmap <LocalLeader>uk :setlocal spell spelllang=en_gb<CR>
+nmap <LocalLeader>us :setlocal spell spelllang=en_us<CR>
 
 
 
@@ -124,3 +174,24 @@ nnoremap <leader>v :vsplit<CR><C-w>l
 call lengthmatters#highlight('ctermbg=7')
 
 let g:yankring_persist = 0
+
+if has('nvim')
+  let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ }
+
+  let g:LanguageClient_autoStart = 1
+
+  let g:deoplete#enable_at_startup = 1
+
+  call deoplete#custom#option({
+    \ 'auto_complete': v:false,
+    \ 'smart_case': v:true,
+    \ })
+
+  " use <C-s> for deoplete autocomplete
+  set completeopt-=preview
+  inoremap <silent><expr> <C-s>
+    \ pumvisible() ? "\<C-n>" :
+    \ deoplete#mappings#manual_complete()
+endif
