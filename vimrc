@@ -63,6 +63,9 @@ endif
 
 set number
 
+set ignorecase
+set smartcase
+
 " allow cursor movements to empty fields for block selection
 set virtualedit=block
 
