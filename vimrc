@@ -130,6 +130,7 @@ map Y y$
 " tab switching
 nmap <Tab> gt
 nmap <S-Tab> gT
+nmap <leader>t :tabnew<CR>
 
 " make
 map <leader>m :make<CR>
