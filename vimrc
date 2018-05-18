@@ -82,6 +82,8 @@ set sidescrolloff=5
 
 set textwidth=80
 
+set tabstop=4
+
 " folding
 set foldmethod=syntax
 set nofoldenable
