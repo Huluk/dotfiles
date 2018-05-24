@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-brew install coreutils wget zsh tree tldr jq
+brew install coreutils wget zsh tree tldr jq ripgrep fzf

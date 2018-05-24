@@ -1,38 +1,78 @@
-execute pathogen#infect()
-" update doc with :Helptags
+" ===== PLUGINS =====
+" https://github.com/junegunn/vim-plug
+call plug#begin('~/.vim/plugged')
 
-set nocompatible
-syntax on
-set backspace=indent,eol,start
+" make `.` work with tpope's plugins
+Plug 'tpope/vim-repeat'
+
+Plug 'tpope/vim-surround'
+
+" comment stuff out with gcc, gc etc.
+Plug 'tpope/vim-commentary'
+
+" increment/decrement dates/times etc, same as normal numbers
+Plug 'tpope/vim-speeddating'
+
+" git wrapper
+Plug 'tpope/vim-fugitive'
+
+" heuristically set tab options
+Plug 'tpope/vim-sleuth'
+
+" extend char information `ga` with unicode names
+Plug 'tpope/vim-characterize'
+
+" fzf fuzzyfinder
+Plug '/usr/local/opt/fzf'
+
+" auto-remove search highlight on cursor movement
+Plug 'junegunn/vim-slash'
+
+" highlight text outside of textwidth
+Plug 'whatyouhide/vim-lengthmatters'
+
+Plug 'vim-scripts/YankRing.vim'
+
+Plug 'scrooloose/syntastic'
+
+if has('nvim')
+
+  Plug 'icymind/NeoSolarized'
+
+  " language server protocol client
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+  " autocomplete
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+endif
+
+call plug#end()
+
+
+" ===== SETTINGS =====
+" nvim-compatibility for vim
+if has('nvim')
+  colorscheme NeoSolarized
+else
+  source ~/.vim/non-nvim.vim
+endif
+
+set number
+
+set ignorecase
+set smartcase
+
+" allow cursor movements to empty fields for block selection
 set virtualedit=block
-set encoding=utf-8
 
-filetype plugin on
-filetype plugin indent on
+set mouse=a
 
-set number " show line number at position
-set relativenumber " use relative line numbers
-
-set scrolloff=4 " keep x lines visible above and below position
-set ruler
-
-" always use soft tabstops of width 2
-set expandtab
-set softtabstop=2
-set shiftwidth=2
-set tabstop=4
-set shiftround
-set autoindent
-
-set textwidth=80
-
-set shell=/bin/sh
-language en_US.UTF-8
-
-" terminal color support
-set t_Co=256
-color solarized " previous: tir_black
-set background=dark
+" allows hidden buffers, needed for LanguageClient
+set hidden
 
 " enable with :set list
 set listchars=eol:¬,precedes:←,extends:→,tab:▶\
@@ -40,238 +80,124 @@ set listchars=eol:¬,precedes:←,extends:→,tab:▶\
 " shows symbol on line wrap
 set showbreak=↪
 
-" terminal mouse support
-set mouse=a
+set scrolloff=4
+set sidescrolloff=5
 
-" do not highlight search results
-set nohlsearch
+set textwidth=80
 
-Helptags
-
-" allow <D-v> for pasting and sync with system paste
-" set clipboard=unnamed
-
-" Y works like D
-noremap Y y$
-
-" set leaders
-let mapleader = ","
-let maplocalleader = "\\"
-
-set ignorecase  " case insensitive search
-set smartcase   " unless search uses uppercase letters
-" set gdefault    " always replace with /g
-" ignore these files in wildcart expressions
-set wildignore=*.o,*.a,*.obj,Session.vim,*.make,*.cmake
-set wildignore+=bin/*,build/*,*/bin/*,*/build/*
-set wildignore+=*.includecache,*.internal
-" coati files
-set wildignore+=*.coatidb,*.coatiproject
+set tabstop=4
 
 " folding
 set foldmethod=syntax
 set nofoldenable
-" open all folds in file (shift-alt-f)
-map φ :set nofoldenable<CR>
-" previous: :%foldopen!<CR>
 
-" make current file's directory default for window (shift-alt-d in neo)
-map δ :lcd %:p:h<CR>
+" do not redraw during macro execution
+set lazyredraw
 
-" decrease/increase number
-noremap + <c-a>
-noremap - <c-x>
+" break line at specific chars
+set linebreak
 
-" ctrl-q/ß to esc
-map ſ <Esc>
-imap ſ <Esc>
-vmap ſ <Esc>
-map <C-ß> <Esc>
-imap <C-ß> <Esc>
-vmap <C-ß> <Esc>
-smap <C-ß> <Esc>
-map <C-q> <Esc>
-imap <C-q> <Esc>
-vmap <C-q> <Esc>
-smap <C-q> <Esc>
+" round indentation to nearest multiple of shiftwidth
+set shiftround
 
-" f2 to write
-nmap <F2> :w<CR>
-" Ctrl-o for PeepOpen
-" map <C-o> \p
-" Ctrl-s for swap case of first Letter of previous word
-map <C-s> m`b~``
-imap <C-s> <Esc>m`b~``a
-
-" add execution environment comment to top of file
-nnoremap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
-" convert current file to unix executable on
-nnoremap <leader>o :!chmod +x %:S<CR>l
-" select pasted text
-nnoremap <leader>s V`]
-" horizontal split
-nnoremap <leader>h :split<CR><C-w>j
-" vertical split on
-nnoremap <leader>v :vsplit<CR><C-w>l
-" list yanks on
-nnoremap <leader>y :YRShow<CR>
-
-" tab
-map <leader>t :tabnew<CR>
-noremap <Tab> gt
-noremap <S-Tab> gT
-" restore ctrl-i for position change (aliased omikron, map also in iterm)
-nnoremap ο <C-i>
-
-" split navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-
-" spell correction
-map <LocalLeader>d :setlocal spell spelllang=de_20<CR>
-map <LocalLeader>n :setlocal spell spelllang=nl_nl<CR>
-map <LocalLeader>eo :setlocal spell spelllang=eo_l3<CR>
-map <LocalLeader>en :setlocal spell spelllang=en<CR>
-map <LocalLeader>g :setlocal spell spelllang=en_gb<CR>
-map <LocalLeader>us :setlocal spell spelllang=en_us<CR>
-
-" various make commands
-map <leader>m :make<CR>
-map <leader>x :make quick<CR>
-map <leader>r :!%:p:S<CR>
-
-if has("persistent_undo")
+if has('persistent_undo')
   set undodir=~/.vim-undo/
   set undofile
 endif
 
+" wildcard ignore expressions
+set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
+set wildignore+=bin/*,build/*,*/bin/*,*/build/*
+
 " save on losing focus
-au FocusLost,Tableave,BufLeave * :call Autosave()
+autocmd FocusLost,Tableave,BufLeave * :call Autosave()
 function! Autosave()
     if filereadable(expand("%:p"))
         silent! write
     endif
 endfunction
 
-" close all tabs to direction
-" TODO keeps non-saved buffers in background, even with bang
-function! TabCloseRight(bang)
-    let l:cur = tabpagenr('$')
-    while l:cur > tabpagenr()
-        exe 'tabclose' . a:bang . ' ' . l:cur
-        let l:cur = l:cur - 1
-    endwhile
-endfunction
 
-function! TabCloseLeft(bang)
-    let l:cur = tabpagenr() - 1
-    while l:cur >= 1
-        exe 'tabclose' . a:bang . l:cur
-        let l:cur = l:cur - 1
-    endwhile
-endfunction
+" ===== KEY MAPPINGS =====
+" set leaders
+let mapleader = ","
+let maplocalleader = "\\"
 
-command! -bang TabcloseRight call TabCloseRight('<bang>')
-command! -bang TabcloseLeft call TabCloseLeft('<bang>')
+" alt-ß (neo-layout) / ſ to esc
+map <silent> ſ <Esc>:nohlsearch<CR>
+map! ſ <Esc>
 
-map <Leader>tcl :TabcloseLeft<CR>
-map <Leader>tcl! :TabcloseLeft!<CR>
-map <Leader>tcr :TabcloseRight<CR>
-map <Leader>tcr! :TabcloseRight!<CR>
-map <Leader>tql :TabcloseLeft<CR>
-map <Leader>tql! :TabcloseLeft!<CR>
-map <Leader>tqr :TabcloseRight<CR>
-map <Leader>tqr! :TabcloseRight!<CR>
+" Y works like D (yank up to end of line)
+map Y y$
 
-" dirname
-function! Dirname()
-    return expand("%:p:h:t")
-endfunction
+" tab switching
+nmap <Tab> gt
+nmap <S-Tab> gT
+nmap <leader>t :tabnew<CR>
 
-function! RelativePath()
-    return expand("%:.:h")
-endfunction
+" make
+map <leader>m :make<CR>
 
-function! IsSourceDirectory()
-    return (RelativePath() == '.' && Dirname() == "src")
-endfunction
+" make current file's directory default for window (shift-alt-d in neo)
+nmap δ :lcd %:p:h<CR>
 
-" project
-function! IsProject()
-    return filereadable("Makefile") || IsSourceDirectory()
-endfunction
+" fuzzyfinder open
+nmap <leader>e :FZF<CR>
 
-" jump to ctag under cursor
-map τ g]1<CR><CR> 
-" manually generate ctags
-noremap <Leader>gc :GenerateCtags<CR>
+" decrement/increment number under cursor
+noremap + <c-a>
+noremap - <c-x>
 
-" Project-wide search
-function! RecursiveSearch(str)
-    execute "lvimgrep" . a:str . " **/*|lw"
-endfunction
-function! RecursiveSearchWithPath(str)
-    execute "lvimgrep" . a:str . "|lw"
-endfunction
+" split navigation
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
 
-command! -nargs=* P call RecursiveSearch( '<args>' )
-command! -nargs=* Ps call RecursiveSearchWithPath( '<args>' )
+" add execution environment comment to top of file
+nmap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
+" convert current file to unix executable
+nmap <leader>o :!chmod +x %:S<CR>l
+" select pasted text
+nmap <leader>s V`]
+" horizontal split
+nmap <leader>h :split<CR><C-w>j
+" vertical split
+nmap <leader>v :vsplit<CR><C-w>l
 
-" toggle navigation for texts with wrapped lines:
-let g:wrappedLineNavigation = 1
-function! WrappedLineNavigationToggle()
-    if g:wrappedLineNavigation == 0
-        unmap j
-        unmap k
-        unmap $
-        unmap 0
-        let g:wrappedLineNavigation = 1
-        echo "Code navigation active"
-    else
-        noremap j gj
-        noremap k gk
-        noremap $ g$
-        noremap 0 g0
-        let g:wrappedLineNavigation = 0
-        echo "Text navigation active"
-    endif
-endfunction
-noremap <Leader>nav :call WrappedLineNavigationToggle()<CR>
+" spell correction
+nmap <LocalLeader>de :setlocal spell spelllang=de_20<CR>
+nmap <LocalLeader>nl :setlocal spell spelllang=nl_nl<CR>
+nmap <LocalLeader>eo :setlocal spell spelllang=eo_l3<CR>
+nmap <LocalLeader>en :setlocal spell spelllang=en<CR>
+nmap <LocalLeader>gb :setlocal spell spelllang=en_gb<CR>
+nmap <LocalLeader>uk :setlocal spell spelllang=en_gb<CR>
+nmap <LocalLeader>us :setlocal spell spelllang=en_us<CR>
 
-let g:python_host_prog="/usr/local/bin/python"
-let g:python3_host_prog="/usr/local/bin/python3"
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories=['UltiSnips', 'snips']
-let g:UltiSnipsSnippetsDir='../snips'
 
-let g:EasyMotion_leader_key = '<Leader>'
-" let g:SuperTabNoCompleteAfter = ['^', ',', ';', '\s']
-let g:yankring_history_dir = '$HOME'
-let g:yankring_history_file = '.yankring_history'
+" ===== CONFIG VARS =====
+call lengthmatters#highlight('ctermbg=7')
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:yankring_persist = 0
 
-let g:elm_syntastic_show_warnings = 1
-let g:elm_setup_keybindings = 0
+if has('nvim')
+  let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ }
 
-" open shell command in buffer with :Shell or :shell
-function! s:ExecuteInShell(command)
-  let command = join(map(split(a:command), 'expand(v:val)'))
-  let winnr = bufwinnr('^' . command . '$')
-  silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
-  setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
-  echo 'Execute ' . command . '...'
-  silent! execute 'silent %!'. command
-  silent! execute 'resize ' . line('$')
-  silent! redraw
-  silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
-  silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
-  echo 'Shell command ' . command . ' executed.'
-endfunction
-command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+  let g:LanguageClient_autoStart = 1
+
+  let g:deoplete#enable_at_startup = 1
+
+  call deoplete#custom#option({
+    \ 'auto_complete': v:false,
+    \ 'smart_case': v:true,
+    \ })
+
+  " use <C-s> for deoplete autocomplete
+  set completeopt-=preview
+  inoremap <silent><expr> <C-s>
+    \ pumvisible() ? "\<C-n>" :
+    \ deoplete#mappings#manual_complete()
+endif
