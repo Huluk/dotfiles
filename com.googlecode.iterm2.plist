@@ -722,12 +722,14 @@
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>925 110 445 103 0 0 1440 877 </string>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>840 20 400 129 0 0 1440 877 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>378 363 620 392 0 0 1440 877 </string>
+	<string>410 363 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1404 404 958 451 -1920 51 1920 1057 </string>
+	<string>-1901 247 958 451 -1920 51 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-823 360 697 469 -1920 51 1920 1057 </string>
+	<string>650 400 697 469 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>33 342 570 452 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1516,6 +1518,8 @@
 			<string>/Users/huluk</string>
 		</dict>
 	</array>
+	<key>NoSyncHaveUsedCopyMode</key>
+	<true/>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
@@ -1585,6 +1589,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/lars.hansen1/hide/dotfiles</string>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
@@ -1602,12 +1608,14 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-02-01T10:25:07Z</date>
+	<date>2018-06-26T13:17:06Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
+	<false/>
+	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>ShowPaneTitles</key>
 	<true/>
@@ -1654,6 +1662,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.5.beta.2</string>
+	<string>3.2.0beta5</string>
 </dict>
 </plist>

@@ -31,7 +31,11 @@ Plug 'junegunn/vim-slash'
 " highlight text outside of textwidth
 Plug 'whatyouhide/vim-lengthmatters'
 
+" yank history
 Plug 'vim-scripts/YankRing.vim'
+
+" directory tree sidebar
+Plug 'scrooloose/nerdtree'
 
 Plug 'scrooloose/syntastic'
 
@@ -135,6 +139,9 @@ nmap <Tab> gt
 nmap <S-Tab> gT
 nmap <leader>t :tabnew<CR>
 
+" directory tree sidebar
+nmap <leader>d :NERDTreeToggle<CR>
+
 " make
 map <leader>m :make<CR>
 
@@ -180,6 +187,9 @@ nmap <LocalLeader>us :setlocal spell spelllang=en_us<CR>
 call lengthmatters#highlight('ctermbg=7')
 
 let g:yankring_persist = 0
+
+let NERDTreeQuitOnOpen = 1
+let NERDTreeBookmarksFile = '$HOME/vim/NERDTreeBookmarks'
 
 if has('nvim')
   let g:LanguageClient_serverCommands = {

@@ -82,7 +82,6 @@ alias todo="v ~/Documents/todo.md"
 # for git
 alias -g create-upstream='--set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
-alias spark="spark-shell --jars pipeline-common/target/pipeline-common-9999-SNAPSHOT.jar pipeline-core/target/pipeline-core-9999-SNAPSHOT.jar"
 alias octave="octave --no-gui"
 
 # switch sierra karabiner-elements config depending on keyboard
@@ -157,6 +156,23 @@ export LC_ALL=en_US.UTF-8
 
 # added by Anaconda3 installer
 export PATH="/Users/lars.hansen1/hide/anaconda3/bin:$PATH"
+
+sshtun() {
+       sshConfigFile="${HOME}/.ssh/config"
+       if [[ "$1" == "" ]] ; then
+               echo Name of the tunnel is required. Valid values are devtunnel, prodtunnel-toronto, prodtunnel-eu1 or any other value defined in ${sshConfigFile}.
+       else
+               if ! cat ${sshConfigFile} | grep -q "^Host $1 *\$" ; then
+                       echo "ERROR: cannot find '$1' in ${sshConfigFile}"
+               else
+                       sshuttle -D --pidfile=/tmp/sshuttle.pid -e 'ssh -qv' -r $1 10.0.0.0/8
+                       echo "Connected"
+               fi
+       fi
+}
+sshtunx() {
+       [[ -f /tmp/sshuttle.pid ]] && sudo kill $(cat /tmp/sshuttle.pid) && echo "Disconnected."
+}
 
 clear
 
