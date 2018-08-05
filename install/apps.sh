@@ -2,7 +2,7 @@
 
 brew install smartmontools gnupg2 pass pwgen fortune wd rbenv
 brew install gnu-sed --with-default-names
-brew install p7zip
+brew install p7zip mas
 
 brew install neovim
 NEOVIM=~/.config/nvim/init.vim
@@ -18,7 +18,7 @@ echo 'let &packpath = &runtimepath' >> $NEOVIM
 echo 'source ~/.vimrc' >> $NEOVIM
 
 brew cask install karabiner-elements bettertouchtool hammerspoon
-brew cask install alfred flux iterm2 firefox
+brew cask install alfred iterm2 firefox
 
 # oh my zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -28,3 +28,6 @@ cp xtrv_lars.zsh-theme ~/.oh-my-zsh/themes/
 
 # gui apps
 brew cask install appcleaner dropbox skype telegram steam transmission vlc ynab tresorit ticktick calibre veracrypt gpgtools torbrowser
+
+# Pixelmator
+mas install 407963104
