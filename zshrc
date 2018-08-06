@@ -156,6 +156,8 @@ export LC_ALL=en_US.UTF-8
 
 # added by Anaconda3 installer
 export PATH="/Users/lars.hansen1/hide/anaconda3/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
 
 sshtun() {
        sshConfigFile="${HOME}/.ssh/config"
