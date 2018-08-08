@@ -128,7 +128,9 @@ pomo(){
   fi
 }
 
-reload(){clear && fortune $*}
+reload(){
+  clear && fortune $*
+}
 
 pdfunite(){
     echo "sejda merge -o outfile -f infiles"
@@ -142,9 +144,6 @@ eval "$(rbenv init -)"
 export JAVA_HOME=$(/usr/libexec/java_home)
 export SCALA_HOME=/usr/local/Cellar/scala@2.11/2.11.11
 export PATH=$PATH:$SCALA_HOME/bin
-
-# docker
-eval $(docker-machine env)
 
 # for livy
 export SPARK_HOME=/usr/local/Cellar/apache-spark/2.3.0/libexec/
@@ -176,6 +175,6 @@ sshtunx() {
        [[ -f /tmp/sshuttle.pid ]] && sudo kill $(cat /tmp/sshuttle.pid) && echo "Disconnected."
 }
 
-clear
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+clear

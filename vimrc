@@ -34,23 +34,24 @@ Plug 'whatyouhide/vim-lengthmatters'
 " yank history
 Plug 'vim-scripts/YankRing.vim'
 
+" statusline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 " directory tree sidebar
 Plug 'scrooloose/nerdtree'
 
-Plug 'scrooloose/syntastic'
+" language server + linting
+Plug 'w0rp/ale'
 
 if has('nvim')
 
   Plug 'icymind/NeoSolarized'
 
-  " language server protocol client
-  Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
   " autocomplete
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " syntax files for outocomplete
+  Plug 'Shougo/neco-syntax'
 
 endif
 
@@ -74,9 +75,6 @@ set smartcase
 set virtualedit=block
 
 set mouse=a
-
-" allows hidden buffers, needed for LanguageClient
-set hidden
 
 " enable with :set list
 set listchars=eol:¬,precedes:←,extends:→,tab:▶\
@@ -151,6 +149,18 @@ nmap δ :lcd %:p:h<CR>
 " fuzzyfinder open
 nmap <leader>e :FZF<CR>
 
+" ale go to definition (shift-alt-t in neo)
+nmap τ :ALEGoToDefinition<CR>
+" ale find references (shift-alt-f in neo)
+nmap φ :ALEFindReferences<CR>
+" ale info about object (shift-alt-b in neo)
+nmap β :ALEHover<CR>
+" move between errors - overrides sentence navigation!
+nmap <silent> ( <Plug>(ale_previous_wrap)
+nmap <silent> ) <Plug>(ale_next_wrap)
+" auto-fix
+nmap <leader>f :ALEFix<CR>
+
 " decrement/increment number under cursor
 noremap + <c-a>
 noremap - <c-x>
@@ -189,14 +199,40 @@ call lengthmatters#highlight('ctermbg=7')
 let g:yankring_persist = 0
 
 let NERDTreeQuitOnOpen = 1
-let NERDTreeBookmarksFile = '$HOME/vim/NERDTreeBookmarks'
+let NERDTreeBookmarksFile = '$HOME/.vim/NERDTreeBookmarks'
+
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_sign_error = '✖︎'
+let g:ale_sign_warning = '⚠︎'
+let g:ale_sign_info = 'ℹ︎'
+let g:ale_sign_style_error = '✖︎'
+let g:ale_sign_style_warning = '☞'
+
+" airline statusline
+" don't display file encoding and file format if it is the expected value
+let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]'
+" slightly change looks of line count section
+let g:airline_section_z =
+      \ '%3p%% ' .
+      \ '%{g:airline_symbols.linenr}%4l%#__accent_bold#/%L%#__restore__# :%3v'
+let g:airline#extensions#tagbar#enabled = 0
+" redefine spell such that spelllang is shown for smaller window widths
+function! airline#parts#spell()
+  let out = g:airline_detect_spelllang
+        \ ? printf("[%s]", toupper(substitute(&spelllang, ',', '/', 'g')))
+        \ : g:airline_symbols.spell
+  if g:airline_detect_spell && &spell
+    if winwidth(0) >= 75
+      return out
+    else
+      return split(g:airline_symbols.spell, '\zs')[0]
+    endif
+  endif
+  return ''
+endfunction
 
 if has('nvim')
-  let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ }
-
-  let g:LanguageClient_autoStart = 1
 
   let g:deoplete#enable_at_startup = 1
 
@@ -210,4 +246,5 @@ if has('nvim')
   inoremap <silent><expr> <C-s>
     \ pumvisible() ? "\<C-n>" :
     \ deoplete#mappings#manual_complete()
+
 endif
