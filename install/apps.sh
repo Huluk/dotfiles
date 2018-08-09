@@ -7,6 +7,7 @@ brew install p7zip mas
 brew install neovim
 NEOVIM=~/.config/nvim/init.vim
 mkdir -p ~/.config/nvim
+pip install neovim
 
 # TODO download vim package manager
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \

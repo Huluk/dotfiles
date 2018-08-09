@@ -11,9 +11,12 @@ ln -s $DIR/inputrc ~/.inputrc
 ln -s $DIR/irbrc ~/.irbrc
 ln -s $DIR/bashrc ~/.bashrc
 ln -s $DIR/bash_profile ~/.bash_profile
-ln -s $DIR/hammerspoon ~/.hammerspoon
 
 ln -s $DIR/gitconfig ~/.gitconfig
 ln -s $DIR/gitignore_global ~/.gitignore_global
 
-cp -r $DIR/mvim.app /Applications/mvim.app
+# Mac OS only!
+if [[ $OSTYPE = darwin* ]]; then
+    cp -r $DIR/mvim.app /Applications/mvim.app
+    ln -s $DIR/hammerspoon ~/.hammerspoon
+fi

@@ -69,7 +69,7 @@ ttyctl -f
 
 v(){ nvim -p $* }
 alias vdiff='nvim -d'
-alias vd='nvim -d'
+alias vd='nvim -d -c "windo set wrap"'
 
 rb(){
     open -a /Applications/Firefox.app/ \
@@ -90,7 +90,15 @@ diary(){
 
 alias umount="diskutil unmount"
 alias shuf="gshuf"
-unalias t
+alias 7z="7za"
+
+# time-tracking
+unalias t # shadowing gem timetrap
+
+# for git
+alias -g create-upstream='--set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
+
+alias octave="octave --no-gui"
 
 # switch sierra karabiner-elements config depending on keyboard
 keyboard() {
@@ -124,7 +132,18 @@ add_when_found(){
     xargs -I target cp $1 target
 }
 
-reload(){clear && fortune $*}
+# hammerspoon
+pomo(){
+  if [ $# -eq 0 ]; then
+    open -g "hammerspoon://pomodoro"
+  else
+    open -g "hammerspoon://pomodoro?duration=$1"
+  fi
+}
+
+reload(){
+  clear && fortune $*
+}
 
 pdfunite(){
     echo "sejda merge -o outfile -f infiles"
@@ -133,8 +152,6 @@ pdfunite(){
 # rbenv
 export RBENV_ROOT=/usr/local/var/rbenv
 eval "$(rbenv init -)"
-
-# java-home
 
 # mono
 export MONO_GAC_PREFIX="/usr/local"
@@ -146,6 +163,9 @@ PERL_LOCAL_LIB_ROOT="/Users/huluk/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_
 PERL_MB_OPT="--install_base \"/Users/huluk/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/Users/huluk/perl5"; export PERL_MM_OPT;
 
-clear
+# solve problem with spacy
+export LC_ALL=en_US.UTF-8
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+clear
