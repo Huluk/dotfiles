@@ -193,8 +193,8 @@ nmap <LocalLeader>us :setlocal spell spelllang=en_us<CR>
 
 
 
-" ===== CONFIG VARS =====
-call lengthmatters#highlight('ctermbg=7')
+" ===== PLUGIN CONFIG =====
+call lengthmatters#highlight_link_to('FoldColumn')
 
 let g:yankring_persist = 0
 
