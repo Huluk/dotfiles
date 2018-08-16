@@ -50,7 +50,7 @@ if has('nvim')
 
   " autocomplete
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  " syntax files for outocomplete
+  " syntax files for autocomplete
   Plug 'Shougo/neco-syntax'
 
 endif
@@ -118,6 +118,9 @@ function! Autosave()
         silent! write
     endif
 endfunction
+
+" check for external changes on gaining focus
+autocmd FocusGained,BufEnter * :checktime
 
 
 " ===== KEY MAPPINGS =====
