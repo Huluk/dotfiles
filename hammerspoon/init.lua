@@ -2,7 +2,9 @@ hs.loadSpoon("PomodoroTimer")
 spoon.PomodoroTimer:init()
 
 menu = hs.menubar.new()
-menu:setTitle("〶") -- TODO use icon instead
+postal = hs.image.imageFromPath('postal.pdf'):setSize({w=16,h=16})
+postal_red = hs.image.imageFromPath('postal_red.pdf'):setSize({w=16,h=16})
+menu:setIcon(postal, true)
 
 
 -- redshift
@@ -13,7 +15,7 @@ redshiftWindowFilter = hs.window.filter.new({
 }, 'wf-redshift')
 function enableRedshift()
   -- light temperature in K, midEvening, midMorning, transition, invertColor
-  hs.redshift.start(2700, "21:45", "7:30",  "3h", false, redshiftWindowFilter)
+  hs.redshift.start(2700, "21:30", "7:30",  "3h", false, redshiftWindowFilter)
   redshiftMode.checked = true
   redshiftMode.fn = disableRedshift
   menu:setMenu(menuState)
@@ -99,8 +101,10 @@ function toggleTravelMode()
     local appWatcher = hs.application.watcher.new(watch)
     appWatcher:start()
     hs.timer.doAfter(3, function() appWatcher:stop() end)
+    menu:setIcon(postal, true)
   else
     fn = turnAppOff
+    menu:setIcon(postal_red, false)
   end
   for app,_ in pairs(dataIntensiveApps) do
     fn(app)

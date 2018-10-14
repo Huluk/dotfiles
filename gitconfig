@@ -1,10 +1,10 @@
 [core]
 	excludesfile = ~/.gitignore_global
-    editor = nvim
+	editor = nvim
 	mergeoptions = --no-edit
 [user]
-	email = Lars.Hansen1@ibm.com
-	name = Lars-Hansen1
+	email = LarsHuluk@gmail.com
+	name = Lars Hansen
 [credential]
 	helper = osxkeychain
 [push]
