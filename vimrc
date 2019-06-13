@@ -1,3 +1,9 @@
+if isdirectory('/google')
+  let g:at_work = 1
+else
+  let g:at_work = 0
+endif
+
 " ===== PLUGINS =====
 " https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
