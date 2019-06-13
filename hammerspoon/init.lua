@@ -27,8 +27,7 @@ function disableRedshift()
   menu:setMenu(menuState)
 end
 redshiftMode =
-  { title = "Redshift", checked = true, fn = disableRedshift }
-enableRedshift()
+  { title = "Redshift", checked = false, fn = enableRedshift }
 
 -- darkroom
 -- TODO change solarized preset for iterm
@@ -78,7 +77,7 @@ function togglePomodoro()
   pomodoroState.checked = not pomodoroState.checked
   menu:setMenu(menuState)
 end
-pomodoroState = 
+pomodoroState =
   { title = "Pomodoro Timer", checked = false, fn = togglePomodoro }
 
 -- Travel Mode, disable everything which sends a lot of data (but not mail)

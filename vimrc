@@ -168,6 +168,10 @@ nmap <leader>f :ALEFix<CR>
 noremap + <c-a>
 noremap - <c-x>
 
+" re-select after indenting selection
+vnoremap < <gv
+vnoremap > >gv
+
 " split navigation
 nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
@@ -206,11 +210,17 @@ let NERDTreeBookmarksFile = '$HOME/.vim/NERDTreeBookmarks'
 
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
-let g:ale_sign_error = '✖︎'
-let g:ale_sign_warning = '⚠︎'
-let g:ale_sign_info = 'ℹ︎'
-let g:ale_sign_style_error = '✖︎'
-let g:ale_sign_style_warning = '☞'
+" let g:ale_sign_error = '✖︎'
+" let g:ale_sign_warning = '⚠︎'
+" let g:ale_sign_info = 'ℹ︎'
+" let g:ale_sign_style_error = '✖︎'
+" let g:ale_sign_style_warning = '☞'
+
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = 'w'
+let g:ale_sign_info = 'i'
+let g:ale_sign_style_error = 'x'
+let g:ale_sign_style_warning = '-'
 
 " airline statusline
 " don't display file encoding and file format if it is the expected value
@@ -221,19 +231,20 @@ let g:airline_section_z =
       \ '%{g:airline_symbols.linenr}%4l%#__accent_bold#/%L%#__restore__# :%3v'
 let g:airline#extensions#tagbar#enabled = 0
 " redefine spell such that spelllang is shown for smaller window widths
-function! airline#parts#spell()
-  let out = g:airline_detect_spelllang
-        \ ? printf("[%s]", toupper(substitute(&spelllang, ',', '/', 'g')))
-        \ : g:airline_symbols.spell
-  if g:airline_detect_spell && &spell
-    if winwidth(0) >= 75
-      return out
-    else
-      return split(g:airline_symbols.spell, '\zs')[0]
-    endif
-  endif
-  return ''
-endfunction
+" TODO repair!
+" function! airline#parts#spell()
+"   let out = g:airline_detect_spelllang
+"         \ ? printf("[%s]", toupper(substitute(&spelllang, ',', '/', 'g')))
+"         \ : g:airline_symbols.spell
+"   if g:airline_detect_spell && &spell
+"     if winwidth(0) >= 75
+"       return out
+"     else
+"       return split(g:airline_symbols.spell, '\zs')[0]
+"     endif
+"   endif
+"   return ''
+" endfunction
 
 if has('nvim')
 
