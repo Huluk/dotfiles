@@ -1,5 +1,6 @@
 if isdirectory('/google')
   let g:at_work = 1
+  source $HOME/.vim/work.vim
 else
   let g:at_work = 0
 endif
@@ -22,8 +23,8 @@ Plug 'tpope/vim-speeddating'
 " git wrapper
 Plug 'tpope/vim-fugitive'
 
-" heuristically set tab options
-Plug 'tpope/vim-sleuth'
+" like fugitive, but for mercurial
+Plug 'ludovicchabant/vim-lawrencium'
 
 " extend char information `ga` with unicode names
 Plug 'tpope/vim-characterize'
@@ -37,31 +38,45 @@ Plug 'junegunn/vim-slash'
 " highlight text outside of textwidth
 Plug 'whatyouhide/vim-lengthmatters'
 
-" yank history
-Plug 'vim-scripts/YankRing.vim'
+" fix tmux focus integration
+Plug 'tmux-plugins/vim-tmux-focus-events'
+" tmux split navigation
+Plug 'christoomey/vim-tmux-navigator'
 
 " statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" directory tree sidebar
-Plug 'scrooloose/nerdtree'
-
 " language server + linting
-Plug 'w0rp/ale'
+if !g:at_work
+  " directory tree sidebar
+  Plug 'scrooloose/nerdtree'
+  Plug 'w0rp/ale'
+endif
 
 if has('nvim')
 
   Plug 'icymind/NeoSolarized'
 
-  " autocomplete
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  " syntax files for autocomplete
-  Plug 'Shougo/neco-syntax'
-
+  if !g:at_work
+    " autocomplete
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " syntax files for autocomplete
+    Plug 'Shougo/neco-syntax'
+  endif
 endif
 
 call plug#end()
+
+" TODO what's this?
+" Enable file type based indent configuration and syntax highlighting.
+" Note that when code is pasted via the terminal, vim by default does not detect
+" that the code is pasted (as opposed to when using vim's paste mappings), which
+" leads to incorrect indentation when indent mode is on.
+" To work around this, use ":set paste" / ":set nopaste" to toggle paste mode.
+" You can also use a plugin to:
+" - enter insert mode with paste (https://github.com/tpope/vim-unimpaired)
+" - auto-detect pasting (https://github.com/ConradIrwin/vim-bracketed-paste)
 
 
 " ===== SETTINGS =====
@@ -113,19 +128,32 @@ if has('persistent_undo')
   set undofile
 endif
 
+set noswapfile
+
 " wildcard ignore expressions
 set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
 set wildignore+=bin/*,build/*,*/bin/*,*/build/*
 
 " save on losing focus
+" TODO replace with 'autowrite'?
 autocmd FocusLost,Tableave,BufLeave * :call Autosave()
 function! Autosave()
     if filereadable(expand("%:p"))
         silent! write
     endif
 endfunction
+if g:at_work
+  function! MaybeFormatCode()
+    " TODO do not FormatCode if in diff mode
+    if expand("%:t") != 'lvs.borg' && !&diff
+      FormatCode
+    endif
+  endfunction
+  autocmd BufWritePre /google/* call MaybeFormatCode()
+endif
 
 " check for external changes on gaining focus
+" TODO how does this relate to 'autoread'?
 autocmd FocusGained,BufEnter * :checktime
 
 
@@ -158,31 +186,62 @@ nmap δ :lcd %:p:h<CR>
 " fuzzyfinder open
 nmap <leader>e :FZF<CR>
 
-" ale go to definition (shift-alt-t in neo)
-nmap τ :ALEGoToDefinition<CR>
-" ale find references (shift-alt-f in neo)
-nmap φ :ALEFindReferences<CR>
-" ale info about object (shift-alt-b in neo)
-nmap β :ALEHover<CR>
-" move between errors - overrides sentence navigation!
-nmap <silent> ( <Plug>(ale_previous_wrap)
-nmap <silent> ) <Plug>(ale_next_wrap)
-" auto-fix
-nmap <leader>f :ALEFix<CR>
+if g:at_work
+  " ale or you-complete-me shortcuts
+  " error information
+  nmap <leader>i :YcmShowDetailedDiagnostic<CR>
+  " go to definition (shift-alt-t in neo)
+  " nmap τ :ALEGoToDefinition<CR>
+  nmap τ :YcmCompleter GoTo<CR>
+  " find references (shift-alt-f in neo)
+  " nmap φ :ALEFindReferences<CR>
+  nmap φ :YcmCompleter GoToReferences<CR>
+  " info about object (shift-alt-b in neo)
+  " nmap β :ALEHover<CR>
+  nmap β :YcmCompleter GetType<CR>
+  " move between errors - overrides sentence navigation!
+  " nmap <silent> ( <Plug>(ale_previous_wrap)
+  " nmap <silent> ) <Plug>(ale_next_wrap)
+  " TODO make these wrap-around
+  nmap ( :lprevious!<CR>
+  nmap ) :lnext!<CR>
+  " auto-fix
+  " nmap <leader>f :ALEFix<CR>
+  nmap <leader>f :YcmCompleter FixIt<CR>
+  " rename
+  nmap ρ :YcmCompleter RefactorRename<space>
+  " (omikron, shift-alt-o in neo)
+  nmap ο :YcmCompleter OrganizeImports<CR>
+else
+  " ale go to definition (shift-alt-t in neo)
+  nmap τ :ALEGoToDefinition<CR>
+  " ale find references (shift-alt-f in neo)
+  nmap φ :ALEFindReferences<CR>
+  " ale info about object (shift-alt-b in neo)
+  nmap β :ALEHover<CR>
+  " move between errors - overrides sentence navigation!
+  nmap <silent> ( <Plug>(ale_previous_wrap)
+  nmap <silent> ) <Plug>(ale_next_wrap)
+  " auto-fix
+  nmap <leader>f :ALEFix<CR>
+endif
 
 " decrement/increment number under cursor
-noremap + <c-a>
-noremap - <c-x>
+nmap + <c-a>
+nmap - <c-x>
 
 " re-select after indenting selection
 vnoremap < <gv
 vnoremap > >gv
 
-" split navigation
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
+" TODO enable when not in tmux, check interaction with plugin
+if !g:at_work
+  " split navigation
+  nmap <C-h> <C-w>h
+  nmap <C-j> <C-w>j
+  nmap <C-k> <C-w>k
+  nmap <C-l> <C-w>l
+endif
 
 " add execution environment comment to top of file
 nmap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
@@ -209,24 +268,33 @@ nmap <LocalLeader>us :setlocal spell spelllang=en_us<CR>
 " ===== PLUGIN CONFIG =====
 call lengthmatters#highlight_link_to('FoldColumn')
 
-let g:yankring_persist = 0
-
-let NERDTreeQuitOnOpen = 1
-let NERDTreeBookmarksFile = '$HOME/.vim/NERDTreeBookmarks'
-
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-" let g:ale_sign_error = '✖︎'
-" let g:ale_sign_warning = '⚠︎'
-" let g:ale_sign_info = 'ℹ︎'
-" let g:ale_sign_style_error = '✖︎'
-" let g:ale_sign_style_warning = '☞'
-
 let g:ale_sign_error = 'x'
 let g:ale_sign_warning = 'w'
 let g:ale_sign_info = 'i'
 let g:ale_sign_style_error = 'x'
 let g:ale_sign_style_warning = '-'
+
+if g:at_work
+  let g:ycm_auto_trigger = 0
+  let g:ycm_always_populate_location_list = 1
+  set completeopt-=preview
+  let g:ycm_error_symbol = '✖︎'
+  let g:ycm_warning_symbol = '⚠︎'
+
+  let g:ale_linters = {
+        \ 'python': ['glint'],
+        \ 'proto': ['glint'],
+        \ 'java': ['glint'],
+        \ 'javascript': ['glint'],
+        \ 'cpp' : ['glint'],
+        \}
+else
+  let g:ale_lint_on_text_changed = 'normal'
+  let g:ale_lint_on_insert_leave = 1
+
+  let NERDTreeQuitOnOpen = 1
+  let NERDTreeBookmarksFile = '$HOME/.vim/NERDTreeBookmarks'
+endif
 
 " airline statusline
 " don't display file encoding and file format if it is the expected value
@@ -236,6 +304,7 @@ let g:airline_section_z =
       \ '%3p%% ' .
       \ '%{g:airline_symbols.linenr}%4l%#__accent_bold#/%L%#__restore__# :%3v'
 let g:airline#extensions#tagbar#enabled = 0
+
 " redefine spell such that spelllang is shown for smaller window widths
 " TODO repair!
 " function! airline#parts#spell()
@@ -252,7 +321,7 @@ let g:airline#extensions#tagbar#enabled = 0
 "   return ''
 " endfunction
 
-if has('nvim')
+if has('nvim') && !g:at_work
 
   let g:deoplete#enable_at_startup = 1
 
