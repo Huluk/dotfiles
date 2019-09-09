@@ -212,6 +212,8 @@ if g:at_work
   nmap ρ :YcmCompleter RefactorRename<space>
   " (omikron, shift-alt-o in neo)
   nmap ο :YcmCompleter OrganizeImports<CR>
+  " open current line in Code Search
+  nmap <leader>c :echo system("xdg-open '" . substitute(expand("%:p"), '.*google3/', 'https://cs.corp.google.com/piper///depot/google3/', '') . '?l=' . line('.') . "'")<CR><CR>
 else
   " ale go to definition (shift-alt-t in neo)
   nmap τ :ALEGoToDefinition<CR>
