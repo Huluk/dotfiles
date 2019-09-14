@@ -71,11 +71,6 @@ v(){ nvim -p $* }
 alias vdiff='nvim -d'
 alias vd='nvim -d -c "windo set wrap"'
 
-rb(){
-    open -a /Applications/Firefox.app/ \
-    "http://ruby-doc.org/core/classes/$1.html"
-}
-
 diary_open(){
     (wd text && cd diary &&
       ARG='' &&
@@ -91,9 +86,6 @@ diary(){
 alias umount="diskutil unmount"
 alias shuf="gshuf"
 alias 7z="7za"
-
-# time-tracking
-unalias t # shadowing gem timetrap
 
 # for git
 alias -g create-upstream='--set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
@@ -124,14 +116,6 @@ passgen(){
     head -c $1; echo
 }
 
-# copy $1 as $2 to subdir when $3 is present
-add_when_found(){
-    find . -name $3 |
-    xargs -n 1 dirname |
-    sed 's!$!/'$2'!' |
-    xargs -I target cp $1 target
-}
-
 # hammerspoon
 pomo(){
   if [ $# -eq 0 ]; then
@@ -157,14 +141,13 @@ eval "$(rbenv init -)"
 export MONO_GAC_PREFIX="/usr/local"
 
 # perl
-PATH="/Users/huluk/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/Users/huluk/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/Users/huluk/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/Users/huluk/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Users/huluk/perl5"; export PERL_MM_OPT;
-
-# solve problem with spacy
-export LC_ALL=en_US.UTF-8
+if [ $HOME = '/Users/huluk' ]; then
+    PATH="/Users/huluk/perl5/bin${PATH:+:${PATH}}"; export PATH;
+    PERL5LIB="/Users/huluk/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+    PERL_LOCAL_LIB_ROOT="/Users/huluk/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+    PERL_MB_OPT="--install_base \"/Users/huluk/perl5\""; export PERL_MB_OPT;
+    PERL_MM_OPT="INSTALL_BASE=/Users/huluk/perl5"; export PERL_MM_OPT;
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
