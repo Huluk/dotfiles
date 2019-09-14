@@ -7,6 +7,40 @@ postal_red = hs.image.imageFromPath('postal_red.pdf'):setSize({w=16,h=16})
 menu:setIcon(postal, true)
 
 
+-- auto-sort Downloads
+sortingDownloads = false
+function sortFinished(exitCode, stdOut, stdErr)
+  if exitCode > 0 then
+    hs.alert.show('Error ' .. exitCode .. ': ' .. stdErr, 8)
+  end
+  sortingDownloads = false
+end
+function sortDownloads(paths, flagTables)
+  if not sortingDownloads then
+    sortingDownloads = true
+    downloads = {}
+    for k,v in pairs(flagTables) do
+      if v['itemCreated'] or v['itemRenamed'] then
+        downloads[#downloads+1] = paths[k]
+      end
+    end
+    if #downloads > 0 then
+      hs.task.new(
+        os.getenv("HOME") .. "/.hammerspoon/sort_downloads.rb",
+        sortFinished,
+        downloads
+      ):start()
+    else
+      sortingDownloads = false
+    end
+  end
+end
+downloadWatcher = hs.pathwatcher.new(
+  os.getenv("HOME") .. "/Downloads/",
+  sortDownloads
+):start()
+
+
 -- redshift
 redshiftWindowFilter = hs.window.filter.new({
   VLC={focused=true},
