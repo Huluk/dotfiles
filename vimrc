@@ -52,6 +52,9 @@ if !g:at_work
   " directory tree sidebar
   Plug 'scrooloose/nerdtree'
   Plug 'w0rp/ale'
+else
+  " Monkey C syntax highlighting
+  Plug 'tipishev/vim-monkey-c'
 endif
 
 if has('nvim')
@@ -109,6 +112,8 @@ set sidescrolloff=5
 set textwidth=80
 
 set tabstop=4
+set expandtab
+set softtabstop=-1
 
 " folding
 set foldmethod=syntax
