@@ -52,7 +52,7 @@ if !g:at_work
   " directory tree sidebar
   Plug 'scrooloose/nerdtree'
   Plug 'w0rp/ale'
-else
+ 
   " Monkey C syntax highlighting
   Plug 'tipishev/vim-monkey-c'
 endif
