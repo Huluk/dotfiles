@@ -48,11 +48,17 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " language server + linting
-if !g:at_work
+if g:at_work
+  Plug 'prabirshrestha/async.vim'
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+else
+  Plug 'w0rp/ale'
+
   " directory tree sidebar
   Plug 'scrooloose/nerdtree'
-  Plug 'w0rp/ale'
- 
+
   " Monkey C syntax highlighting
   Plug 'tipishev/vim-monkey-c'
 endif
@@ -283,6 +289,22 @@ let g:ale_sign_style_error = 'x'
 let g:ale_sign_style_warning = '-'
 
 if g:at_work
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'CiderLSP',
+        \ 'cmd': {server_info->[
+        \   '/google/bin/releases/editor-devtools/ciderlsp',
+        \   '--tooltag=vim-lsp',
+        \   '--noforward_sync_responses',
+        \   '--hub_addr=blade:languageservices-staging',
+        \ ]},
+        \ 'whitelist': ['java'],
+        \})
+  let g:lsp_async_completion = 1
+  let g:lsp_signs_enabled = 1
+  let g:lsp_diagnostics_echo_cursor = 0
+  let g:asyncomplete_smart_completion = 0
+  let g:asyncomplete_auto_popup = 0
+
   let g:ycm_auto_trigger = 0
   let g:ycm_always_populate_location_list = 1
   set completeopt-=preview
