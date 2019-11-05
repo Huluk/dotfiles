@@ -280,6 +280,7 @@ nmap <LocalLeader>us :setlocal spell spelllang=en_us<CR>
 
 
 " ===== PLUGIN CONFIG =====
+
 call lengthmatters#highlight_link_to('FoldColumn')
 
 let g:ale_sign_error = 'x'
@@ -300,14 +301,18 @@ if g:at_work
         \ 'whitelist': ['java'],
         \})
   let g:lsp_async_completion = 1
+  let g:lsp_preview_float = 1
+  let g:lsp_diagnostics_echo_cursor = 1
   let g:lsp_signs_enabled = 1
-  let g:lsp_diagnostics_echo_cursor = 0
+  let g:lsp_highlight_references_enabled = 1
+  let g:lsp_virtual_text_enabled = 0
+
   let g:asyncomplete_smart_completion = 0
   let g:asyncomplete_auto_popup = 0
+  let g:asyncomplete_auto_completeopt = 0
 
   let g:ycm_auto_trigger = 0
   let g:ycm_always_populate_location_list = 1
-  set completeopt-=preview
   let g:ycm_error_symbol = '✖︎'
   let g:ycm_warning_symbol = '⚠︎'
 
@@ -361,9 +366,11 @@ if has('nvim') && !g:at_work
     \ })
 
   " use <C-s> for deoplete autocomplete
-  set completeopt-=preview
   inoremap <silent><expr> <C-s>
     \ pumvisible() ? "\<C-n>" :
     \ deoplete#mappings#manual_complete()
 
 endif
+
+" Needs to be after plugin setting changes, for whatever reason.
+set completeopt-=preview
