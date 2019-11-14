@@ -374,3 +374,4 @@ endif
 
 " Needs to be after plugin setting changes, for whatever reason.
 set completeopt-=preview
+set completeopt-=menuone
