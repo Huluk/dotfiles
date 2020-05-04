@@ -49,10 +49,13 @@ Plug 'vim-airline/vim-airline-themes'
 
 " language server + linting
 if g:at_work
+  Plug 'prabirshrestha/asyncomplete.vim'
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
-  Plug 'prabirshrestha/asyncomplete.vim'
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+  " todo manager
+  Plug 'davidoc/taskpaper.vim'
 else
   Plug 'w0rp/ale'
 
@@ -141,6 +144,8 @@ if has('persistent_undo')
 endif
 
 set noswapfile
+
+set completeopt=
 
 " wildcard ignore expressions
 set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
@@ -300,8 +305,8 @@ if g:at_work
         \ ]},
         \ 'whitelist': ['java'],
         \})
-  let g:lsp_async_completion = 1
-  let g:lsp_preview_float = 1
+  let g:lsp_async_completion = 0
+  let g:lsp_preview_float = 0
   let g:lsp_diagnostics_echo_cursor = 1
   let g:lsp_signs_enabled = 1
   let g:lsp_highlight_references_enabled = 1
@@ -313,8 +318,8 @@ if g:at_work
 
   let g:ycm_auto_trigger = 0
   let g:ycm_always_populate_location_list = 1
-  let g:ycm_error_symbol = '✖︎'
-  let g:ycm_warning_symbol = '⚠︎'
+  let g:ycm_error_symbol = 'X'
+  let g:ycm_warning_symbol = 'w'
 
   let g:ale_linters = {
         \ 'python': ['glint'],
@@ -323,6 +328,8 @@ if g:at_work
         \ 'javascript': ['glint'],
         \ 'cpp' : ['glint'],
         \}
+
+  let g:task_paper_search_hide_done = 1
 else
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
@@ -371,7 +378,3 @@ if has('nvim') && !g:at_work
     \ deoplete#mappings#manual_complete()
 
 endif
-
-" Needs to be after plugin setting changes, for whatever reason.
-set completeopt-=preview
-set completeopt-=menuone

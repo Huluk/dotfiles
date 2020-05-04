@@ -40,7 +40,7 @@ augroup END
 " Load YCM (http://go/ycm) for semantic auto-completion and quick syntax
 " error checking. Pulls in a google3-enabled version of YCM itself and
 " a google3-specific default configuration.
-Glug youcompleteme-google
+" Glug youcompleteme-google
 
 " Load the automated blaze dependency integration for Go.
 " Note: for Go, blazedeps uses the Go team's glaze tool, which is fully
@@ -78,6 +78,7 @@ Glug blaze plugin[mappings]
 Glug ft-cpp
 Glug ft-python
 Glug ft-javascript
+Glug ft-java
 
 " Glug glug sources+=`$HOME . '/.vim/local'`
 " Glug glint-ale

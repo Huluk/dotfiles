@@ -1,3 +1,5 @@
+Glug youcompleteme-google
+
 let b:commentary_format = '// %s'
 
 if !g:at_work && executable('clang++')

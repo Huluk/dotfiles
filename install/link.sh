@@ -15,6 +15,9 @@ ln -s $DIR/bash_profile ~/.bash_profile
 ln -s $DIR/gitconfig ~/.gitconfig
 ln -s $DIR/gitignore_global ~/.gitignore_global
 
+mkdir -p ~/.config/nvim
+ln -s $DIR/nvim_init.vim ~/.config/nvim/init.vim
+
 # Mac OS only!
 if [[ $OSTYPE = darwin* ]]; then
     cp -r $DIR/mvim.app /Applications/mvim.app
