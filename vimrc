@@ -38,6 +38,9 @@ Plug 'junegunn/vim-slash'
 " highlight text outside of textwidth
 Plug 'whatyouhide/vim-lengthmatters'
 
+" todo manager
+Plug 'davidoc/taskpaper.vim'
+
 " fix tmux focus integration
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " tmux split navigation
@@ -53,9 +56,6 @@ if g:at_work
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-  " todo manager
-  Plug 'davidoc/taskpaper.vim'
 else
   Plug 'w0rp/ale'
 
@@ -328,8 +328,6 @@ if g:at_work
         \ 'javascript': ['glint'],
         \ 'cpp' : ['glint'],
         \}
-
-  let g:task_paper_search_hide_done = 1
 else
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
@@ -337,6 +335,8 @@ else
   let NERDTreeQuitOnOpen = 1
   let NERDTreeBookmarksFile = '$HOME/.vim/NERDTreeBookmarks'
 endif
+
+let g:task_paper_search_hide_done = 1
 
 " airline statusline
 " don't display file encoding and file format if it is the expected value
