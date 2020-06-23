@@ -23,6 +23,8 @@ Plug 'tpope/vim-speeddating'
 " git wrapper
 Plug 'tpope/vim-fugitive'
 
+Plug 'tpope/vim-endwise'
+
 " like fugitive, but for mercurial
 Plug 'ludovicchabant/vim-lawrencium'
 

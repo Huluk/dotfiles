@@ -1,9 +1,14 @@
 hs.loadSpoon("PomodoroTimer")
 spoon.PomodoroTimer:init()
 
+workBackground = os.getenv("HOME") .. "/Pictures/wallpaper/Space/Spaceship You/Desktop 4k/Desktop 4k_07.jpg"
+workAccentColor = "Orange"
+nonWorkBackground = os.getenv("HOME") .. "/Pictures/wallpaper/Muster & Details/910.jpg"
+nonWorkAccentColor = "Purple"
+
 menu = hs.menubar.new()
 postal = hs.image.imageFromPath('postal.pdf'):setSize({w=16,h=16})
-postal_red = hs.image.imageFromPath('postal_red.pdf'):setSize({w=16,h=16})
+postalRed = hs.image.imageFromPath('postal_red.pdf'):setSize({w=16,h=16})
 menu:setIcon(postal, true)
 
 
@@ -137,7 +142,7 @@ function toggleTravelMode()
     menu:setIcon(postal, true)
   else
     fn = turnAppOff
-    menu:setIcon(postal_red, false)
+    menu:setIcon(postalRed, false)
   end
   for app,_ in pairs(dataIntensiveApps) do
     fn(app)
@@ -148,11 +153,51 @@ end
 travelMode =
   { title = "Travel Mode", checked = false, fn = toggleTravelMode }
 
+function toggleWorkingMode()
+  workingMode.checked = not workingMode.checked
+  local background = nil
+  local color = nil
+  if workingMode.checked then
+    background = workBackground
+    color = workAccentColor
+  else
+    background = nonWorkBackground
+    color = nonWorkAccentColor
+  end
+  hs.osascript.applescript([[
+    tell application "Finder"
+      set desktop picture to POSIX file "]] .. background .. [["
+    end tell
+    tell application "System Events"
+      tell appearance preferences
+        set dark mode to ]] .. tostring(workingMode.checked) .. [[#
+      end tell
+    end tell
+    tell application "System Preferences" to reveal anchor "Main" of pane id "com.apple.preference.general"
+tell application "System Events"
+      repeat until exists of checkbox "Graphite" of window "General" of application process "System Preferences"
+        delay 0.1
+      end repeat
+      click checkbox "]] .. color .. [[" of window "General" of application process "System Preferences"
+    end tell
+    try
+      if application "System Preferences" is running then do shell script "killall 'System Preferences'"
+    end try
+  ]])
+  menu:setMenu(menuState)
+end
+hs.urlevent.bind("toggleWorkingMode", function(eventName, params)
+  toggleWorkingMode()
+end)
+workingMode =
+  { title = "Work Mode", checked = false, fn = toggleWorkingMode }
+
 
 menuState = {
   pomodoroState,
   { title = '-' },
   travelMode,
+  workingMode,
   { title = '-' },
   redshiftMode,
   darkroomMode,
