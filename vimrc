@@ -210,15 +210,15 @@ nmap <leader>e :FZF<CR>
 
 if g:at_work
   nnoremap <S-k> :LspHover<CR>
-  nmap <leader>f :YcmCompleter FixIt<CR>
+  nmap <leader>f :LspCodeAction<CR>
   nmap <leader>i :YcmShowDetailedDiagnostic<CR>
-  nmap τ :YcmCompleter GetType<CR>
+  nmap τ :LspPeekTypeDefinition<CR>
 
-  nmap <leader>g :YcmCompleter GoTo<CR>
-  nmap γ :YcmCompleter GoToDeclaration<CR>
-  nmap φ :YcmCompleter GoToReferences<CR>
+  nmap <leader>g :LspPeekDefinition<CR>
+  nmap γ :LspPeekDeclaration<CR>
+  nmap φ :LspReferences<CR>
 
-  nmap ρ :YcmCompleter RefactorRename<space>
+  nmap ρ :LspRename<space>
   " (omikron, shift-alt-o in neo)
   nmap ο :YcmCompleter OrganizeImports<CR>
 
@@ -226,8 +226,8 @@ if g:at_work
   nmap <leader>c :echo system("xdg-open '" . substitute(expand("%:p"), '.*google3/', 'https://cs.corp.google.com/piper///depot/google3/', '') . '?l=' . line('.') . "'")<CR><CR>
 
   " error navigation - overrides sentence navigation!
-  nmap ( :lprevious!<CR>
-  nmap ) :lnext!<CR>
+  nmap ( :LspPreviousDiagnostic<CR>
+  nmap ) :LspNextDiagnostic<CR>
 else
   nnoremap <S-k> :ALEHover<CR>
   nmap <leader>f :ALEFix<CR>
@@ -295,7 +295,7 @@ if g:at_work
         \   '--noforward_sync_responses',
         \   '--hub_addr=blade:languageservices-staging',
         \ ]},
-        \ 'whitelist': ['java'],
+        \ 'whitelist': ['c', 'cpp', 'java', 'proto', 'textproto', 'go', 'swift'],
         \})
   let g:lsp_async_completion = 0
   let g:lsp_preview_float = 1
