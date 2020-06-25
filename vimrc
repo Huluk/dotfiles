@@ -1,4 +1,4 @@
-if isdirectory('/google')
+if isdirectory('/google') && has('unix')
   let g:at_work = 1
   source $HOME/.vim/work.vim
 else
@@ -117,6 +117,9 @@ set listchars=eol:¬,precedes:←,extends:→,tab:▶\
 " shows symbol on line wrap
 set showbreak=↪
 
+set breakindent
+set breakindentopt=shift:4
+
 set scrolloff=4
 set sidescrolloff=5
 
@@ -206,45 +209,41 @@ nmap δ :lcd %:p:h<CR>
 nmap <leader>e :FZF<CR>
 
 if g:at_work
-  " ale or you-complete-me shortcuts
-  " error information
-  nmap <leader>i :YcmShowDetailedDiagnostic<CR>
-  " go to definition (shift-alt-t in neo)
-  " nmap τ :ALEGoToDefinition<CR>
-  nmap τ :YcmCompleter GoTo<CR>
-  " find references (shift-alt-f in neo)
-  " nmap φ :ALEFindReferences<CR>
-  nmap φ :YcmCompleter GoToReferences<CR>
-  " info about object (shift-alt-b in neo)
-  " nmap β :ALEHover<CR>
-  nmap β :YcmCompleter GetType<CR>
-  " move between errors - overrides sentence navigation!
-  " nmap <silent> ( <Plug>(ale_previous_wrap)
-  " nmap <silent> ) <Plug>(ale_next_wrap)
-  " TODO make these wrap-around
-  nmap ( :lprevious!<CR>
-  nmap ) :lnext!<CR>
-  " auto-fix
-  " nmap <leader>f :ALEFix<CR>
+  nnoremap <S-k> :LspHover<CR>
   nmap <leader>f :YcmCompleter FixIt<CR>
-  " rename
+  nmap <leader>i :YcmShowDetailedDiagnostic<CR>
+  nmap τ :YcmCompleter GetType<CR>
+
+  nmap <leader>g :YcmCompleter GoTo<CR>
+  nmap γ :YcmCompleter GoToDeclaration<CR>
+  nmap φ :YcmCompleter GoToReferences<CR>
+
   nmap ρ :YcmCompleter RefactorRename<space>
   " (omikron, shift-alt-o in neo)
   nmap ο :YcmCompleter OrganizeImports<CR>
+
   " open current line in Code Search
   nmap <leader>c :echo system("xdg-open '" . substitute(expand("%:p"), '.*google3/', 'https://cs.corp.google.com/piper///depot/google3/', '') . '?l=' . line('.') . "'")<CR><CR>
+
+  " error navigation - overrides sentence navigation!
+  nmap ( :lprevious!<CR>
+  nmap ) :lnext!<CR>
 else
-  " ale go to definition (shift-alt-t in neo)
-  nmap τ :ALEGoToDefinition<CR>
-  " ale find references (shift-alt-f in neo)
+  nnoremap <S-k> :ALEHover<CR>
+  nmap <leader>f :ALEFix<CR>
+  " missing: nmap <leader>i for diagnostics
+  " missing: nmap τ for get type
+
+  nmap <leader>g :ALEGoToDefinition<CR>
+  " missing: nmap γ for go to declaration
   nmap φ :ALEFindReferences<CR>
-  " ale info about object (shift-alt-b in neo)
-  nmap β :ALEHover<CR>
-  " move between errors - overrides sentence navigation!
+
+  " missing: nmap ρ for rename
+  " missing: nmap ο (omikron) for organize imports
+
+  " error navigation - overrides sentence navigation!
   nmap <silent> ( <Plug>(ale_previous_wrap)
   nmap <silent> ) <Plug>(ale_next_wrap)
-  " auto-fix
-  nmap <leader>f :ALEFix<CR>
 endif
 
 " decrement/increment number under cursor
@@ -254,15 +253,6 @@ nmap - <c-x>
 " re-select after indenting selection
 vnoremap < <gv
 vnoremap > >gv
-
-" TODO enable when not in tmux, check interaction with plugin
-if !g:at_work
-  " split navigation
-  nmap <C-h> <C-w>h
-  nmap <C-j> <C-w>j
-  nmap <C-k> <C-w>k
-  nmap <C-l> <C-w>l
-endif
 
 " add execution environment comment to top of file
 nmap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
@@ -308,11 +298,12 @@ if g:at_work
         \ 'whitelist': ['java'],
         \})
   let g:lsp_async_completion = 0
-  let g:lsp_preview_float = 0
+  let g:lsp_preview_float = 1
   let g:lsp_diagnostics_echo_cursor = 1
   let g:lsp_signs_enabled = 1
   let g:lsp_highlight_references_enabled = 1
   let g:lsp_virtual_text_enabled = 0
+  let g:lsp_signature_help_enabled = 0
 
   let g:asyncomplete_smart_completion = 0
   let g:asyncomplete_auto_popup = 0
@@ -348,22 +339,6 @@ let g:airline_section_z =
       \ '%3p%% ' .
       \ '%{g:airline_symbols.linenr}%4l%#__accent_bold#/%L%#__restore__# :%3v'
 let g:airline#extensions#tagbar#enabled = 0
-
-" redefine spell such that spelllang is shown for smaller window widths
-" TODO repair!
-" function! airline#parts#spell()
-"   let out = g:airline_detect_spelllang
-"         \ ? printf("[%s]", toupper(substitute(&spelllang, ',', '/', 'g')))
-"         \ : g:airline_symbols.spell
-"   if g:airline_detect_spell && &spell
-"     if winwidth(0) >= 75
-"       return out
-"     else
-"       return split(g:airline_symbols.spell, '\zs')[0]
-"     endif
-"   endif
-"   return ''
-" endfunction
 
 if has('nvim') && !g:at_work
 

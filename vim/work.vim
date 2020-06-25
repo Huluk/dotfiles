@@ -84,7 +84,7 @@ Glug ft-java
 " Glug glint-ale
 
 " ===== ALIASES =====
-cnoremap Jeval e java/com/google/lens/eval/
-cnoremap Jevals e java/com/google/lens/eval/evalservice/
-cnoremap Jteval e javatests/com/google/lens/eval/
-cnoremap Jtevals e javatests/com/google/lens/eval/evalservice/
+cnoremap Jeval e java/com/google/lens/eval
+cnoremap Jevals e java/com/google/lens/eval/evalservice
+cnoremap Jteval e javatests/com/google/lens/eval
+cnoremap Jtevals e javatests/com/google/lens/eval/evalservice
