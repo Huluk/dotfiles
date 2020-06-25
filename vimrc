@@ -1,4 +1,4 @@
-if isdirectory('/google') && has('unix')
+if isdirectory('/google') && !has('macunix')
   let g:at_work = 1
   source $HOME/.vim/work.vim
 else
