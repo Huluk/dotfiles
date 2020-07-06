@@ -32,7 +32,7 @@ Plug 'ludovicchabant/vim-lawrencium'
 Plug 'tpope/vim-characterize'
 
 " fzf fuzzyfinder
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf'
 
 " auto-remove search highlight on cursor movement
 Plug 'junegunn/vim-slash'
