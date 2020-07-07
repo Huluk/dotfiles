@@ -3,7 +3,6 @@ set nocompatible
 
 " Use the 'google' package by default (see http://go/vim/packages).
 source /usr/share/vim/google/google.vim
-source ~/.vim/g4blame.vim
 
 " Plugin configuration.
 " See http://google3/devtools/editors/vim/examples/ for example configurations

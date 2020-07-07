@@ -61,9 +61,6 @@ if g:at_work
 else
   Plug 'w0rp/ale'
 
-  " directory tree sidebar
-  Plug 'scrooloose/nerdtree'
-
   " Monkey C syntax highlighting
   Plug 'tipishev/vim-monkey-c'
 endif
@@ -196,9 +193,6 @@ nmap <Tab> gt
 nmap <S-Tab> gT
 nmap <leader>t :tabnew<CR>
 
-" directory tree sidebar
-nmap <leader>d :NERDTreeToggle<CR>
-
 " make
 map <leader>m :make<CR>
 
@@ -228,6 +222,9 @@ if g:at_work
   " error navigation - overrides sentence navigation!
   nmap ( :LspPreviousDiagnostic<CR>
   nmap ) :LspNextDiagnostic<CR>
+
+  nmap <leader>d :LspDocumentDiagnostics<CR>
+  nmap <leader>D :lclose<CR>
 else
   nnoremap <S-k> :ALEHover<CR>
   nmap <leader>f :ALEFix<CR>
