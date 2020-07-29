@@ -25,6 +25,8 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'tpope/vim-endwise'
 
+Plug 'mbbill/undotree'
+
 " like fugitive, but for mercurial
 Plug 'ludovicchabant/vim-lawrencium'
 
