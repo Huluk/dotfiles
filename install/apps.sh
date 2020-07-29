@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+defaults write com.apple.PowerChime ChimeOnAllHardware -bool false &&
+    killall PowerChime
+
 brew install smartmontools gnupg2 pass pwgen fortune wd rbenv
 brew install gnu-sed --with-default-names
 brew install p7zip mas
