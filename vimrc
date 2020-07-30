@@ -65,6 +65,8 @@ else
 
   " Monkey C syntax highlighting
   Plug 'tipishev/vim-monkey-c'
+
+  Plug 'editorconfig/editorconfig-vim'
 endif
 
 if has('nvim')
