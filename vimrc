@@ -296,7 +296,9 @@ if g:at_work
         \   '--noforward_sync_responses',
         \   '--hub_addr=blade:languageservices-staging',
         \ ]},
-        \ 'whitelist': ['c', 'cpp', 'java', 'proto', 'textproto', 'go', 'swift'],
+        \ 'whitelist': [
+        \   'c', 'cpp', 'java', 'proto', 'python', 'textproto', 'go', 'swift'
+        \ ],
         \})
   let g:lsp_async_completion = 0
   let g:lsp_preview_float = 1
