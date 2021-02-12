@@ -149,6 +149,11 @@ if [ $HOME = '/Users/huluk' ]; then
     PERL_MM_OPT="INSTALL_BASE=/Users/huluk/perl5"; export PERL_MM_OPT;
 fi
 
+# connectiq
+if [ $HOME = '/Users/huluk' ]; then
+    export MB_HOME='/Users/huluk/Library/Application Support/Garmin/ConnectIQ/Sdks/connectiq-sdk-mac-3.2.3-2020-10-13-c14e609bd/bin'
+fi
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 clear
