@@ -44,7 +44,7 @@ ZSH_THEME="xtrv_lars"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # old plugins: plugins=(git github heroku osx history ruby rvm brew vi-mode)
 # old plugins: plugins=(osx history vi-mode ruby rbenv irb)
-plugins=(osx history git wd common-aliases brew colored-man-pages colorize history-substring-search)
+plugins=(osx history pass git wd common-aliases brew colored-man-pages colorize history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
