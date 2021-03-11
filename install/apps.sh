@@ -6,6 +6,7 @@ defaults write com.apple.PowerChime ChimeOnAllHardware -bool false &&
 brew install smartmontools gnupg2 pass pwgen fortune rbenv
 brew install gnu-sed --with-default-names
 brew install keyboard-maestro
+brew install homebrew/cask/dash
 
 # not working: 
 brew install p7zip mas wd

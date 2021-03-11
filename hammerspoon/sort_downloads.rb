@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 HOME = ENV['HOME']
-TEXT = "#{HOME}/Documents/Text und Schrift"
+TEXT = "/Volumes/Huluk/Documents"
 
 ARGV.each do |filepath|
   destination =
