@@ -133,6 +133,18 @@ pdfunite(){
     echo "sejda merge -o outfile -f infiles"
 }
 
+remarkable_backup(){
+    rsync -rauhP --rsync-path=/opt/bin/rsync \
+        --exclude='*.cache' \
+        --exclude='*.highlights' \
+        --exclude='*.textconversion' \
+        --exclude='*.thumbnails' \
+        --exclude='*.pagedata' \
+        'root@remarkable:/home/root/.local/share/remarkable/xochitl/*' \
+        /Volumes/Huluk/remarkable-backup/files/
+}
+# if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then
+
 # rbenv
 export RBENV_ROOT=/usr/local/var/rbenv
 eval "$(rbenv init -)"
