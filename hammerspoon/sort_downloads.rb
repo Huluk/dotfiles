@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 HOME = ENV['HOME']
+PICS = "/Volumes/Huluk/Pictures"
 TEXT = "/Volumes/Huluk/Documents"
 
 ARGV.each do |filepath|
@@ -18,12 +19,12 @@ ARGV.each do |filepath|
       "#{TEXT}/Esperanto/Magazine/Esperanto Aktuell/"
     when /^Kontakto[_\d]+\.pdf/
       "#{TEXT}/Esperanto/Magazine/Kontakto/"
-    when /^Screenshot/
-      "#{HOME}/Pictures/"
+    when /^pic-(.+)/
+      "#{PICS}/Internetz/#{$1}"
     else
       nil
     end
   if not destination.nil?
-    system "[[ -e '#{filepath}' ]] && mv '#{filepath}' '#{destination}'"
+    system "[[ -e '#{filepath}' ]] && rsync -a --remove-source-files '#{filepath}' '#{destination}'"
   end
 end

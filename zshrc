@@ -134,7 +134,7 @@ pdfunite(){
 }
 
 remarkable_backup(){
-    rsync -rauhP --rsync-path=/opt/bin/rsync \
+    rsync -auhP --rsync-path=/opt/bin/rsync \
         --exclude='*.cache' \
         --exclude='*.highlights' \
         --exclude='*.textconversion' \
