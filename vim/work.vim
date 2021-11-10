@@ -67,7 +67,7 @@ Glug blaze plugin[mappings]
 " Load the ultisnips plugin (http://go/ultisnips).
 " Note: this requires installing the upstream ultisnips plugin from
 " https://github.com/SirVer/ultisnips.
-"Glug ultisnips-google
+" Glug ultisnips-google
 
 " All of your plugins must be added before the following line.
 " See go/vim-plugin-manager if you need help picking a plugin manager and

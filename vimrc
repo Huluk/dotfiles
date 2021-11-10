@@ -54,31 +54,30 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" language server + linting
-if g:at_work
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/async.vim'
-  Plug 'prabirshrestha/vim-lsp'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
-else
+if has('nvim')
+
+  " autocomplete
+  Plug 'icymind/NeoSolarized'
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+  if g:at_work
+    " language server + linting
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'Shougo/deoplete-lsp'
+  else
+    " syntax files for autocomplete
+    Plug 'Shougo/neco-syntax'
+  endif
+elseif !g:at_work
+  " language server + linting
+  " TODO Migrate private lsp usage to nvim-lsp
   Plug 'w0rp/ale'
 
   " Monkey C syntax highlighting
   Plug 'tipishev/vim-monkey-c'
 
   Plug 'editorconfig/editorconfig-vim'
-endif
-
-if has('nvim')
-
-  Plug 'icymind/NeoSolarized'
-
-  if !g:at_work
-    " autocomplete
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    " syntax files for autocomplete
-    Plug 'Shougo/neco-syntax'
-  endif
 endif
 
 call plug#end()
@@ -207,44 +206,9 @@ nmap δ :lcd %:p:h<CR>
 nmap <leader>e :FZF<CR>
 
 if g:at_work
-  nnoremap <S-k> :LspHover<CR>
-  nmap <leader>f :LspCodeAction<CR>
-  nmap <leader>i :YcmShowDetailedDiagnostic<CR>
-  nmap τ :LspPeekTypeDefinition<CR>
-
-  nmap <leader>g :LspPeekDefinition<CR>
-  nmap γ :LspPeekDeclaration<CR>
-  nmap φ :LspReferences<CR>
-
-  nmap ρ :LspRename<space>
-  " (omikron, shift-alt-o in neo)
-  nmap ο :YcmCompleter OrganizeImports<CR>
-
-  " open current line in Code Search
-  nmap <leader>c :echo system("xdg-open '" . substitute(expand("%:p"), '.*google3/', 'https://cs.corp.google.com/piper///depot/google3/', '') . '?l=' . line('.') . "'")<CR><CR>
-
-  " error navigation - overrides sentence navigation!
-  nmap ( :LspPreviousDiagnostic<CR>
-  nmap ) :LspNextDiagnostic<CR>
-
-  nmap <leader>d :LspDocumentDiagnostics<CR>
-  nmap <leader>D :lclose<CR>
+  luafile $HOME/.vim/lsp/nvim_lsp.lua
 else
-  nnoremap <S-k> :ALEHover<CR>
-  nmap <leader>f :ALEFix<CR>
-  " missing: nmap <leader>i for diagnostics
-  " missing: nmap τ for get type
-
-  nmap <leader>g :ALEGoToDefinition<CR>
-  " missing: nmap γ for go to declaration
-  nmap φ :ALEFindReferences<CR>
-
-  " missing: nmap ρ for rename
-  " missing: nmap ο (omikron) for organize imports
-
-  " error navigation - overrides sentence navigation!
-  nmap <silent> ( <Plug>(ale_previous_wrap)
-  nmap <silent> ) <Plug>(ale_next_wrap)
+  source $HOME/.vim/lsp/ale.vim
 endif
 
 " decrement/increment number under cursor
@@ -281,57 +245,6 @@ nmap <LocalLeader>us :setlocal spell spelllang=en_us<CR>
 
 call lengthmatters#highlight_link_to('FoldColumn')
 
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = 'w'
-let g:ale_sign_info = 'i'
-let g:ale_sign_style_error = 'x'
-let g:ale_sign_style_warning = '-'
-
-if g:at_work
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'CiderLSP',
-        \ 'cmd': {server_info->[
-        \   '/google/bin/releases/editor-devtools/ciderlsp',
-        \   '--tooltag=vim-lsp',
-        \   '--noforward_sync_responses',
-        \   '--hub_addr=blade:languageservices-staging',
-        \ ]},
-        \ 'whitelist': [
-        \   'c', 'cpp', 'java', 'proto', 'python', 'textproto', 'go', 'swift'
-        \ ],
-        \})
-  let g:lsp_async_completion = 0
-  let g:lsp_preview_float = 1
-  let g:lsp_diagnostics_echo_cursor = 1
-  let g:lsp_signs_enabled = 1
-  let g:lsp_highlight_references_enabled = 1
-  let g:lsp_virtual_text_enabled = 0
-  let g:lsp_signature_help_enabled = 0
-
-  let g:asyncomplete_smart_completion = 0
-  let g:asyncomplete_auto_popup = 0
-  let g:asyncomplete_auto_completeopt = 0
-
-  let g:ycm_auto_trigger = 0
-  let g:ycm_always_populate_location_list = 1
-  let g:ycm_error_symbol = 'X'
-  let g:ycm_warning_symbol = 'w'
-
-  let g:ale_linters = {
-        \ 'python': ['glint'],
-        \ 'proto': ['glint'],
-        \ 'java': ['glint'],
-        \ 'javascript': ['glint'],
-        \ 'cpp' : ['glint'],
-        \}
-else
-  let g:ale_lint_on_text_changed = 'normal'
-  let g:ale_lint_on_insert_leave = 1
-
-  let NERDTreeQuitOnOpen = 1
-  let NERDTreeBookmarksFile = '$HOME/.vim/NERDTreeBookmarks'
-endif
-
 let g:task_paper_search_hide_done = 1
 
 " airline statusline
@@ -343,18 +256,23 @@ let g:airline_section_z =
       \ '%{g:airline_symbols.linenr}%4l%#__accent_bold#/%L%#__restore__# :%3v'
 let g:airline#extensions#tagbar#enabled = 0
 
-if has('nvim') && !g:at_work
+let g:ycm_auto_trigger = 0
+let g:ycm_always_populate_location_list = 1
+let g:ycm_error_symbol = 'X'
+let g:ycm_warning_symbol = 'w'
+
+if has('nvim')
 
   let g:deoplete#enable_at_startup = 1
 
   call deoplete#custom#option({
-    \ 'auto_complete': v:false,
-    \ 'smart_case': v:true,
-    \ })
+                 \ 'auto_complete': v:false,
+                 \ 'smart_case': v:true,
+                 \ })
 
   " use <C-s> for deoplete autocomplete
   inoremap <silent><expr> <C-s>
-    \ pumvisible() ? "\<C-n>" :
-    \ deoplete#mappings#manual_complete()
+              \ pumvisible() ? "\<C-n>" :
+              \ deoplete#mappings#manual_complete()
 
 endif
