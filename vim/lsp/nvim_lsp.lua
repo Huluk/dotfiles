@@ -46,7 +46,9 @@ local custom_attach = function(client, bufnr)
 
   -- modify
   map('n','ρ','<cmd>lua vim.lsp.buf.rename()<CR>')
+  -- TODO deprecating f, use x
   map('n','<leader>f','<cmd>lua vim.lsp.buf.code_action()<CR>')
+  map('n','<leader>x','<cmd>lua vim.lsp.buf.code_action()<CR>')
 
   -- full document
   map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
