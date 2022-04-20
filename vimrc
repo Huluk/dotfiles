@@ -211,6 +211,7 @@ if has('nvim')
   let g:coq_settings = {
               \ 'display.icons.mode': 'none',
               \ 'completion.always': v:false,
+              \ 'keymap.jump_to_mark': '<LocalLeader>m',
               \ }
 
   if g:at_work
