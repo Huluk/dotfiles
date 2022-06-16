@@ -42,9 +42,9 @@ ZSH_THEME="xtrv_lars"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-# old plugins: plugins=(git github heroku osx history ruby rvm brew vi-mode)
-# old plugins: plugins=(osx history vi-mode ruby rbenv irb)
-plugins=(osx history pass git wd common-aliases brew colored-man-pages colorize history-substring-search)
+# old plugins: plugins=(git github heroku macos history ruby rvm brew vi-mode)
+# old plugins: plugins=(macos history vi-mode ruby rbenv irb)
+plugins=(macos history pass git wd common-aliases brew colored-man-pages colorize history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
