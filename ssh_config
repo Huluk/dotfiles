@@ -4,5 +4,6 @@ Host remarkable
 
 Host *
   AddKeysToAgent yes
+  IgnoreUnknown UseKeychain
   UseKeychain yes
   IdentityFile ~/.ssh/id_rsa
