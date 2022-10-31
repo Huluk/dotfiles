@@ -125,8 +125,6 @@ fi
 
 if [ $WORK ]; then
 
-  alias intellij=/opt/intellij-ce-stable/bin/idea.sh
-
   c() { # cs search open results in vim (relative to g4d dir)
       nvim -p $(cs -l "$1" | sed "s#.*/google3/##;")
   }
@@ -138,31 +136,36 @@ if [ $WORK ]; then
       command gcert "$@"
   }
 
-  function workspace() {
-      g4d $1
-      tmux split-window -hb -p 64 -c "$(pwd)"
-      tmux rename-window $1
-  }
-  alias w=workspace
+  if [ $LINUX ]; then
 
-  # WORK-shortcuts
-  jeval='java/com/google/lens/eval'
-  jevals='java/com/google/lens/eval/evalservice'
-  jteval='javatests/com/google/lens/eval'
-  jtevals='javatests/com/google/lens/eval/evalservice'
-  vvsl='vision/visualsearch/server/lens'
+    function workspace() {
+        g4d $1
+        tmux split-window -hb -p 64 -c "$(pwd)"
+        tmux rename-window $1
+    }
+    alias w=workspace
 
-  source /etc/bash_completion.d/g4d
+    # WORK-shortcuts
+    jeval='java/com/google/lens/eval'
+    jevals='java/com/google/lens/eval/evalservice'
+    jteval='javatests/com/google/lens/eval'
+    jtevals='javatests/com/google/lens/eval/evalservice'
+    vvsl='vision/visualsearch/server/lens'
 
-  alias gaiamint='/google/data/ro/projects/gaiamint/bin/get_mint  --type=loas --text --endusercreds --scopes=77900  --out=/tmp/auth.txt'
+    source /etc/bash_completion.d/g4d
+    alias intellij=/opt/intellij-ce-stable/bin/idea.sh
 
-  alias x='hg xl'
-  alias s='hg st'
-  alias u='hg ut'
-  alias d='hg diff'
+    alias gaiamint='/google/data/ro/projects/gaiamint/bin/get_mint  --type=loas --text --endusercreds --scopes=77900  --out=/tmp/auth.txt'
 
-  export LANGUAGE=en_US.UTF-8
-  export LC_ALL=en_US.UTF-8
+    alias x='hg xl'
+    alias s='hg st'
+    alias u='hg ut'
+    alias d='hg diff'
+
+    export LANGUAGE=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+
+  fi
 
 else # non-work
 
