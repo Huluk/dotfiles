@@ -17,12 +17,16 @@ ARGV.each do |filepath|
       "#{TEXT}/Adulting/Konto/DiBa/"
     when /^\d{8}_.*_Payslip_\d{6}\.pdf/
       "#{TEXT}/Adulting/Arbeit/Google/Payslips/"
+    when /^CI_NEWS/
+      "#{TEXT}/Adulting/Versicherung/Cryonics/Newsletter/"
     when /^FLT_/, /^FLIX-/
       "#{TEXT}/Travel/Tickets/"
-    when /^Esperanto_aktuell.*\.pdf/
+    when /^Esperanto_aktuell.*\.pdf/, /EA\d.\d{4}.reta/
       "#{TEXT}/Esperanto/Magazine/Esperanto Aktuell/"
     when /^Kontakto[_\d]+\.pdf/
       "#{TEXT}/Esperanto/Magazine/Kontakto/"
+    when /^t22\-/
+      "#{TEXT}/Travel/Tickets/2022/"
     when /^Screenshot/
       "#{HOME}/Pictures/"
     when /^#{IOTA}\-/
@@ -33,8 +37,8 @@ ARGV.each do |filepath|
       "#{IMG}/Internetz/Compasses/#{name.sub(/\w+\-/, '')}"
     when /^#{IOTA}l\-/
       "#{IMG}/Internetz/Learn/#{name.sub(/\w+\-/, '')}"
-    # when /^#{IOTA}s\-/
-    #   "#{IMG}/Internetz/Stuff/#{name.sub(/\w+\-/, '')}"
+    when /^#{IOTA}r\-/
+      "#{IMG}/Internetz/Random/#{name.sub(/\w+\-/, '')}"
     else
       nil
     end
