@@ -8,7 +8,7 @@ brew install gnu-sed --with-default-names
 brew install keyboard-maestro
 brew install homebrew/cask/dash
 
-# not working: 
+# not working:
 brew install p7zip mas wd
 
 brew install neovim
@@ -33,6 +33,7 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 rm -f ~/.zshrc
 ln -s ~/hide/dotfiles/zshrc ~/.zshrc
 cp xtrv_lars.zsh-theme ~/.oh-my-zsh/themes/
+cp -r completions ~/.oh-my-zsh/
 
 # gui apps
 brew install appcleaner skype telegram steam transmission vlc calibre veracrypt
