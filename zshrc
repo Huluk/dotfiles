@@ -145,6 +145,11 @@ if [ $WORK ]; then
     }
     alias w=workspace
 
+    function cl() {
+        CL=$(hg ll -r . | head -n1 | awk '{print $4}')
+        open "http://${CL}"
+    }
+
     # WORK-shortcuts
     jeval='java/com/google/lens/eval'
     jevals='java/com/google/lens/eval/evalservice'
