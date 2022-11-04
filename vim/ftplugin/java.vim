@@ -1,3 +1,6 @@
+" fix imports
+map <leader>i :!/google/src/head/depot/google3/tools/java/fix_imports.py %<CR>
+
 " switch to test file
 map <localleader>t :e %:p:s!java!javatests!:s!\.java$!Test.java!<CR>
 map <localleader>T :tabnew %:p:s!java!javatests!:s!\.java$!Test.java!<CR>

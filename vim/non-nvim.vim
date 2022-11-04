@@ -16,3 +16,6 @@ set display+=lastline
 set wildmenu
 set tabpagemax=50
 set sessionoptions-=options
+
+" Y works like D (yank up to end of line)
+map Y y$

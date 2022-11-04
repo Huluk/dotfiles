@@ -46,32 +46,46 @@ local custom_attach = function(client, bufnr)
       vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
   end
 
-  -- info
-  map('γ','<cmd>lua vim.lsp.buf.definition()<CR>')
+  -- INFO
+  -- hover for current word
   map('<S-k>','<cmd>lua vim.lsp.buf.hover()<CR>')
-  map('φ','<cmd>lua vim.lsp.buf.references()<CR>')
-  -- does not work
-  map('π','<cmd>lua peek("textDocument/implementation")<CR>')
-  map('gπ','<cmd>lua vim.lsp.buf.implementation()<CR>')
+  -- jump to definition (S-A-g)
+  map('γ','<cmd>lua vim.lsp.buf.definition()<CR>')
+  -- display all references (S-A-r)
+  map('ρ','<cmd>lua vim.lsp.buf.references()<CR>')
+  -- all following are CURRENTLY NOT SUPPORTED in CiderLSP:
+  -- peek implementations (S-A-h)
+  map('ψ','<cmd>lua peek("textDocument/implementation")<CR>')
+  -- go to implementations (g S-A-h)
+  map('gψ','<cmd>lua vim.lsp.buf.implementation()<CR>')
+  -- list all callers of symbol (S-A-i)
   map('ι','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
+  -- list all items called by the symbol (S-A-o)
   map('ο','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
 
-  -- modify
-  map('ρ','<cmd>lua vim.lsp.buf.rename()<CR>')
-  -- TODO deprecating f, use x
-  map('<leader>f','<cmd>lua vim.lsp.buf.code_action()<CR>')
+  -- MODIFY
+  -- rename
+  map('<leader>r','<cmd>lua vim.lsp.buf.rename()<CR>')
+  -- fix error under cursor
   map('<leader>x','<cmd>lua vim.lsp.buf.code_action()<CR>')
 
-  -- full document
-  map('<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-  map('<localleader>υ','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-  map('<localleader>ω','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+  -- DOCUMENT
+  -- format
+  map('<leader>=', '<cmd>lua vim.lsp.buf.format()<CR>')
+  -- display all symbols
+  map('σ','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+  -- search for symbol in workspace
+  map('ω','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
 
-  -- diagnostic
+  -- DIAGNOSTIC
+  -- previous error
   map('(','<cmd>lua vim.diagnostic.goto_prev()<CR>')
+  -- next error
   map(')','<cmd>lua vim.diagnostic.goto_next()<CR>')
-  map('<leader>d','<cmd>lua vim.diagnostic.open_float()<CR>')
-  map('<leader>D','<cmd>lua vim.diagnostic.get_all()<CR>')
+  -- display diagnostics (S-A-d)
+  map('δ','<cmd>lua vim.diagnostic.open_float()<CR>')
+  -- display all errors (S-A-a)
+  map('<leader>α','<cmd>lua vim.diagnostic.get_all()<CR>')
 
   vim.api.nvim_command("augroup LSP")
   vim.api.nvim_command("autocmd!")

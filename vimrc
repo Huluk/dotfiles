@@ -16,6 +16,8 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-speeddating'
 " tree structure for undo/redo operations
 Plug 'mbbill/undotree'
+" jump to last line on file open
+Plug 'farmergreg/vim-lastplace'
 
 " === Highlighting ===
 " highlight text outside of textwidth
@@ -63,31 +65,35 @@ Plug 'tpope/vim-characterize'
 call plug#end()
 
 
-" ===== KEY MAPPINGS =====
+" ===== KEY MAPS =====
+
+" Maps system:
+"
+" <leader>
+" • anything related to vim itself
+" • language-agnostic commands
+" • LSP commands which modify the code
+" Neo greek layer
+" • LSP info
+" <localleader>
+" • language-specific file actions or commands
+"
+" Additional maps may be defined in ftplugin/*, work.vim, and the lsp/ config.
+
 " set leaders
 let mapleader = ","
 let maplocalleader = "\\"
+
+" GENERAL MAPS
 
 " alt-ß (neo-layout) / ſ to esc
 map <silent> ſ <Esc>:nohlsearch<CR>
 map! ſ <Esc>
 
-" Y works like D (yank up to end of line)
-map Y y$
-
 " tab switching
 nmap <Tab> gt
 nmap <S-Tab> gT
 nmap <leader>t :tabnew<CR>
-
-" make
-map <leader>m :make<CR>
-
-" make current file's directory default for window (shift-alt-d in neo)
-nmap δ :lcd %:p:h<CR>
-
-" fuzzyfinder open
-nmap <leader>e :FZF<CR>
 
 " decrement/increment number under cursor
 nmap + <c-a>
@@ -96,6 +102,17 @@ nmap - <c-x>
 " re-select after indenting selection
 vnoremap < <gv
 vnoremap > >gv
+
+" LEADER MAPS
+
+" make
+map <leader>m :make<CR>
+
+" make current file's directory default for window
+nmap <leader>d :lcd %:p:h<CR>
+
+" fuzzyfinder open
+nmap <leader>e :FZF<CR>
 
 " add execution environment comment to top of file
 nmap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
@@ -108,14 +125,16 @@ nmap <leader>h :split<CR><C-w>j
 " vertical split
 nmap <leader>v :vsplit<CR><C-w>l
 
+" LOCALLEADER MAPS
+
 " spell correction
-nmap <LocalLeader>de :setlocal spell spelllang=de_20<CR>
-nmap <LocalLeader>nl :setlocal spell spelllang=nl_nl<CR>
-nmap <LocalLeader>eo :setlocal spell spelllang=eo_l3<CR>
-nmap <LocalLeader>en :setlocal spell spelllang=en<CR>
-nmap <LocalLeader>gb :setlocal spell spelllang=en_gb<CR>
-nmap <LocalLeader>uk :setlocal spell spelllang=en_gb<CR>
-nmap <LocalLeader>us :setlocal spell spelllang=en_us<CR>
+nmap <localleader>de :setlocal spell spelllang=de_20<CR>
+nmap <localleader>nl :setlocal spell spelllang=nl_nl<CR>
+nmap <localleader>eo :setlocal spell spelllang=eo_l3<CR>
+nmap <localleader>en :setlocal spell spelllang=en<CR>
+nmap <localleader>gb :setlocal spell spelllang=en_gb<CR>
+nmap <localleader>uk :setlocal spell spelllang=en_gb<CR>
+nmap <localleader>us :setlocal spell spelllang=en_us<CR>
 
 
 " ===== SETTINGS =====
@@ -200,6 +219,7 @@ if g:at_work
     endif
   endfunction
   autocmd BufWritePre /google/* call MaybeFormatCode()
+  " Use ›:noa w‹ to skip autocommand
 endif
 
 " check for external changes on gaining focus

@@ -34,5 +34,6 @@ cnoremap Jtevals e javatests/com/google/lens/eval/evalservice
 cnoremap Vvsl e vision/visualsearch/server/lens
 
 " switch to build file
+" NOTE: there is Glug relatedfiles plugin
 map <localleader>b :e %:p:h/BUILD<CR>
 map <localleader>B :tabnew %:p:h/BUILD<CR>
