@@ -105,21 +105,22 @@ vnoremap > >gv
 
 " LEADER MAPS
 
-" make
-map <leader>m :make<CR>
-
 " make current file's directory default for window
 nmap <leader>d :lcd %:p:h<CR>
 
 " fuzzyfinder open
 nmap <leader>e :FZF<CR>
 
+" make
+map <leader>m :make<CR>
 " add execution environment comment to top of file
 nmap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
-" convert current file to unix executable
+" make current file unix executable
 nmap <leader>o :!chmod +x %:S<CR>l
+
 " select pasted text
-nmap <leader>s V`]
+nmap <silent> <leader>s V`]
+
 " horizontal split
 nmap <leader>h :split<CR><C-w>j
 " vertical split
