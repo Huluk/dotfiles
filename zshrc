@@ -115,6 +115,11 @@ if [ $MACOS ]; then
   keyboard() {
       ~/Documents/scripts/karabiner-elements_switch_keyboard $*
   }
+
+  # rbenv
+  export RBENV_ROOT=/usr/local/var/rbenv
+  eval "$(rbenv init -)"
+
 fi
 
 if [ $LINUX ]; then
@@ -193,9 +198,5 @@ else # non-work
           /Volumes/Huluk/remarkable-backup/files/
       }
   # if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then
-
-  # rbenv
-  export RBENV_ROOT=/usr/local/var/rbenv
-  eval "$(rbenv init -)"
 
 fi
