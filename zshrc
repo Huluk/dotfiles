@@ -68,8 +68,6 @@ zstyle ':completion:*' users root $USER             #fix lag in google3
 autoload -Uz compinit && compinit -i
 # source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-export PATH=/usr/local/include:/usr/local/bin:/usr/local/lib:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
-
 # bindkey "[D" backward-word
 # bindkey "[C" forward-word
 bindkey "^[a" beginning-of-line
@@ -124,10 +122,6 @@ if [ $LINUX ]; then
 fi
 
 if [ $WORK ]; then
-
-  c() { # cs search open results in vim (relative to g4d dir)
-      nvim -p $(cs -l "$1" | sed "s#.*/google3/##;")
-  }
 
   function gcert() {
       if [[ -n $TMUX ]]; then

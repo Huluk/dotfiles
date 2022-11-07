@@ -60,7 +60,7 @@ endif
 " extend char information `ga` with unicode names
 Plug 'tpope/vim-characterize'
 " todo manager
-" Plug 'davidoc/taskpaper.vim'
+Plug 'davidoc/taskpaper.vim'
 
 call plug#end()
 

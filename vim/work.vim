@@ -14,6 +14,15 @@ source /usr/share/vim/google/google.vim
 "Glug codefmt plugin[mappings] gofmt_executable="goimports"
 Glug codefmt-google
 
+" Open in CodeSearch
+Glug corpweb
+
+" Java imports
+Glug google-csimporter
+
+" Open CNS paths
+Glug googlepaths
+
 " Enable autoformatting on save for the languages at Google that enforce
 " formatting, and for which all checked-in code is already conforming (thus,
 " autoformatting will never change unrelated lines in a file).
@@ -34,6 +43,16 @@ cnoremap Jtevals e javatests/com/google/lens/eval/evalservice
 cnoremap Vvsl e vision/visualsearch/server/lens
 
 " switch to build file
-" NOTE: there is Glug relatedfiles plugin
+" NOTE: there is Glug relatedfiles plugin which could replace these
 map <localleader>b :e %:p:h/BUILD<CR>
 map <localleader>B :tabnew %:p:h/BUILD<CR>
+
+" CodeSearch search
+" search for word under cursor
+nnoremap <leader>cs :call corpweb#CodeSearchLiteral(expand("<cword>"))<CR>
+" search for visual selection
+vnoremap <leader>cs :<C-U>call corpweb#CodeSearchLiteral(maktaba#buffer#GetVisualSelection())<CR>
+" open current position in code search
+map <leader>cf :CorpWebCsFile<CR>
+" open cl in critique
+map <leader>cl :CorpWebCritiqueCl<CR>
