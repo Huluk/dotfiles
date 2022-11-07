@@ -161,7 +161,12 @@ set virtualedit=block
 set mouse=a
 
 " enable with :set list
-set listchars=eol:¬,precedes:←,extends:→,tab:▶\
+" position in long non-wrap line: precedes:← extends:→
+set listchars=precedes:\\u2190,extends:\\u2192
+" line break:¬ non-breaking space:␣
+set listchars+=eol:\\xAC,nbsp:\\\u2423
+" tab:⊳⋅⋅⋅ trailing space:⌁
+set listchars+=tab:\\u22b3\\u22c5,trail:\\u2301
 
 " shows symbol on line wrap
 set showbreak=↪
@@ -200,6 +205,16 @@ endif
 set noswapfile
 
 set completeopt=
+
+" max line matching offset in diff mode
+if has('nvim-0.9')
+  silent! set diffopt+=linematch:40
+endif
+
+" global statusline to reduce visual clutter
+if has('nvim-0.7')
+  set laststatus=3
+endif
 
 " wildcard ignore expressions
 set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
