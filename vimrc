@@ -267,8 +267,22 @@ let g:task_paper_search_hide_done = 1
 " airline statusline
 " don't display file encoding and file format if it is the expected value
 let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]'
-" slightly change looks of line count section
+" don't display default branch
+let g:airline#extensions#branch#format = 'CleanBranchName'
+function! CleanBranchName(name)
+  if index(['default', 'master', 'main'], a:name) >= 0
+    return ''
+  else
+    return a:name
+  endif
+endfunction
+" don't display branch marker for 'dirty'
+let g:airline#extensions#branch#vcs_checks = ['untracked']
+" don't display filetype at all
+let g:airline_section_x = ''
+" show file line count in position section
 let g:airline_section_z =
-      \ '%3p%% ' .
-      \ '%{g:airline_symbols.linenr}%4l%#__accent_bold#/%L%#__restore__# :%3v'
-let g:airline#extensions#tagbar#enabled = 0
+      \ '%p%% ' .
+      \ '%l%#__accent_bold#/%L%#__restore__#' .
+      \ ':%3v'
+let g:ailine#extensions#tabline#enabled = 0
