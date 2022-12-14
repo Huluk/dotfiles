@@ -152,6 +152,7 @@ if g:at_work
 endif
 
 set number
+set signcolumn=number
 
 set ignorecase
 set smartcase
