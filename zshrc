@@ -138,9 +138,9 @@ if [ $WORK ]; then
   if [ $LINUX ]; then
 
     function workspace() {
-        g4d $1
-        tmux split-window -hb -p 64 -c "$(pwd)"
-        tmux rename-window $1
+        g4d $1 &&
+            tmux split-window -hb -p 64 -c "$(pwd)" &&
+            tmux rename-window $1
     }
     alias w=workspace
 
