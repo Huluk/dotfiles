@@ -1,6 +1,17 @@
-custom_attach = function(client, bufnr)
-  print("LSP started.");
+local preview_location_callback = function(_, result)
+  if result == nil or vim.tbl_isempty(result) then
+    return nil
+  end
+  vim.lsp.util.preview_location(result[1])
+end
 
+local peek = function(f)
+    local params = vim.lsp.util.make_position_params()
+    return vim.lsp.buf_request(0, f, params, preview_location_callback)
+end
+
+
+custom_attach = function(client, bufnr)
   local map = function(key, value)
     vim.api.nvim_buf_set_keymap(bufnr,"n",key,value,{noremap = true, silent = true});
   end
@@ -68,4 +79,6 @@ custom_attach = function(client, bufnr)
       vim.api.nvim_command("autocmd CursorMoved <buffer> lua vim.lsp.util.buf_clear_references()")
   end
   vim.api.nvim_command("augroup END")
+
+  print("LSP started.");
 end

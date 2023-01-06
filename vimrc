@@ -252,7 +252,7 @@ if has('nvim')
               \ }
 
   if g:at_work
-    luafile $HOME/.vim/lsp/coq_ciderlsp.lua
+    luafile $HOME/.vim/lua/coq_ciderlsp.lua
   else
     " TODO Configure language servers / linters for home use
   endif

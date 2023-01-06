@@ -13,18 +13,6 @@ configs.ciderlsp = {
   };
 }
 
-local preview_location_callback = function(_, result)
-  if result == nil or vim.tbl_isempty(result) then
-    return nil
-  end
-  vim.lsp.util.preview_location(result[1])
-end
-
-peek = function(f)
-  local params = vim.lsp.util.make_position_params()
-  return vim.lsp.buf_request(0, f, params, preview_location_callback)
-end
-
 require('lsp_config')
 nvim_lsp.ciderlsp.setup{ on_attach = custom_attach }
 
