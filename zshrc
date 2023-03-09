@@ -3,7 +3,7 @@ ZSH=$HOME/.oh-my-zsh
 
 typeset -U PATH
 
-[[ -e /google ]] && WORK=true
+[[ -e /google ]] && export WORK=true
 [[ $(uname) == "Linux" ]] && LINUX=true
 [[ $(uname) == "Darwin" ]] && MACOS=true
 
