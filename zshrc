@@ -135,6 +135,25 @@ if [ $WORK ]; then
       command gcert "$@"
   }
 
+  # connect to cloudtop in background
+  function cloudtop_setup() {
+      ssh -MNfS ~/.ssh/cloudtop $USER.c.googlers.com
+  }
+  function cloudtop_attach() {
+      ssh -S ~/.ssh/cloudtop $USER.c.googlers.com
+  }
+
+  function goodmorning() {
+      if [ $MACOS ]; then
+          rw $USER.zrh.corp.google.com $USER.c.googlers.com \
+              --gmosh \
+              --tmux --tmux_session work
+      else # linux
+          rw $USER.c.googlers.com
+          [ -n "$TMUX" ] || tmx2 new -A -s work
+      fi
+  }
+
   if [ $LINUX ]; then
 
     function workspace() {
