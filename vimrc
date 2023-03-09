@@ -50,6 +50,21 @@ endif
 if has('nvim')
 " language server
   Plug 'neovim/nvim-lspconfig'
+  " " snippets
+  " Plug 'hrsh7th/vim-vsnip'
+  " " completion sources
+  " Plug 'hrsh7th/cmp-nvim-lsp'
+  " Plug 'hrsh7th/cmp-buffer'
+  " Plug 'hrsh7th/cmp-nvim-lua'
+  " Plug 'hrsh7th/cmp-path'
+  " Plug 'hrsh7th/cmp-vsnip'
+  " Plug 'hrsh7th/cmp-cmdline'
+  " Plug 'hrsh7th/nvim-cmp'
+  " " stuff, probably delete
+  " Plug 'onsails/lspkind.nvim'
+  " diagnostics
+  " TODO actually use
+  Plug 'folke/trouble.nvim'
   " async autocomplete
   Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 endif
@@ -206,7 +221,7 @@ endif
 
 set noswapfile
 
-set completeopt=
+set completeopt=menu,menuone,noselect
 
 " max line matching offset in diff mode
 if has('nvim-0.9')
@@ -223,7 +238,7 @@ set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
 set wildignore+=bin/*,build/*,*/bin/*,*/build/*
 
 " save on losing focus
-autocmd FocusLost,Tableave,BufLeave * :call Autosave()
+autocmd FocusLost,Tableave,BufLeave * call Autosave()
 function! Autosave()
     if filereadable(expand("%:p"))
         silent! write
@@ -231,7 +246,7 @@ function! Autosave()
 endfunction
 if g:at_work
   function! MaybeFormatCode()
-    if expand("%:t") != 'lvs.borg' && !&diff
+    if !&diff && codefmt#IsFormatterAvailable()
       FormatCode
     endif
   endfunction
@@ -239,8 +254,8 @@ if g:at_work
   " Use ›:noa w‹ to skip autocommand
 endif
 
-" check for external changes on gaining focus
-autocmd FocusGained,BufEnter * :checktime
+" check for external changes on gaining focus on real file
+autocmd FocusGained,BufEnter */* checktime
 
 
 " ===== LANGUAGE SERVER CONFIG =====
@@ -253,6 +268,11 @@ if has('nvim')
 
   if g:at_work
     luafile $HOME/.vim/lua/coq_ciderlsp.lua
+    " TODO if nothing works for ml suggest, how about coc.nvim? it's more like
+    " ale in the config, so that's annoying.
+    " luafile $HOME/.vim/lua/cmp_ciderlsp.lua
+    " TODO enable
+    " luafile $HOME/.vim/lua/diagnostics.lua
   else
     " TODO Configure language servers / linters for home use
   endif
@@ -286,4 +306,4 @@ let g:airline_section_z =
       \ '%p%% ' .
       \ '%l%#__accent_bold#/%L%#__restore__#' .
       \ ':%3v'
-let g:ailine#extensions#tabline#enabled = 0
+let g:airline#extensions#tabline#enabled = 0
