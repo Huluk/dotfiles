@@ -44,6 +44,10 @@ Plug 'vim-airline/vim-airline-themes'
 if has('nvim')
   " solarized theme
   Plug 'icymind/NeoSolarized'
+  if !g:at_work
+    " molokai theme
+    Plug 'ofirgall/ofirkai.nvim'
+  endif
 endif
 
 " === Language-specific ===
@@ -156,7 +160,11 @@ nmap <localleader>us :setlocal spell spelllang=en_us<CR>
 " ===== SETTINGS =====
 " nvim-compatibility for vim
 if has('nvim')
-  colorscheme NeoSolarized
+  if g:at_work
+    colorscheme NeoSolarized
+  else
+    colorscheme ofirkai
+  endif
 else
   source ~/.vim/non-nvim.vim
 endif
@@ -167,6 +175,10 @@ if g:at_work
 endif
 
 set number
+if !g:at_work
+  set relativenumber
+  set cursorline
+endif
 set signcolumn=number
 
 set ignorecase

@@ -5,6 +5,10 @@ TEXT = "/Volumes/Huluk/Documents"
 IMG = "/Volumes/Huluk/Pictures"
 IOTA = "i" # proper iota doesn't work :(
 
+def strip_prefix(str, prefix=/^\w+\-/)
+  str.sub(prefix, '')
+end
+
 ARGV.each do |filepath|
   name = File.basename(filepath)
   destination =
@@ -25,20 +29,22 @@ ARGV.each do |filepath|
       "#{TEXT}/Esperanto/Magazine/Esperanto Aktuell/"
     when /^Kontakto[_\d]+\.pdf/
       "#{TEXT}/Esperanto/Magazine/Kontakto/"
-    when /^t22\-/
-      "#{TEXT}/Travel/Tickets/2022/"
+    when /^t23\-/
+      "#{TEXT}/Travel/Tickets/2023/#{strip_prefix name}"
+    when /^n\-/
+      "#{TEXT}/Howto/Nähen/#{strip_prefix name}"
     when /^Screenshot/
       "#{HOME}/Pictures/"
     when /^#{IOTA}\-/
-      "#{IMG}/Internetz/#{name.sub(/\w+\-/, '')}"
+      "#{IMG}/Internetz/#{strip_prefix name}"
     when /^#{IOTA}m\-/
-      "#{IMG}/Internetz/Maps/#{name.sub(/\w+\-/, '')}"
+      "#{IMG}/Internetz/Maps/#{strip_prefix name}"
     when /^#{IOTA}c\-/
-      "#{IMG}/Internetz/Compasses/#{name.sub(/\w+\-/, '')}"
+      "#{IMG}/Internetz/Compasses/#{strip_prefix name}"
     when /^#{IOTA}l\-/
-      "#{IMG}/Internetz/Learn/#{name.sub(/\w+\-/, '')}"
+      "#{IMG}/Internetz/Learn/#{strip_prefix name}"
     when /^#{IOTA}r\-/
-      "#{IMG}/Internetz/Random/#{name.sub(/\w+\-/, '')}"
+      "#{IMG}/Internetz/Random/#{strip_prefix name}"
     else
       nil
     end
