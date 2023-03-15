@@ -136,20 +136,28 @@ if [ $WORK ]; then
   }
 
   # connect to cloudtop in background
-  function cloudtop_setup() {
-      ssh -MNfS ~/.ssh/cloudtop $USER.c.googlers.com
+  CLOUDTOP_SOCKET=~/.ssh/cloudtop
+  CLOUDTOP_REMOTE=$USER.c.googlers.com
+  DESKTOP_REMOTE=$USER.zrh.corp.google.com
+  function cloudtop_connect() {
+      ssh -S $CLOUDTOP_SOCKET $CLOUDTOP_REMOTE $*
+  }
+  function cloudtop_master() {
+      cloudtop_connect -O check 2>/dev/null || cloudtop_connect -MNf
   }
   function cloudtop_attach() {
-      ssh -S ~/.ssh/cloudtop $USER.c.googlers.com
+      cloudtop_connect -t "cd '$(pwd)'; zsh" $*
   }
+  alias ca=cloudtop_attach
 
   function goodmorning() {
+      # uses go/roadwarrior
       if [ $MACOS ]; then
-          rw $USER.zrh.corp.google.com $USER.c.googlers.com \
-              --gmosh \
-              --tmux --tmux_session work
+          rw $DESKTOP_REMOTE $CLOUDTOP_REMOTE
+          ssh $DESKTOP_REMOTE -c "cloudtop_master; zsh"
       else # linux
-          rw $USER.c.googlers.com
+          rw $CLOUDTOP_REMOTE
+          cloudtop_master
           [ -n "$TMUX" ] || tmx2 new -A -s work
       fi
   }
@@ -159,7 +167,8 @@ if [ $WORK ]; then
     function workspace() {
         g4d $1 &&
             tmux split-window -hb -p 64 -c "$(pwd)" &&
-            tmux rename-window $1
+            tmux rename-window $1 &&
+            cloudtop_attach
     }
     alias w=workspace
 
