@@ -45,6 +45,14 @@ ARGV.each do |filepath|
       "#{IMG}/Internetz/Learn/#{strip_prefix name}"
     when /^#{IOTA}r\-/
       "#{IMG}/Internetz/Random/#{strip_prefix name}"
+    when /^news\-/
+      "#{TEXT}/About/Current Affairs/News Articles/#{strip_prefix name}"
+    when /^zsz\-/
+      "#{TEXT}/About/Current Affairs/News Articles/ZSZ/#{strip_prefix name}"
+    when /^nzz\-/
+      "#{TEXT}/About/Current Affairs/News Articles/NZZ/#{strip_prefix name}"
+    when /^economist\-/
+      "#{TEXT}/About/Current Affairs/News Articles/Economist/#{strip_prefix name}"
     else
       nil
     end
