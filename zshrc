@@ -152,11 +152,12 @@ if [ $WORK ]; then
 
   function goodmorning() {
       # uses go/roadwarrior
+      AUTH_SSH_CERTIFICATION=false
       if [ $MACOS ]; then
-          rw $DESKTOP_REMOTE $CLOUDTOP_REMOTE
-          ssh $DESKTOP_REMOTE -c "cloudtop_master; zsh"
+          rw $DESKTOP_REMOTE $CLOUDTOP_REMOTE --no_prodssh \
+              --command "cloudtop_master; zsh"
       else # linux
-          rw $CLOUDTOP_REMOTE
+          rw $CLOUDTOP_REMOTE --no_prodssh --nossh_interactively
           cloudtop_master
           [ -n "$TMUX" ] || tmx2 new -A -s work
       fi
