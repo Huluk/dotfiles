@@ -19,6 +19,7 @@ mkdir -p ~/.config/nvim
 ln -s $DIR/nvim_init.vim ~/.config/nvim/init.vim
 
 ln -s $DIR/ssh_config ~/.ssh/config
+ln -s $DIR/tmux.conf ~/.tmux.conf
 
 # Mac OS only!
 if [[ $OSTYPE = darwin* ]]; then

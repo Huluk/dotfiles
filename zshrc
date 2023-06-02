@@ -135,12 +135,16 @@ if [ $WORK ]; then
       command gcert "$@"
   }
 
+  function tmx() {
+      tmx2 new -A -s work
+  }
+
   # connect to cloudtop in background
   CLOUDTOP_SOCKET=~/.ssh/cloudtop
   CLOUDTOP_REMOTE=$USER.c.googlers.com
   DESKTOP_REMOTE=$USER.zrh.corp.google.com
   function cloudtop_connect() {
-      ssh -S $CLOUDTOP_SOCKET $CLOUDTOP_REMOTE $*
+      ssh -S "$CLOUDTOP_SOCKET" "$CLOUDTOP_REMOTE" $*
   }
   function cloudtop_master() {
       cloudtop_connect -MNf
@@ -154,10 +158,9 @@ if [ $WORK ]; then
       # uses go/roadwarrior
       AUTH_SSH_CERTIFICATION=false
       if [ $MACOS ]; then
-          rw $DESKTOP_REMOTE $CLOUDTOP_REMOTE --no_prodssh \
-              --command zsh
+          rw "$DESKTOP_REMOTE" "$CLOUDTOP_REMOTE" --no_prodssh --command zsh
       else # linux
-          rw $CLOUDTOP_REMOTE --no_prodssh --nossh_interactively
+          rw "$CLOUDTOP_REMOTE" --no_prodssh --nossh_interactively
           cloudtop_master
       fi
   }
@@ -168,7 +171,7 @@ if [ $WORK ]; then
         g4d $1 &&
             tmux split-window -hb -p 64 -c "$(pwd)" &&
             tmux rename-window $1 &&
-            cloudtop_attach
+            [ $(print -P %M) = $CLOUDTOP_REMOTE ] || cloudtop_attach
     }
     alias w=workspace
 
@@ -235,3 +238,6 @@ else # non-work
   # if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then
 
 fi
+
+# Setup go/hi #!>>HI<<!#
+source /etc/bash.bashrc.d/shell_history_forwarder.sh #!>>HI<<!#
