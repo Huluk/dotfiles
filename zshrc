@@ -155,7 +155,7 @@ if [ $WORK ]; then
       AUTH_SSH_CERTIFICATION=false
       if [ $MACOS ]; then
           rw $DESKTOP_REMOTE $CLOUDTOP_REMOTE --no_prodssh \
-              --command "cloudtop_master; zsh"
+              --command zsh
       else # linux
           rw $CLOUDTOP_REMOTE --no_prodssh --nossh_interactively
           cloudtop_master

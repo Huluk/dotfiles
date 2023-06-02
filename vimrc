@@ -1,5 +1,6 @@
 " ===== WORK SETUP? =====
 let g:at_work = isdirectory('/google') && !has('macunix')
+let g:work_laptop = isdirectory('/google') && has('macunix')
 
 " ===== PLUGINS =====
 " https://github.com/junegunn/vim-plug
@@ -160,7 +161,7 @@ nmap <localleader>us :setlocal spell spelllang=en_us<CR>
 " ===== SETTINGS =====
 " nvim-compatibility for vim
 if has('nvim')
-  if g:at_work
+  if g:at_work || g:work_laptop
     colorscheme NeoSolarized
   else
     colorscheme ofirkai
