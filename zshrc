@@ -143,7 +143,7 @@ if [ $WORK ]; then
       ssh -S $CLOUDTOP_SOCKET $CLOUDTOP_REMOTE $*
   }
   function cloudtop_master() {
-      cloudtop_connect -O check 2>/dev/null || cloudtop_connect -MNf
+      cloudtop_connect -MNf
   }
   function cloudtop_attach() {
       cloudtop_connect -t "cd '$(pwd)'; zsh" $*
@@ -159,7 +159,6 @@ if [ $WORK ]; then
       else # linux
           rw $CLOUDTOP_REMOTE --no_prodssh --nossh_interactively
           cloudtop_master
-          [ -n "$TMUX" ] || tmx2 new -A -s work
       fi
   }
 
@@ -190,14 +189,21 @@ if [ $WORK ]; then
 
     alias gaiamint='/google/data/ro/projects/gaiamint/bin/get_mint  --type=loas --text --endusercreds --scopes=77900  --out=/tmp/auth.txt'
 
-    alias x='hg xl'
-    alias s='hg st'
-    alias u='hg ut'
-    alias d='hg diff'
+    unalias h
+    alias hx='hg xl'
+    alias hs='hg st'
+    alias hy='hg sync'
+    alias hu='hg ut'
+    alias hd='hg diff'
+    alias hpd='hg pdiff'
+    alias ht='hg checkout tip'
+    alias hh='hg checkout p4head'
 
     export LANGUAGE=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
 
+    # Setup go/hi #!>>HI<<!#
+    source /etc/bash.bashrc.d/shell_history_forwarder.sh #!>>HI<<!#
   fi
 
 else # non-work
