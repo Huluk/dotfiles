@@ -238,6 +238,3 @@ else # non-work
   # if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then
 
 fi
-
-# Setup go/hi #!>>HI<<!#
-source /etc/bash.bashrc.d/shell_history_forwarder.sh #!>>HI<<!#
