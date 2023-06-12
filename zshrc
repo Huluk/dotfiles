@@ -194,13 +194,20 @@ if [ $WORK ]; then
 
     unalias h
     alias hx='hg xl'
+    alias hl='hg ll'
     alias hs='hg st'
     alias hy='hg sync'
-    alias hu='hg ut'
+    alias hsy='hg sync'
+    alias hu='hg upload'
+    alias hut='hg upload tree'
+    alias ha='hg amend'
+    alias hau='hg amend && hg upload tree'
     alias hd='hg diff'
     alias hpd='hg pdiff'
-    alias ht='hg checkout tip'
-    alias hh='hg checkout p4head'
+    alias hdp='hg pdiff'
+    alias hc='hg checkout'
+    alias hct='hg checkout tip'
+    alias hch='hg checkout p4head'
 
     export LANGUAGE=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
