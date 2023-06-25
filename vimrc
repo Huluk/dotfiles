@@ -141,6 +141,9 @@ nmap <leader>o :!chmod +x %:S<CR>l
 " select pasted text
 nmap <silent> <leader>s V`]
 
+" uppercase previous word
+inoremap <c-ü> <Esc>bgU$A
+
 " horizontal split
 nmap <leader>h :split<CR><C-w>j
 " vertical split
