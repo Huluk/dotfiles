@@ -176,8 +176,7 @@ if [ $WORK ]; then
     alias w=workspace
 
     function cl() {
-        CL=$(hg ll -r . | head -n1 | awk '{print $4}')
-        open "http://${CL}"
+        open "http://cl/$(hg exportedcl)"
     }
 
     # WORK-shortcuts
@@ -192,19 +191,32 @@ if [ $WORK ]; then
 
     alias gaiamint='/google/data/ro/projects/gaiamint/bin/get_mint  --type=loas --text --endusercreds --scopes=77900  --out=/tmp/auth.txt'
 
+    alias jarvis_cli=/google/bin/releases/ke-graph-exp/tools/jarvis_cli
+
     unalias h
     alias hx='hg xl'
     alias hl='hg ll'
     alias hs='hg st'
+
     alias hy='hg sync'
     alias hsy='hg sync'
+
     alias hu='hg upload'
     alias hut='hg upload tree'
+
     alias ha='hg amend'
-    alias hau='hg amend && hg upload tree'
+    alias hau='hg amend && hg upload'
+    alias haut='hg amend && hg upload tree'
+    alias hay='hg amend && hg sync'
+    alias hayu='hg amend && hg sync && hg upload'
+    alias hayut='hg amend && hg sync && hg upload tree'
+
     alias hd='hg diff'
     alias hpd='hg pdiff'
     alias hdp='hg pdiff'
+    alias hdu='hg diffexported'
+    alias hdsnap='hg diffexported'
+
     alias hc='hg checkout'
     alias hct='hg checkout tip'
     alias hch='hg checkout p4head'
