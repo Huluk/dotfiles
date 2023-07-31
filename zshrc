@@ -158,10 +158,9 @@ if [ $WORK ]; then
       # uses go/roadwarrior
       AUTH_SSH_CERTIFICATION=false
       if [ $MACOS ]; then
-          rw "$DESKTOP_REMOTE" "$CLOUDTOP_REMOTE" --no_prodssh --command zsh
+          rw "$DESKTOP_REMOTE" --no_prodssh --command zsh
       else # linux
-          rw "$CLOUDTOP_REMOTE" --no_prodssh --nossh_interactively
-          cloudtop_master
+          rw --no_prodssh --nossh_interactively
       fi
   }
 
@@ -194,32 +193,33 @@ if [ $WORK ]; then
     alias jarvis_cli=/google/bin/releases/ke-graph-exp/tools/jarvis_cli
 
     unalias h
-    alias hx='hg xl'
-    alias hl='hg ll'
-    alias hs='hg st'
+    alias hx='chg xl'
+    alias hl='chg ll'
+    alias hs='chg st'
 
-    alias hy='hg sync'
-    alias hsy='hg sync'
+    alias hy='chg sync'
+    alias hsy='chg sync'
 
-    alias hu='hg upload'
-    alias hut='hg upload tree'
+    alias hu='chg upload'
+    alias hut='chg upload tree'
 
-    alias ha='hg amend'
-    alias hau='hg amend && hg upload'
-    alias haut='hg amend && hg upload tree'
-    alias hay='hg amend && hg sync'
-    alias hayu='hg amend && hg sync && hg upload'
-    alias hayut='hg amend && hg sync && hg upload tree'
+    alias ha='chg amend'
+    alias hau='chg amend && chg upload'
+    alias haut='chg amend && chg upload tree'
+    alias hay='chg amend && chg sync'
+    alias hayu='chg amend && chg sync && chg upload'
+    alias hayut='chg amend && chg sync && chg upload tree'
 
-    alias hd='hg diff'
-    alias hpd='hg pdiff'
-    alias hdp='hg pdiff'
-    alias hdu='hg diffexported'
-    alias hdsnap='hg diffexported'
+    alias hd='chg diff'
+    alias hpd='chg pdiff'
+    alias hdp='chg pdiff'
+    alias hdu='chg diffexported'
+    alias hdsnap='chg diffexported'
 
-    alias hc='hg checkout'
-    alias hct='hg checkout tip'
-    alias hch='hg checkout p4head'
+    alias hc='chg checkout'
+    alias hct='chg checkout tip'
+    alias hch='chg checkout p4head'
+    alias hcp='chg checkout p4head'
 
     export LANGUAGE=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
