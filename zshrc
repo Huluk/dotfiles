@@ -169,8 +169,7 @@ if [ $WORK ]; then
     function workspace() {
         g4d $1 &&
             tmux split-window -hb -p 64 -c "$(pwd)" &&
-            tmux rename-window $1 &&
-            [ $(print -P %M) = $CLOUDTOP_REMOTE ] || cloudtop_attach
+            tmux rename-window $1
     }
     alias w=workspace
 
@@ -206,6 +205,7 @@ if [ $WORK ]; then
     alias ha='chg amend'
     alias hau='chg amend && chg upload'
     alias haut='chg amend && chg upload tree'
+    alias haeut='chg amend && chg evolve && chg upload tree'
     alias hay='chg amend && chg sync'
     alias hayu='chg amend && chg sync && chg upload'
     alias hayut='chg amend && chg sync && chg upload tree'
