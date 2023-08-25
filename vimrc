@@ -35,6 +35,8 @@ Plug 'ludovicchabant/vim-lawrencium'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " tmux split navigation
 Plug 'christoomey/vim-tmux-navigator'
+" tmux remote clipboard
+Plug 'ojroques/nvim-osc52'
 " fzf fuzzyfinder
 Plug 'junegunn/fzf'
 
@@ -55,18 +57,6 @@ endif
 if has('nvim')
 " language server
   Plug 'neovim/nvim-lspconfig'
-  " " snippets
-  " Plug 'hrsh7th/vim-vsnip'
-  " " completion sources
-  " Plug 'hrsh7th/cmp-nvim-lsp'
-  " Plug 'hrsh7th/cmp-buffer'
-  " Plug 'hrsh7th/cmp-nvim-lua'
-  " Plug 'hrsh7th/cmp-path'
-  " Plug 'hrsh7th/cmp-vsnip'
-  " Plug 'hrsh7th/cmp-cmdline'
-  " Plug 'hrsh7th/nvim-cmp'
-  " " stuff, probably delete
-  " Plug 'onsails/lspkind.nvim'
   " diagnostics
   " TODO actually use
   Plug 'folke/trouble.nvim'
@@ -281,6 +271,9 @@ if has('nvim')
               \ 'completion.always': v:false,
               \ 'keymap.jump_to_mark': '<LocalLeader>m',
               \ }
+
+  " Support clipboard over ssh via tmux.
+  luafile $HOME/.vim/lua/clipboard.lua
 
   if g:at_work
     luafile $HOME/.vim/lua/coq_ciderlsp.lua
