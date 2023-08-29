@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
 HOME = ENV['HOME']
-TEXT = "/Volumes/Huluk/Documents"
-IMG = "/Volumes/Huluk/Pictures"
+TEXT = "/Volumes/kEb8ASeZOpEE/Documents"
+IMG = "/Volumes/kEb8ASeZOpEE/Pictures"
 IOTA = "i" # proper iota doesn't work :(
 
 def strip_prefix(str, prefix=/^\w+\-/)

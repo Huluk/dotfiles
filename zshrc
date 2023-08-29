@@ -252,7 +252,7 @@ else # non-work
           --exclude='*.thumbnails' \
           --exclude='*.pagedata' \
           'root@remarkable:/home/root/.local/share/remarkable/xochitl/*' \
-          /Volumes/Huluk/remarkable-backup/files/
+          /Volumes/kEb8ASeZOpEE/remarkable-backup/files/
       }
   # if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then
 
