@@ -1,4 +1,29 @@
 [ui]
-username = LarsHuluk <LarsHuluk@gmail.com>
+username = larsthansen
 ignore = ~/.gitignore_global
-[auth]
+merge = vimdiff
+
+[merge-tools]
+vimdiff.executable = nvim
+vimdiff.args = -d $base $local $output $other +close +close
+
+[alias]
+x = ll -r smart --pager=no
+l = ll
+s = status
+y = sync
+a = amend
+e = evolve
+d = diff
+dp = pdiff
+de = diffexported
+c = checkout
+ct = checkout tip
+ch = checkout p4head
+cp = checkout 'p1(p1())'
+
+[pager]
+ignore = status
+
+[trainingwheels]
+prevent-push-dirty = true

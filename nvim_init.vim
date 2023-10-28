@@ -2,4 +2,4 @@ set runtimepath+=~/.vim,~/.vim/after
 set packpath+=~/.vim
 source ~/.vimrc
 
-set background=dark
+set background=light

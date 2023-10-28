@@ -62,6 +62,7 @@ if has('nvim')
   Plug 'folke/trouble.nvim'
   " async autocomplete
   Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 endif
 " auto-add end statements of indented code blocks
 " Plug 'tpope/vim-endwise'

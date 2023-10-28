@@ -107,7 +107,13 @@ bindkey "^[w" backward-kill-word
 
 bindkey -v
 
-v(){ nvim -p $* }
+v(){
+  if [[ ( $# -eq 1 ) && ( "$*" =~ ^(.+):([[:digit:]]+)$ ) ]]; then
+    nvim +${match[2]} ${match[1]}
+  else
+    nvim -p $*
+  fi
+}
 alias vdiff='nvim -d'
 alias vd='nvim -d -c "windo set wrap"'
 
@@ -216,13 +222,15 @@ if [ $WORK ]; then
     vvsl='vision/visualsearch/server/lens'
 
     source /etc/bash_completion.d/g4d
-    alias intellij=/opt/intellij-ce-stable/bin/idea.sh
+    alias intellij='/opt/intellij-ce-stable/bin/idea.sh'
 
     alias gaiamint='/google/data/ro/projects/gaiamint/bin/get_mint  --type=loas --text --endusercreds --scopes=77900  --out=/tmp/auth.txt'
 
-    alias jarvis_cli=/google/bin/releases/ke-graph-exp/tools/jarvis_cli
+    alias jarvis_cli='/google/bin/releases/ke-graph-exp/tools/jarvis_cli'
+    alias bs2='/google/bin/releases/blobstore2/tools/bs2/bs2'
 
     unalias h
+    alias h="raku $HOME/hidden/dotfiles/version_control.raku"
     alias hx='chg xl'
     alias hl='chg ll'
     alias hs='chg st'
@@ -250,7 +258,10 @@ if [ $WORK ]; then
     alias hc='chg checkout'
     alias hct='chg checkout tip'
     alias hch='chg checkout p4head'
-    alias hcp='chg checkout p4head'
+    function hcparent() {
+      # TODO support parameter to go to grandparents etc.
+      chg checkout 'p1(p1())' && chg log --rev 'p1()' | echo
+    }
 
     export LANGUAGE=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
