@@ -189,7 +189,7 @@ if [ $WORK ]; then
       # uses go/roadwarrior
       AUTH_SSH_CERTIFICATION=false
       if [ $MACOS ]; then
-          rw "$DESKTOP_REMOTE" --no_prodssh --command zsh
+          rw "$CLOUDTOP_REMOTE" --no_prodssh --command zsh
       else # linux
           rw --no_prodssh --nossh_interactively
       fi
