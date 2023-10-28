@@ -7,6 +7,8 @@
 	name = Lars Hansen
 [credential]
 	helper = osxkeychain
+[init]
+	defaultBranch = main
 [push]
 	default = current
 [pull]

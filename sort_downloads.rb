@@ -14,15 +14,17 @@ ARGV.each do |filepath|
   destination =
     case name
     when /^\w{3}_P_CH.*\.pdf/
-      "#{TEXT}/Adulting/Konto/PostFinance/"
+      "#{TEXT}/Konto/PostFinance/"
     when /^Revolut.*\.pdf/
-      "#{TEXT}/Adulting/Konto/Revolut/"
+      "#{TEXT}/Konto/Revolut/"
     when /^(Girok|Extra_K)onto_(5419513690|5559012820)_Kontoauszug_\d*\.pdf/
-      "#{TEXT}/Adulting/Konto/DiBa/"
+      "#{TEXT}/Konto/DiBa/"
     when /^\d{8}_.*_Payslip_\d{6}\.pdf/
-      "#{TEXT}/Adulting/Arbeit/Google/Payslips/"
+      "#{TEXT}/Arbeit/Google/Payslips/"
+    when /^ekz-elektr/
+      "#{TEXT}/Wohnen/ZH Baumgartenweg/Nebenkosten/"
     when /^CI_NEWS/
-      "#{TEXT}/Adulting/Versicherung/Cryonics/Newsletter/"
+      "#{TEXT}/Versicherung/Cryonics/Newsletter/"
     when /^FLT_/, /^FLIX-/
       "#{TEXT}/Travel/Tickets/"
     when /^Esperanto_aktuell.*\.pdf/, /EA\d.\d{4}.reta/
