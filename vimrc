@@ -25,6 +25,9 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'whatyouhide/vim-lengthmatters'
 " auto-remove search highlight on cursor movement
 Plug 'junegunn/vim-slash'
+" color-coded parentheses
+" TODO Try this again when it is more stable.
+" Plug 'hiphish/rainbow-delimiters.nvim'
 
 " === Integration ===
 " git wrapper
@@ -284,7 +287,7 @@ if has('nvim')
     " TODO enable
     " luafile $HOME/.vim/lua/diagnostics.lua
   else
-    " TODO Configure language servers / linters for home use
+    luafile $HOME/.vim/lua/home_lsp.lua
   endif
 endif
 

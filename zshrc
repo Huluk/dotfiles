@@ -274,6 +274,9 @@ else # non-work
 
   alias octave="octave --no-gui"
 
+  export ANDROID_HOME=/Users/huluk/Library/Android/sdk
+  export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
   diary_open() {
       (wd text && cd diary &&
         ARG='' &&
