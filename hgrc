@@ -20,7 +20,7 @@ de = diffexported
 c = checkout
 ct = checkout tip
 ch = checkout p4head
-cp = checkout 'p1(p1())'
+cparent = checkout 'p1(p1())'
 
 [pager]
 ignore = status

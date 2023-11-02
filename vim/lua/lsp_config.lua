@@ -79,7 +79,7 @@ custom_attach = function(client, bufnr)
       vim.api.nvim_command("autocmd CursorMoved <buffer> lua vim.lsp.util.buf_clear_references()")
   end
   if client.server_capabilities.documentFormattingProvider then
-    vim.api.nvim_command("silent! autocmd BufWritePre <buffer> lua vim.lsp.buf.format()")
+    vim.api.nvim_command("autocmd BufWritePre lua vim.lsp.buf.format()")
   end
   vim.api.nvim_command("augroup END")
 

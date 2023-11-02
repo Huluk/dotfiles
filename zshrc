@@ -248,6 +248,8 @@ if [ $WORK ]; then
     alias hay='chg amend && chg sync'
     alias hayu='chg amend && chg sync && chg upload'
     alias hayut='chg amend && chg sync && chg upload tree'
+    alias hyu='chg sync && chg upload'
+    alias hyu='chg sync && chg upload tree'
 
     alias hd='chg diff'
     alias hpd='chg pdiff'
