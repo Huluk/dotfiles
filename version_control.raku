@@ -31,6 +31,20 @@ grammar Command {
   token int_ { \-?\d+ }
 }
 
+class Cmd {
+  has Str @cmd is built;
+  has Bool $say is built;
+
+  method new(*@cmd, Bool :$say = False) {
+    return self.bless(:@cmd, :$say);
+  }
+
+  method run {
+    say @cmd.join(' ') if $say;
+    return run @cmd, |%_;
+  }
+}
+
 class Execute {
   method TOP ($/) { make map { .made }, @<cmd>; }
   method arg:sym<any> ($/) { make $/; }
@@ -39,18 +53,29 @@ class Execute {
 }
 
 class MercurialExecute is Execute {
-  sub exec(*@args) {
-    'chg', |@args;
+  sub exec(*@args, Bool :$say = False) {
+    Cmd.new('chg', |@args) :$say;
+  }
+
+  sub read-log(:$rev, *@nodes) {
+    my $nodes = join '\t', map { "\{$_\}" }, @nodes;
+    my $cmd = exec qqw[log -T $nodes\\n -r $rev];
+    my $proc = $cmd.run :out;
+    my @lines = $proc.out.slurp(:close).chomp.split("\n");
+    return map { .split("\t") }, @lines;
   }
 
   method arg:sym<parent> ($/) { make <p1(p1())>; }
   method arg:sym<sibling> ($/) {
-    # TODO sibling should work if current = p4head
-    my @cmd = exec <log -T {graphnode}\t{short(node)}\n -r heads(smart)>;
-    my $proc = run @cmd, :out;
-    my @siblings = reverse split "\n", $proc.out.slurp(:close).chomp;
-    my $current = @siblings.first: /^\@/, :k;
-    make @siblings[$<int_>].subst(/^.\t/);
+    my @heads = reverse read-log <graphnode short(node)>, rev => 'heads(smart)';
+    my $current = @heads.first: /^\@/, :k;
+    if not $current.defined {
+      my $heads = join "\n", map { .join(' – ') }, @heads;
+      die "Current commit not found among {@heads.Int} heads:\n$heads";
+    }
+    my ($, $sibling) = @heads[$current + $<int_>];
+    die "Sibling $<int_> not found for current head $current" if not $sibling;
+    make $sibling.subst(/^.\t/);
   }
 
   method cmd:sym<amend> ($/) { make exec <amend>; }
@@ -63,9 +88,9 @@ class MercurialExecute is Execute {
   method cmd:sym<upload_tree> ($/) { make exec <upload tree>; }
 
   method cmd:sym<diff> ($/) { make exec <diff -r>, $<arg>.made; }
-  method cmd:sym<checkout> ($/) { make exec <checkout>, $<arg>.made; }
+  method cmd:sym<checkout> ($/) { make exec <checkout>, $<arg>.made, :say; }
   method cmd:sym<upload> ($/) { make exec <upload>, $<arg>.made; }
-  method cmd:sym<commit> ($/) { make exec <commit -m>, $<arg>.made; }
+  method cmd:sym<commit> ($/) { make exec <commit -m>, $<arg>.made, :say; }
 }
 
 sub MAIN(
@@ -77,7 +102,7 @@ sub MAIN(
   my $args = join $ARGUMENT_SEPARATOR, @args;
   my $parsed = Command.parse($args, actions => MercurialExecute);
   die 'Failed to parse input!' if not $parsed;
-  for $parsed.made -> @cmd {
-    run @cmd;
+  for $parsed.made -> $cmd {
+    $cmd.run;
   }
 }
