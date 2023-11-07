@@ -20,12 +20,13 @@ grammar Command {
         token cmd:sym<short_history> { 'x' }
         token cmd:sym<diff> { 'd' <.sep> <arg> }
         token cmd:sym<checkout> { 'c' <.sep> <arg> }
+        token cmd:sym<commit> { [ <sym> | 'm' ] <.sep> <arg> }
         token cmd:sym<upload> { 'u' <.sep> <arg> }
 
   proto token arg {*}
         token arg:sym<parent> { <sym> }
         token arg:sym<sibling> { [ <sym> | 'sib' ] <int_> }
-        token arg:sym<any> { \w+ }
+        token arg:sym<any> { <:!sep>+ }
 
   token int_ { \-?\d+ }
 }
@@ -44,6 +45,7 @@ class MercurialExecute is Execute {
 
   method arg:sym<parent> ($/) { make <p1(p1())>; }
   method arg:sym<sibling> ($/) {
+    # TODO sibling should work if current = p4head
     my @cmd = exec <log -T {graphnode}\t{short(node)}\n -r heads(smart)>;
     my $proc = run @cmd, :out;
     my @siblings = reverse split "\n", $proc.out.slurp(:close).chomp;
@@ -63,6 +65,7 @@ class MercurialExecute is Execute {
   method cmd:sym<diff> ($/) { make exec <diff -r>, $<arg>.made; }
   method cmd:sym<checkout> ($/) { make exec <checkout>, $<arg>.made; }
   method cmd:sym<upload> ($/) { make exec <upload>, $<arg>.made; }
+  method cmd:sym<commit> ($/) { make exec <commit -m>, $<arg>.made; }
 }
 
 sub MAIN(
