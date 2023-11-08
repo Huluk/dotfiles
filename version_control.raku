@@ -40,14 +40,14 @@ class Cmd {
   }
 
   method run {
-    say @cmd.join(' ') if $say;
+    @cmd.duckmap(-> $_ where /\s/.any { "'$_'" }).join(' ').say if $say;
     return run @cmd, |%_;
   }
 }
 
 class Execute {
   method TOP ($/) { make map { .made }, @<cmd>; }
-  method arg:sym<any> ($/) { make $/; }
+  method arg:sym<any> ($/) { make $/.Str; }
   # TODO populate help output
   method cmd:sym<help> ($/) { make ('echo', 'Help output'); }
 }
