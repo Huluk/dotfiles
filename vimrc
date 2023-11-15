@@ -40,8 +40,8 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 " tmux remote clipboard
 Plug 'ojroques/nvim-osc52'
-" fzf fuzzyfinder
-Plug 'junegunn/fzf'
+" open at line number after colon
+Plug 'wsdjeg/vim-fetch'
 
 " === Optics ===
 " statusline
