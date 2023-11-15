@@ -309,8 +309,7 @@ function! CleanBranchName(name)
   else
     return a:name
   endif
-endfunction
-" don't display branch marker for 'dirty'
+endfunction " don't display branch marker for 'dirty'
 let g:airline#extensions#branch#vcs_checks = ['untracked']
 " don't display filetype at all
 let g:airline_section_x = ''
@@ -320,3 +319,7 @@ let g:airline_section_z =
       \ '%l%#__accent_bold#/%L%#__restore__#' .
       \ ':%3v'
 let g:airline#extensions#tabline#enabled = 0
+
+" screenreader
+luafile $HOME/.vim/lua/screenreader.lua
+command! -range -nargs=* P lua Psay(<line1>, <line2>, 'p<args>')

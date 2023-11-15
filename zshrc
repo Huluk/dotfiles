@@ -81,6 +81,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export EDITOR='nvim'
+alias ex='nvim -E -u ~/.exrc'
 
 if [ $MACOS ]; then
   unalias run-help
@@ -274,7 +275,7 @@ if [ $WORK ]; then
 
 else # non-work
 
-  alias octave="octave --no-gui"
+  alias s="raku $HOME/hide/dotfiles/version_control.raku"
 
   export ANDROID_HOME=/Users/huluk/Library/Android/sdk
   export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
