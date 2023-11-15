@@ -1,2 +1,2 @@
 " make all commands phony
-nmap <leader>! :execute "normal ggO.PHONY: all $(MAKECMDGOALS)"<CR>
+nmap <leader>! :execute "normal ggOMAKEFLAGS += --always-make"<CR>
