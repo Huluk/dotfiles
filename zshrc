@@ -190,7 +190,7 @@ if [ $WORK ]; then
   function cloudtop_attach() {
       cloudtop_connect -t "cd '$(pwd)'; zsh" $*
   }
-  alias ca=cloudtop_attach
+  alias ca="ssh $CLOUDTOP_REMOTE -t 'tmx2 new -A -s work'"
 
   function goodmorning() {
       # uses go/roadwarrior
