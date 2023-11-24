@@ -232,39 +232,23 @@ if [ $WORK ]; then
 
     unalias h
     alias h="raku $HOME/hidden/dotfiles/version_control.raku"
-    alias hx='chg xl'
-    alias hl='chg ll'
-    alias hs='chg st'
 
-    alias hy='chg sync'
-    alias hsy='chg sync'
-
-    alias hu='chg upload'
-    alias hut='chg upload tree'
-
-    alias ha='chg amend'
-    alias hau='chg amend && chg upload'
-    alias haut='chg amend && chg upload tree'
-    alias haeut='chg amend && chg evolve && chg upload tree'
-    alias hay='chg amend && chg sync'
-    alias hayu='chg amend && chg sync && chg upload'
-    alias hayut='chg amend && chg sync && chg upload tree'
-    alias hyu='chg sync && chg upload'
-    alias hyu='chg sync && chg upload tree'
+    alias hx='h x'
+    alias hs='h s'
+    alias hy='h y'
+    alias ha='h a'
+    alias hc='h c'
+    alias hch='h c head'
+    alias hct='h c tip'
+    alias hut='h ut'
+    alias haut='h aut'
+    alias hayut='h ayut'
 
     alias hd='chg diff'
     alias hpd='chg pdiff'
     alias hdp='chg pdiff'
     alias hdu='chg diffexported'
     alias hdsnap='chg diffexported'
-
-    alias hc='chg checkout'
-    alias hct='chg checkout tip'
-    alias hch='chg checkout p4head'
-    function hcparent() {
-      # TODO support parameter to go to grandparents etc.
-      chg checkout 'p1(p1())' && chg log --rev 'p1()' | echo
-    }
 
     export LANGUAGE=en_US.UTF-8
     export LC_ALL=en_US.UTF-8

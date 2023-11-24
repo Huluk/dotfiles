@@ -6,25 +6,30 @@ use v6;
 constant $ARGUMENT_SEPARATOR = "\0";
 
 grammar Command {
-  token TOP { <cmd>+ }
+  token TOP { <command> + }
 
   token sep { $ARGUMENT_SEPARATOR }
 
+  token command { <cmd> <.sep>? }
   proto token cmd {*}
         token cmd:sym<help> { 'h' }
         token cmd:sym<amend> { 'a' }
         token cmd:sym<evolve> { 'e' }
         token cmd:sym<status> { 's' }
         token cmd:sym<sync> { 'y' }
+        token cmd:sym<print> { 'p' }
         token cmd:sym<long_history> { 'l' }
         token cmd:sym<short_history> { 'x' }
         token cmd:sym<diff> { 'd' <.sep> <arg> }
         token cmd:sym<checkout> { 'c' <.sep> <arg> }
         token cmd:sym<commit> { [ <sym> | 'm' ] <.sep> <arg> }
         token cmd:sym<upload> { 'u' <.sep> <arg> }
+        token cmd:sym<upload_tree> { 'ut' }
 
   proto token arg {*}
+        token arg:sym<interactive> { '-i' }
         token arg:sym<parent> { <sym> }
+        token arg:sym<head> { <sym> }
         token arg:sym<sibling> { [ <sym> | 'sib' ] <int_> }
         token arg:sym<any> { <:!sep>+ }
 
@@ -46,7 +51,8 @@ class Cmd {
 }
 
 class Execute {
-  method TOP ($/) { make map { .made }, @<cmd>; }
+  method TOP ($/) { make map { .made }, @<command>; }
+  method command ($/) { make $<cmd>.made; }
   method arg:sym<any> ($/) { make $/.Str; }
   # TODO populate help output
   method cmd:sym<help> ($/) { make ('echo', 'Help output'); }
@@ -57,6 +63,8 @@ class MercurialExecute is Execute {
     Cmd.new('chg', |@args) :$say;
   }
 
+  method detect returns Bool { exec(<root>).run(:out, :err).so }
+
   sub read-log(:$rev, *@nodes) {
     my $nodes = join '\t', map { "\{$_\}" }, @nodes;
     my $cmd = exec qqw[log -T $nodes\\n -r $rev];
@@ -66,6 +74,7 @@ class MercurialExecute is Execute {
   }
 
   method arg:sym<parent> ($/) { make <p1(p1())>; }
+  method arg:sym<head> ($/) { make <p4head>; } # TODO work-specific
   method arg:sym<sibling> ($/) {
     my @heads = reverse read-log <graphnode short(node)>, rev => 'heads(smart)';
     my $current = @heads.first: /^\@/, :k;
@@ -83,6 +92,9 @@ class MercurialExecute is Execute {
   method cmd:sym<status> ($/) { make exec <status>; }
   method cmd:sym<sync> ($/) { make exec <sync>; }
   # TODO ll and xl are work-specific
+  method cmd:sym<print> ($/) {
+    make exec qww|id -T '{clpreferredname}: {desc}' -r.|;
+  }
   method cmd:sym<long_history> ($/) { make exec <ll>; }
   method cmd:sym<short_history> ($/) { make exec <xl>; }
   method cmd:sym<upload_tree> ($/) { make exec <upload tree>; }
@@ -93,6 +105,21 @@ class MercurialExecute is Execute {
   method cmd:sym<commit> ($/) { make exec <commit -m>, $<arg>.made, :say; }
 }
 
+class GitExecute is Execute {
+  sub exec(*@args, Bool :$say = False) {
+    Cmd.new('git', |@args) :$say;
+  }
+
+  method arg:sym<head> ($/) { make <HEAD>; }
+
+  method detect returns Bool {
+    return exec(<rev-parse --show-toplevel>).run(:out, :err).so;
+  }
+
+  method cmd:sym<status> ($/) { make exec <status>; }
+  method cmd:sym<commit> ($/) { make exec <commit -am>, $<arg>.made, :say; }
+}
+
 sub MAIN(
   $cmd,  #= One or more letters representing a command. Use 'h' for help.
   *@args #= Arguments
@@ -100,7 +127,18 @@ sub MAIN(
   # cmd is a separate argument to enforce that a command is passed.
   @args.unshift($cmd);
   my $args = join $ARGUMENT_SEPARATOR, @args;
-  my $parsed = Command.parse($args, actions => MercurialExecute);
+  my $is-mercurial = MercurialExecute.detect;
+  my $is-git = GitExecute.detect;
+  if not $is-mercurial and not $is-git {
+    die 'No version control detected.';
+  }
+  if $is-mercurial and $is-git {
+    die 'Multiple version control systems detected. No idea what to do.';
+  }
+  my $parsed = Command.parse(
+    $args,
+    actions => $is-git ?? GitExecute !! MercurialExecute
+  );
   die 'Failed to parse input!' if not $parsed;
   for $parsed.made -> $cmd {
     $cmd.run;
