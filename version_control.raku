@@ -31,7 +31,7 @@ grammar Command {
         token arg:sym<parent> { <sym> }
         token arg:sym<head> { <sym> }
         token arg:sym<sibling> { [ <sym> | 'sib' ] <int_> }
-        token arg:sym<any> { <:!sep>+ }
+        token arg:sym<any> { <{ "<-[$ARGUMENT_SEPARATOR]>" }>+ }
 
   token int_ { \-?\d+ }
 }
