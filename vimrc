@@ -54,6 +54,10 @@ endif
 " open at line number after colon
 Plug 'wsdjeg/vim-fetch'
 
+" TODO if !has('nvim-0.10')
+" tmux remote clipboard
+Plug 'ojroques/nvim-osc52'
+
 " === Optics ===
 " statusline
 Plug 'vim-airline/vim-airline'
@@ -69,7 +73,8 @@ endif
 
 " === Language-specific ===
 if has('nvim')
-" language server
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " language server
   Plug 'neovim/nvim-lspconfig'
   if g:lsp == 'cmp'
     " Buffer-based completion
@@ -91,13 +96,19 @@ if has('nvim')
   endif
 endif
 " auto-add end statements of indented code blocks
-Plug 'tpope/vim-endwise', { 'for': 'ruby' }
+Plug 'tpope/vim-endwise', { 'for': ['ruby', 'lua'] }
 
 " === Other ===
 " extend char information `ga` with unicode names
 Plug 'tpope/vim-characterize'
 " todo manager
 Plug 'davidoc/taskpaper.vim'
+
+" === Dev ===
+if isdirectory($HOME.'/Documents/exread')
+  " TODO requires UpdateRemotePlugins
+  Plug '~/Documents/exread'
+endif
 
 call plug#end()
 
@@ -236,6 +247,7 @@ set softtabstop=-1
 
 " folding
 set foldmethod=syntax
+set foldminlines=3
 set nofoldenable
 
 " do not redraw during macro execution
@@ -293,12 +305,6 @@ autocmd FocusGained,BufEnter */* checktime
 
 " ===== LANGUAGE SERVER CONFIG =====
 if has('nvim')
-  let g:coq_settings = {
-              \ 'display.icons.mode': 'none',
-              \ 'completion.always': v:false,
-              \ 'keymap.jump_to_mark': '<LocalLeader>m',
-              \ }
-
   if !has('nvim-0.10')
     " Support clipboard over ssh via tmux.
     luafile $HOME/.vim/lua/clipboard.lua
@@ -312,6 +318,13 @@ if has('nvim')
   endif
 
   if !empty(g:lsp)
+    if g:lsp == 'coq'
+      let g:coq_settings = {
+            \ 'display.icons.mode': 'none',
+            \ 'completion.always': v:false,
+            \ 'keymap.jump_to_mark': '<LocalLeader>m',
+            \ }
+    endif
     lua require(vim.g.lsp .. '_setup').setup(vim.g.lsp_servers)
     " TODO configure and enable
     " luafile $HOME/.vim/lua/diagnostics.lua

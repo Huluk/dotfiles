@@ -1,4 +1,5 @@
 local nvim_lsp = require('lspconfig')
+local treesitter_config = require('nvim-treesitter.configs')
 
 local M = {}
 
@@ -87,11 +88,20 @@ function M.attach(client, bufnr)
   end
   if client.server_capabilities.documentFormattingProvider then
     -- Use ›:noa w‹ to skip autocommand
-    vim.api.nvim_command("autocmd BufWritePre lua vim.lsp.buf.format()")
+    vim.api.nvim_command("autocmd BufWritePre <buffer> lua vim.lsp.buf.format()")
   end
   vim.api.nvim_command("augroup END")
 
   print("LSP started.");
+end
+
+
+function M.treesitter_setup()
+  treesitter_config.setup {
+    indent = {
+      enable = true
+    }
+  }
 end
 
 
@@ -108,4 +118,5 @@ function M.setup(lsp, setup_args)
 end
 
 
+M.treesitter_setup()
 return M

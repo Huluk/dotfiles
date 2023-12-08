@@ -1,3 +1,5 @@
 let b:commentary_format = '// %s'
 
-au BufWritePre <buffer> lua vim.lsp.buf.format()
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
