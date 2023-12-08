@@ -2,6 +2,15 @@
 let g:at_work = isdirectory('/google') && !has('macunix')
 let g:work_laptop = isdirectory('/google') && has('macunix')
 
+if g:at_work
+  " let g:lsp = 'cmp'
+  let g:lsp = 'cmp'
+elseif g:work_laptop
+  let g:lsp = 'builtin'
+else
+  let g:lsp = 'coq'
+endif
+
 " ===== PLUGINS =====
 " https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
@@ -38,8 +47,10 @@ Plug 'ludovicchabant/vim-lawrencium'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " tmux split navigation
 Plug 'christoomey/vim-tmux-navigator'
-" tmux remote clipboard
-Plug 'ojroques/nvim-osc52'
+if !has('nvim-0.10')
+  " tmux remote clipboard
+  Plug 'ojroques/nvim-osc52'
+endif
 " open at line number after colon
 Plug 'wsdjeg/vim-fetch'
 
@@ -60,15 +71,27 @@ endif
 if has('nvim')
 " language server
   Plug 'neovim/nvim-lspconfig'
-  " diagnostics
-  " TODO actually use
-  Plug 'folke/trouble.nvim'
-  " async autocomplete
-  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+  if g:lsp == 'cmp'
+    " Buffer-based completion
+    Plug 'hrsh7th/cmp-buffer'
+    " LSP-based completion
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    " Snippet engine
+    Plug 'hrsh7th/cmp-vsnip'
+    " Lua api completion
+    Plug 'hrsh7th/cmp-nvim-lua'
+    " Main completion engine
+    Plug 'hrsh7th/nvim-cmp'
+    " Snippet engine, part 2
+    Plug 'hrsh7th/vim-vsnip'
+  elseif g:lsp == 'coq'
+    " async autocomplete
+    Plug 'ms-jpq/coq_nvim', { 'branch': 'coq' }
+    Plug 'ms-jpq/coq.artifacts', { 'branch': 'artifacts' }
+  endif
 endif
 " auto-add end statements of indented code blocks
-" Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 
 " === Other ===
 " extend char information `ga` with unicode names
@@ -276,21 +299,24 @@ if has('nvim')
               \ 'keymap.jump_to_mark': '<LocalLeader>m',
               \ }
 
-  " Support clipboard over ssh via tmux.
-  luafile $HOME/.vim/lua/clipboard.lua
+  if !has('nvim-0.10')
+    " Support clipboard over ssh via tmux.
+    luafile $HOME/.vim/lua/clipboard.lua
+  endif
 
   if g:at_work
-    luafile $HOME/.vim/lua/coq_ciderlsp.lua
-    " TODO if nothing works for ml suggest, how about coc.nvim? it's more like
-    " ale in the config, so that's annoying.
-    " luafile $HOME/.vim/lua/cmp_ciderlsp.lua
-    " TODO enable
+    luafile $HOME/.vim/lua/ciderlsp.lua
+    let g:lsp_servers = ['ciderlsp']
+  elseif !g:work_laptop
+    let g:lsp_servers = ['dartls']
+  endif
+
+  if !empty(g:lsp)
+    lua require(vim.g.lsp .. '_setup').setup(vim.g.lsp_servers)
+    " TODO configure and enable
     " luafile $HOME/.vim/lua/diagnostics.lua
-  else
-    luafile $HOME/.vim/lua/home_lsp.lua
   endif
 endif
-
 
 " ===== PLUGIN CONFIG =====
 
@@ -319,7 +345,3 @@ let g:airline_section_z =
       \ '%l%#__accent_bold#/%L%#__restore__#' .
       \ ':%3v'
 let g:airline#extensions#tabline#enabled = 0
-
-" screenreader
-luafile $HOME/.vim/lua/screenreader.lua
-command! -range -nargs=* P lua Psay(<line1>, <line2>, 'p<args>')

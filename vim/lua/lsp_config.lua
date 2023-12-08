@@ -1,3 +1,7 @@
+local nvim_lsp = require('lspconfig')
+
+local M = {}
+
 local preview_location_callback = function(_, result)
   if result == nil or vim.tbl_isempty(result) then
     return nil
@@ -11,14 +15,11 @@ local peek = function(f)
 end
 
 
-custom_attach = function(client, bufnr)
+function M.attach(client, bufnr)
   local map = function(key, value)
     vim.api.nvim_buf_set_keymap(bufnr,"n",key,value,{noremap = true, silent = true});
   end
 
-  -- Omni-completion via LSP. See `:help compl-omni`. Use <C-x><C-o> in
-  -- insert mode. Or use an external autocompleter (see below) for a
-  -- smoother UX.
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   if vim.lsp.formatexpr then -- Neovim v0.6.0+ only.
@@ -33,8 +34,14 @@ custom_attach = function(client, bufnr)
   -- INFO
   -- hover for current word
   map('<S-k>','<cmd>lua vim.lsp.buf.hover()<CR>')
+  -- signature help
+  -- map('<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+  -- type definition
+  -- map('gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   -- jump to definition (S-A-g)
   map('γ','<cmd>lua vim.lsp.buf.definition()<CR>')
+  -- jump to declaration
+  map('gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
   -- display all references (S-A-r)
   map('ρ','<cmd>lua vim.lsp.buf.references()<CR>')
   -- all following are CURRENTLY NOT SUPPORTED in CiderLSP:
@@ -79,9 +86,26 @@ custom_attach = function(client, bufnr)
       vim.api.nvim_command("autocmd CursorMoved <buffer> lua vim.lsp.util.buf_clear_references()")
   end
   if client.server_capabilities.documentFormattingProvider then
+    -- Use ›:noa w‹ to skip autocommand
     vim.api.nvim_command("autocmd BufWritePre lua vim.lsp.buf.format()")
   end
   vim.api.nvim_command("augroup END")
 
   print("LSP started.");
 end
+
+
+function M.setup(lsp, setup_args)
+  nvim_lsp[lsp].setup(setup_args)
+
+  nvim_lsp[lsp].handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      virtual_text = false,
+      signs = true,
+      update_in_insert = true,
+    }
+  )
+end
+
+
+return M
