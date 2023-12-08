@@ -88,7 +88,7 @@ function M.attach(client, bufnr)
   end
   if client.server_capabilities.documentFormattingProvider then
     -- Use ›:noa w‹ to skip autocommand
-    vim.api.nvim_command("autocmd BufWritePre <buffer> lua vim.lsp.buf.format()")
+    vim.api.nvim_command("autocmd! BufWritePre * lua vim.lsp.buf.format()")
   end
   vim.api.nvim_command("augroup END")
 
