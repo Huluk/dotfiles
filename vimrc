@@ -289,15 +289,6 @@ function! Autosave()
         silent! write
     endif
 endfunction
-if g:at_work
-  function! MaybeFormatCode()
-    if !&diff && codefmt#IsFormatterAvailable()
-      FormatCode
-    endif
-  endfunction
-  autocmd BufWritePre /google/* call MaybeFormatCode()
-  " Use ›:noa w‹ to skip autocommand
-endif
 
 " check for external changes on gaining focus on real file
 autocmd FocusGained,BufEnter */* checktime
