@@ -308,7 +308,7 @@ if has('nvim')
     let g:lsp_servers = ['dartls']
   endif
 
-  if !empty(g:lsp)
+  if exists('g:lsp_servers')
     if g:lsp == 'coq'
       let g:coq_settings = {
             \ 'display.icons.mode': 'none',
