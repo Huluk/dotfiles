@@ -260,7 +260,7 @@ set linebreak
 set shiftround
 
 if has('persistent_undo')
-  set undodir=~/.vim-undo/
+  set undodir=~/.vim-undo,/tmp/vim-undo/
   set undofile
 endif
 
