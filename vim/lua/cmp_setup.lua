@@ -1,4 +1,3 @@
-local nvim_lsp = require("lspconfig")
 local lsp_config = require('lsp_config')
 local cmp = require("cmp")
 
@@ -73,10 +72,11 @@ function M.setup(servers)
     vim.lsp.protocol.make_client_capabilities()
   )
 
-  for i,server in ipairs(servers) do
+  for _, server in ipairs(servers) do
     lsp_config.setup(server, {
       on_attach = lsp_config.attach,
       capabilities = capabilities,
+      settings = lsp_config.settings(server),
     })
   end
 end
