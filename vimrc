@@ -105,9 +105,9 @@ Plug 'tpope/vim-characterize'
 Plug 'davidoc/taskpaper.vim'
 
 " === Dev ===
-if isdirectory($HOME.'/Documents/exread')
+if isdirectory($HOME.'/Documents/exreader')
   " TODO requires UpdateRemotePlugins
-  Plug '~/Documents/exread'
+  Plug '~/Documents/exreader'
 endif
 
 call plug#end()
@@ -305,7 +305,7 @@ if has('nvim')
     luafile $HOME/.vim/lua/ciderlsp.lua
     let g:lsp_servers = ['ciderlsp']
   elseif !g:work_laptop
-    let g:lsp_servers = ['dartls']
+    let g:lsp_servers = ['dartls', 'lua_ls']
   endif
 
   if exists('g:lsp_servers')
