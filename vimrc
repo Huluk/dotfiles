@@ -3,11 +3,10 @@ let g:at_work = isdirectory('/google') && !has('macunix')
 let g:work_laptop = isdirectory('/google') && has('macunix')
 
 if g:at_work
-  " let g:lsp = 'cmp'
   let g:lsp = 'cmp'
 elseif g:work_laptop
   let g:lsp = 'builtin'
-else
+else " at home
   let g:lsp = 'coq'
 endif
 
@@ -53,10 +52,6 @@ if !has('nvim-0.10')
 endif
 " open at line number after colon
 Plug 'wsdjeg/vim-fetch'
-
-" TODO if !has('nvim-0.10')
-" tmux remote clipboard
-Plug 'ojroques/nvim-osc52'
 
 " === Optics ===
 " statusline
@@ -302,21 +297,13 @@ if has('nvim')
   endif
 
   if g:at_work
-    luafile $HOME/.vim/lua/ciderlsp.lua
     let g:lsp_servers = ['ciderlsp']
   elseif !g:work_laptop
     let g:lsp_servers = ['dartls', 'lua_ls']
   endif
 
   if exists('g:lsp_servers')
-    if g:lsp == 'coq'
-      let g:coq_settings = {
-            \ 'display.icons.mode': 'none',
-            \ 'completion.always': v:false,
-            \ 'keymap.jump_to_mark': '<LocalLeader>m',
-            \ }
-    endif
-    lua require(vim.g.lsp .. '_setup').setup(vim.g.lsp_servers)
+    lua require('lsp_setup').setup(vim.g.lsp, vim.g.lsp_servers)
     " TODO configure and enable
     " luafile $HOME/.vim/lua/diagnostics.lua
   endif

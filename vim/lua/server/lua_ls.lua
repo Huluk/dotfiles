@@ -1,6 +1,6 @@
-local M = {}
+local opt = {}
 
-M.settings = {
+opt.settings = {
   Lua = {
     runtime = {
       -- Tell the language server which version of Lua you're using
@@ -28,4 +28,4 @@ M.settings = {
   },
 }
 
-return M
+return opt

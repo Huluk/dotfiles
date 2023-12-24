@@ -3,14 +3,14 @@ local treesitter_config = require('nvim-treesitter.configs')
 
 local M = {}
 
-local preview_location_callback = function(_, result)
+local function preview_location_callback(_, result)
   if result == nil or vim.tbl_isempty(result) then
     return nil
   end
   vim.lsp.util.preview_location(result[1])
 end
 
-local peek = function(f)
+local function peek(f)
   local params = vim.lsp.util.make_position_params()
   return vim.lsp.buf_request(0, f, params, preview_location_callback)
 end
@@ -102,6 +102,8 @@ end
 function M.settings(server)
   if server == 'lua_ls' then
     return require('lua_ls').settings
+  elseif server == 'dartls' then
+    return require('dartls').settings
   else
     return nil
   end
@@ -115,16 +117,28 @@ function M.treesitter_setup()
   }
 end
 
-function M.setup(lsp, setup_args)
-  nvim_lsp[lsp].setup(setup_args)
-
-  nvim_lsp[lsp].handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+function M.register_diagnostics(server)
+  nvim_lsp[server].handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = false,
       signs = true,
       update_in_insert = true,
     }
   )
+end
+
+function M.setup(client_name, servers)
+  local client = require('client/' .. client_name)
+  if client.pre then client.pre(servers) else end
+  for _, server in ipairs(servers) do
+    local optsfile = 'server/' .. server
+    local opts = package.searchpath(optsfile, package.path)
+        and require(optsfile) or {}
+    opts.on_attach = M.attach
+    nvim_lsp[server].setup(client.ensure_capabilities(server, opts))
+    M.register_diagnostics(server)
+  end
+  if client.post then client.post(servers) else end
 end
 
 M.treesitter_setup()

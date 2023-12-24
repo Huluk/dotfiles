@@ -1,9 +1,8 @@
-local lsp_config = require('lsp_config')
 local cmp = require("cmp")
 
 local M = {}
 
-function M.setup(servers)
+function M.pre(_)
   cmp.setup({
     mapping = cmp.mapping.preset.insert({
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -59,26 +58,15 @@ function M.setup(servers)
       ghost_text = false,
     },
   })
+end
 
+M.capabilities = require('cmp_nvim_lsp').default_capabilities(
+  vim.lsp.protocol.make_client_capabilities()
+)
 
-  vim.cmd([[
-    augroup CmpZsh
-      au!
-      autocmd Filetype zsh lua require'cmp'.setup.buffer { sources = { { name = "zsh" }, } }
-    augroup END
-  ]])
-
-  local capabilities = require('cmp_nvim_lsp').default_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  )
-
-  for _, server in ipairs(servers) do
-    lsp_config.setup(server, {
-      on_attach = lsp_config.attach,
-      capabilities = capabilities,
-      settings = lsp_config.settings(server),
-    })
-  end
+function M.ensure_capabilities(_, opts)
+  opts.capabilities = M.capabilities
+  return opts
 end
 
 return M
