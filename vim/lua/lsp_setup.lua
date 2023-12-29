@@ -99,16 +99,6 @@ function M.attach(client, bufnr)
   print("LSP started.");
 end
 
-function M.settings(server)
-  if server == 'lua_ls' then
-    return require('lua_ls').settings
-  elseif server == 'dartls' then
-    return require('dartls').settings
-  else
-    return nil
-  end
-end
-
 function M.treesitter_setup()
   treesitter_config.setup {
     indent = {
@@ -132,8 +122,8 @@ function M.setup(client_name, servers)
   if client.pre then client.pre(servers) else end
   for _, server in ipairs(servers) do
     local optsfile = 'server/' .. server
-    local opts = package.searchpath(optsfile, package.path)
-        and require(optsfile) or {}
+    local status, opts = pcall(require, optsfile)
+    if not status then opts = {} end
     opts.on_attach = M.attach
     nvim_lsp[server].setup(client.ensure_capabilities(server, opts))
     M.register_diagnostics(server)
