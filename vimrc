@@ -36,6 +36,9 @@ Plug 'junegunn/vim-slash'
 " color-coded parentheses
 " TODO Try this again when it is more stable.
 " Plug 'hiphish/rainbow-delimiters.nvim'
+if has('nvim')
+  Plug 'sahlte/timed-highlight.nvim'
+endif
 
 " === Integration ===
 " git wrapper
@@ -58,6 +61,7 @@ Plug 'wsdjeg/vim-fetch'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 if has('nvim')
+  Plug 'mg979/tabline.nvim'
   " solarized theme
   Plug 'icymind/NeoSolarized'
   if !g:at_work
@@ -192,6 +196,7 @@ if has('nvim')
   else
     colorscheme ofirkai
   endif
+  luafile $HOME/.vim/lua/config.lua
 else
   source ~/.vim/non-nvim.vim
 endif
@@ -263,16 +268,6 @@ set noswapfile
 
 set completeopt=menu,menuone,noselect
 
-" max line matching offset in diff mode
-if has('nvim-0.9')
-  silent! set diffopt+=linematch:40
-endif
-
-" global statusline to reduce visual clutter
-if has('nvim-0.7')
-  set laststatus=3
-endif
-
 " wildcard ignore expressions
 set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
 set wildignore+=bin/*,build/*,*/bin/*,*/build/*
@@ -289,26 +284,6 @@ endfunction
 autocmd FocusGained,BufEnter */* checktime
 
 
-" ===== LANGUAGE SERVER CONFIG =====
-if has('nvim')
-  if !has('nvim-0.10')
-    " Support clipboard over ssh via tmux.
-    luafile $HOME/.vim/lua/clipboard.lua
-  endif
-
-  if g:at_work
-    let g:lsp_servers = ['ciderlsp']
-  elseif !g:work_laptop
-    let g:lsp_servers = ['dartls', 'lua_ls']
-  endif
-
-  if exists('g:lsp_servers')
-    lua require('lsp_setup').setup(vim.g.lsp, vim.g.lsp_servers)
-    " TODO configure and enable
-    " luafile $HOME/.vim/lua/diagnostics.lua
-  endif
-endif
-
 " ===== PLUGIN CONFIG =====
 
 call lengthmatters#highlight_link_to('FoldColumn')
@@ -316,6 +291,19 @@ call lengthmatters#highlight_link_to('FoldColumn')
 let g:task_paper_search_hide_done = 1
 
 " airline statusline
+" TODO set keymap?
+let g:airline_extensions = [
+  \ 'branch',
+  \ 'fugitiveline',
+  \ 'keymap',
+  \ 'netrw',
+  \ 'nvimlsp',
+  \ 'quickfix',
+  \ 'searchcount',
+  \ 'term',
+  \ 'undotree',
+  \ 'whitespace',
+  \ 'wordcount']
 " don't display file encoding and file format if it is the expected value
 let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]'
 " don't display default branch
@@ -335,4 +323,3 @@ let g:airline_section_z =
       \ '%p%% ' .
       \ '%l%#__accent_bold#/%L%#__restore__#' .
       \ ':%3v'
-let g:airline#extensions#tabline#enabled = 0

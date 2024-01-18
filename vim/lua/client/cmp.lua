@@ -25,7 +25,10 @@ function M.pre(_)
       end,
       ['<CR>'] = function(fallback)
         if cmp.visible() then
-          cmp.confirm({ select = true })
+          cmp.confirm({
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = false,
+          })
         else
           fallback() -- vim-endwise
         end
@@ -40,7 +43,24 @@ function M.pre(_)
     },
 
     sorting = {
-      comparators = {}, -- We stop all sorting to let the lsp do the sorting
+      comparators = {
+        function(entry1, entry2)
+          local is_ciderlsp1 = entry1.source.name == 'nvim_ciderlsp'
+          local is_ciderlsp2 = entry2.source.name == 'nvim_ciderlsp'
+          if is_ciderlsp1 == is_ciderlsp2 then
+            return nil
+          else
+            return is_ciderlsp1
+          end
+        end,
+        cmp.config.compare.offset,
+        cmp.config.compare.exact,
+        cmp.config.compare.score,
+        cmp.config.compare.kind,
+        cmp.config.compare.sort_text,
+        cmp.config.compare.length,
+        cmp.config.compare.order,
+      }
     },
 
     completion = {
