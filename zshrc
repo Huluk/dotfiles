@@ -125,6 +125,10 @@ osm() {
   telnet mapscii.me
 }
 
+vtip() {
+  curl -s -m 3 https://vtip.43z.one
+}
+
 # generate passwort of length $1
 passgen(){
     [ $# -eq 0 ] && 1="16"

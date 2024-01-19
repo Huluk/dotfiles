@@ -15,13 +15,9 @@ if nvim_version.major >= 1 or nvim_version.minor >= 7 then
   vim.opt.laststatus = 3
 end
 
-require('tabline.setup').setup({
-  ascii_only = true,
-  show_icons = true,
-  icons = {},
-})
-
 require("timed-highlight").setup({ highlight_timeout_ms = 3500 })
+
+require('hawtkeys').setup({})
 
 if vim.g.at_work > 0 then
   require('lspconfig.configs').ciderlsp = { default_config = require('server/ciderlsp') }

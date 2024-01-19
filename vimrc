@@ -5,9 +5,9 @@ let g:work_laptop = isdirectory('/google') && has('macunix')
 if g:at_work
   let g:lsp = 'cmp'
 elseif g:work_laptop
-  let g:lsp = 'builtin'
+  let g:lsp = 'nvim'
 else " at home
-  let g:lsp = 'coq'
+  let g:lsp = 'cmp'
 endif
 
 " ===== PLUGINS =====
@@ -61,7 +61,6 @@ Plug 'wsdjeg/vim-fetch'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 if has('nvim')
-  Plug 'mg979/tabline.nvim'
   " solarized theme
   Plug 'icymind/NeoSolarized'
   if !g:at_work
@@ -102,6 +101,11 @@ Plug 'tpope/vim-endwise', { 'for': ['ruby', 'lua'] }
 Plug 'tpope/vim-characterize'
 " todo manager
 Plug 'davidoc/taskpaper.vim'
+if has('nvim')
+  " hotkey tooling
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'tris203/hawtkeys.nvim'
+endif
 
 " === Dev ===
 if isdirectory($HOME.'/Documents/exreader')
@@ -291,19 +295,6 @@ call lengthmatters#highlight_link_to('FoldColumn')
 let g:task_paper_search_hide_done = 1
 
 " airline statusline
-" TODO set keymap?
-let g:airline_extensions = [
-  \ 'branch',
-  \ 'fugitiveline',
-  \ 'keymap',
-  \ 'netrw',
-  \ 'nvimlsp',
-  \ 'quickfix',
-  \ 'searchcount',
-  \ 'term',
-  \ 'undotree',
-  \ 'whitespace',
-  \ 'wordcount']
 " don't display file encoding and file format if it is the expected value
 let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]'
 " don't display default branch
@@ -323,3 +314,30 @@ let g:airline_section_z =
       \ '%p%% ' .
       \ '%l%#__accent_bold#/%L%#__restore__#' .
       \ ':%3v'
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tab_count = 0
+let g:airline#extensions#tabline#tab_min_count = 2
+let g:airline#extensions#tabline#buffer_min_count = 2
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#buf_label_first = 0
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#overflow_marker = '…'
+function! FormatTabNr(tab_nr, buflist)
+  let split_nr = len(tabpagebuflist(a:tab_nr))
+  if split_nr > 1
+    return g:airline_symbols.space . split_nr
+  else
+    return ''
+  endif
+endfunction
+let g:airline#extensions#tabline#tabnr_formatter = 'FormatTabNr'
+" See help for filename-modifiers.
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''

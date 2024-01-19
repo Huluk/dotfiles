@@ -1,5 +1,5 @@
 [ui]
-username = larsthansen
+username = Lars Hansen <LTHansen@protonmail.com>
 ignore = ~/.gitignore_global
 merge = vimdiff
 
@@ -27,3 +27,11 @@ ignore = status
 
 [trainingwheels]
 prevent-push-dirty = true
+
+[extensions]
+convert=
+histedit=
+rebase=
+split=
+amend=
+graphlog=
