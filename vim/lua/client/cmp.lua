@@ -40,6 +40,7 @@ function M.pre(_)
       -- { name = "path" }, -- requires 'cmp-path'
       { name = "vim_vsnip" }, -- requires 'cmp-vsnip'
       { name = "buffer",   keyword_length = 5 },
+      { name = "nvim_ciderlsp" }, -- requires 'cmp-nvim-ciderlsp'
     },
 
     sorting = {
@@ -83,6 +84,11 @@ end
 M.capabilities = require('cmp_nvim_lsp').default_capabilities(
   vim.lsp.protocol.make_client_capabilities()
 )
+
+local status, cmp_ciderlsp = pcall(require, 'cmp_nvim_ciderlsp')
+if status then
+  M.capabilities = cmp_ciderlsp.update_capabilities(M.capabilities)
+end
 
 function M.ensure_capabilities(_, opts)
   opts.capabilities = M.capabilities

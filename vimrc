@@ -49,6 +49,10 @@ Plug 'ludovicchabant/vim-lawrencium'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " tmux split navigation
 Plug 'christoomey/vim-tmux-navigator'
+if g:at_work && has('nvim')
+  " Auto-refresh work credentials
+  Plug 'sso://user/fentanes/gcert.nvim'
+endif
 if !has('nvim-0.10')
   " tmux remote clipboard
   Plug 'ojroques/nvim-osc52'
@@ -87,6 +91,9 @@ if has('nvim')
     Plug 'hrsh7th/nvim-cmp'
     " Snippet engine, part 2
     Plug 'hrsh7th/vim-vsnip'
+    if g:at_work
+      Plug 'sso://user/piloto/cmp-nvim-ciderlsp'
+    endif
   elseif g:lsp == 'coq'
     " async autocomplete
     Plug 'ms-jpq/coq_nvim', { 'branch': 'coq' }
@@ -193,7 +200,6 @@ nmap <localleader>us :setlocal spell spelllang=en_us<CR>
 
 
 " ===== SETTINGS =====
-" nvim-compatibility for vim
 if has('nvim')
   if g:at_work || g:work_laptop
     colorscheme NeoSolarized
@@ -202,6 +208,7 @@ if has('nvim')
   endif
   luafile $HOME/.vim/lua/config.lua
 else
+  " nvim-compatibility for vim
   source ~/.vim/non-nvim.vim
 endif
 
