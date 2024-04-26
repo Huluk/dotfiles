@@ -73,8 +73,8 @@ ZSH_THEME="xtrv_lars"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# previous plugins: git github heroku irb osx pass rbenv ruby rvm vi-mode
-plugins=(brew colored-man-pages colorize history history-substring-search macos wd)
+# previous plugins: git github heroku irb macos pass rbenv ruby rvm vi-mode
+plugins=(brew colored-man-pages colorize history history-substring-search wd)
 
 alias rm='rm -i'
 alias cp='cp -i'

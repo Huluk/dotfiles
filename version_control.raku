@@ -29,6 +29,7 @@ grammar Command {
   proto token arg {*}
         token arg:sym<interactive> { '-i' }
         token arg:sym<parent> { <sym> }
+        token arg:sym<child> { <sym> }
         token arg:sym<head> { <sym> }
         token arg:sym<sibling> { [ <sym> | 'sib' ] <int_> }
         token arg:sym<any> { <{ "<-[$ARGUMENT_SEPARATOR]>" }>+ }
@@ -74,6 +75,7 @@ class MercurialExecute is Execute {
   }
 
   method arg:sym<parent> ($/) { make <p1(p1())>; }
+  method arg:sym<child> ($/) { make <children(p1())>; } # TODO error-handling
   method arg:sym<head> ($/) { make <p4head>; } # TODO work-specific
   method arg:sym<sibling> ($/) {
     my @heads = reverse read-log <graphnode short(node)>, rev => 'heads(smart)';

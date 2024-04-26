@@ -277,8 +277,8 @@ set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
 set wildignore+=bin/*,build/*,*/bin/*,*/build/*
 
 " save on losing focus
-autocmd FocusLost,Tableave,BufLeave * call Autosave()
-function! Autosave()
+autocmd FocusLost,Tableave,BufLeave * call <SID>Autosave()
+function! s:Autosave()
     if filereadable(expand("%:p"))
         silent! write
     endif
@@ -286,6 +286,22 @@ endfunction
 
 " check for external changes on gaining focus on real file
 autocmd FocusGained,BufEnter */* checktime
+
+" large file compatibility mode
+autocmd BufReadPre * call <SID>LargeFile(expand("<afile>"))
+function! s:LargeFile(fname)
+  let size = getfsize(a:fname)
+  if size > -2 && size <= 1000000
+    return
+  endif
+  setlocal noswapfile nobackup nowritebackup bufhidden=unload
+  setlocal foldmethod=manual nofoldenable
+  setlocal complete-=wbuU
+  if size == -2
+    setlocal ul=-1
+  endif
+  syntax sync clear
+endfunction
 
 
 " ===== PLUGIN CONFIG =====
@@ -335,7 +351,7 @@ function! FormatTabNr(tab_nr, buflist)
 endfunction
 let g:airline#extensions#tabline#tabnr_formatter = 'FormatTabNr'
 " See help for filename-modifiers.
-let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
