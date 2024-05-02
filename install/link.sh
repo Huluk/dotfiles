@@ -22,6 +22,9 @@ ln -s $DIR/nvim_init.vim ~/.config/nvim/init.vim
 ln -s $DIR/ssh_config ~/.ssh/config
 ln -s $DIR/tmux.conf ~/.tmux.conf
 
+mkdir -p ~/.oh-my-zsh
+ln -s $DIR/completions ~/.oh-my-zsh/
+
 # Mac OS only!
 if [[ $OSTYPE = darwin* ]]; then
     cp -r $DIR/mvim.app /Applications/mvim.app
