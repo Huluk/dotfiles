@@ -284,6 +284,9 @@ else # non-work
     diary_open $(date -v${DIFF}d +%Y/%m-%d)
   }
 
+  REMARKABLE_HOST=remarkable.wifi
+  RESTART_XOCHITL_DEFAULT=1
+  REMARKABLE_PARENT_DIR='4ec3a632-bbd8-445d-83e3-dd4897fc829d'
   remarkable_backup(){
       rsync -auhP --rsync-path=/opt/bin/rsync \
           --exclude='*.cache' \
@@ -291,7 +294,7 @@ else # non-work
           --exclude='*.textconversion' \
           --exclude='*.thumbnails' \
           --exclude='*.pagedata' \
-          'root@remarkable:/home/root/.local/share/remarkable/xochitl/*' \
+          "root@$REMARKABLE_HOST:/home/root/.local/share/remarkable/xochitl/*" \
           /Volumes/kEb8ASeZOpEE/remarkable-backup/files/
       }
   # if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then

@@ -3,6 +3,14 @@ Host remarkable
   HostName 10.11.99.1
   HostKeyAlgorithms=+ssh-rsa
   PubkeyAcceptedKeyTypes=+ssh-rsa
+  IdentityFile ~/.ssh/id_rsa_remarkable
+
+Host remarkable.wifi
+  User root
+  HostName 192.168.0.128
+  HostKeyAlgorithms=+ssh-rsa
+  PubkeyAcceptedKeyTypes=+ssh-rsa
+  IdentityFile ~/.ssh/id_rsa_remarkable
 
 Host *
   AddKeysToAgent yes

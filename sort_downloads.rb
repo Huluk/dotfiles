@@ -55,6 +55,13 @@ ARGV.each do |filepath|
       "#{TEXT}/About/Current Affairs/News Articles/NZZ/#{strip_prefix name}"
     when /^economist\-/
       "#{TEXT}/About/Current Affairs/News Articles/Economist/#{strip_prefix name}"
+    when /^rm2\-/,
+        /^delve_/, /^a2ch/,
+        /^Pokemon.*\.epub$/, /^\d{3}:? \w+\.epub$/, /^Alexandra_Q.*\.epub$/
+      clean_filepath = filepath.sub('rm2-', '')
+      system "mv '#{filepath}' '#{clean_filepath}'"
+      system "/usr/local/bin/copy2remarkable '#{clean_filepath}'"
+      next
     else
       nil
     end
