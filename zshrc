@@ -231,6 +231,8 @@ if [ $WORK ]; then
     vvsl='vision/visualsearch/server/lens'
 
     source /etc/bash_completion.d/g4d
+    source /etc/bash_completion.d/hgd
+
     alias intellij='/opt/intellij-ce-stable/bin/idea.sh'
 
     alias gaiamint='/google/data/ro/projects/gaiamint/bin/get_mint  --type=loas --text --endusercreds --scopes=77900  --out=/tmp/auth.txt'
@@ -251,6 +253,7 @@ if [ $WORK ]; then
     alias hut='h ut'
     alias haut='h aut'
     alias hayut='h ayut'
+    alias hyut='h yut'
 
     alias hd='chg diff'
     alias hpd='chg pdiff'
