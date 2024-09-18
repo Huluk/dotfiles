@@ -17,17 +17,19 @@ ARGV.each do |filepath|
       "#{TEXT}/Konto/PostFinance/"
     when /^Revolut.*\.pdf/
       "#{TEXT}/Konto/Revolut/"
-    when /^(Girok|Extra_K)onto_(5419513690|5559012820)_Kontoauszug_\d*\.pdf/
+    when /^(Girok|Extra_K)onto_\d+_Kontoauszug_\d*\.pdf/
       "#{TEXT}/Konto/DiBa/"
     when /^\d{8}_.*_Payslip_\d{6}\.pdf/
       "#{TEXT}/Arbeit/Google/Payslips/"
+    when /^css-kranken.*.pdf/
+      "#{TEXT}/Versicherung/Krankenversicherung/CSS/Monatsrechnung/"
     when /^ekz-elektr/
       "#{TEXT}/Wohnen/ZH Baumgartenweg/Nebenkosten/"
-    when /^CI_NEWS/
+    when /^CI.NEWS/, /^CI.MAG/
       "#{TEXT}/Versicherung/Cryonics/Newsletter/"
     when /^FLT_/, /^FLIX-/
       "#{TEXT}/Travel/Tickets/"
-    when /^Esperanto_aktuell.*\.pdf/, /EA\d.\d{4}.reta/
+    when /^Esperanto.aktuell.*\.pdf/, /EA\d.\d{4}.reta/
       "#{TEXT}/Esperanto/Magazine/Esperanto Aktuell/"
     when /^Kontakto[_\d]+\.pdf/
       "#{TEXT}/Esperanto/Magazine/Kontakto/"
@@ -57,7 +59,8 @@ ARGV.each do |filepath|
       "#{TEXT}/About/Current Affairs/News Articles/Economist/#{strip_prefix name}"
     when /^rm2\-/,
         /^delve_/, /^a2ch/,
-        /^Pokemon.*\.epub$/, /^\d{3}:? \w+\.epub$/, /^Alexandra_Q.*\.epub$/
+        /^Pokemon.*\.epub$/, /^\d{3}:? \w+\.epub$/, /^Alexandra.Q.*\.epub$/,
+        /^Zenith.*\.epub$/
       clean_filepath = filepath.sub('rm2-', '')
       system "mv '#{filepath}' '#{clean_filepath}'"
       system "/usr/local/bin/copy2remarkable '#{clean_filepath}'"
@@ -66,6 +69,6 @@ ARGV.each do |filepath|
       nil
     end
   if not destination.nil?
-    system "[[ -e '#{filepath}' ]] && mv '#{filepath}' '#{destination}'"
+    system "[[ -e '#{filepath}' ]] && mv -n '#{filepath}' '#{destination}'"
   end
 end

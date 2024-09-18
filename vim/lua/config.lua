@@ -22,11 +22,11 @@ require("timed-highlight").setup({ highlight_timeout_ms = 3500 })
 
 if vim.g.at_work > 0 then
   require('lspconfig.configs').ciderlsp = { default_config = require('server/ciderlsp') }
-  vim.g.lsp_servers = {'ciderlsp'}
+  vim.g.lsp_servers = { 'ciderlsp' }
 elseif vim.g.work_laptop > 0 then
-  vim.g.lsp_servers = {'dartls', 'lua_ls'}
-else
   vim.g.lsp_servers = {}
+else
+  vim.g.lsp_servers = { 'dartls', 'lua_ls' }
 end
 
 if #vim.g.lsp_servers then
