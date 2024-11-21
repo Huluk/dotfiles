@@ -47,12 +47,24 @@ cnoremap Vvsl e vision/visualsearch/server/lens
 map <localleader>b :e %:p:h/BUILD<CR>
 map <localleader>B :tabnew %:p:h/BUILD<CR>
 
-" CodeSearch search
+" CodeSearch telescope search and CodeSearch web search
+" search for file (path)
+nnoremap <leader>p :lua require('telescope').extensions.codesearch.find_files{}<CR>
+" search for text (query)
+nnoremap <leader>f :lua require('telescope').extensions.codesearch.find_query{}<CR>
 " search for word under cursor
-nnoremap <leader>cs :call corpweb#CodeSearchLiteral(expand("<cword>"))<CR>
+nnoremap <leader>cs :lua require('telescope').extensions.codesearch.find_query{default_text_expand='<cword>'}<CR>
+nnoremap <leader>ws :call corpweb#CodeSearchLiteral(expand("<cword>"))<CR>
 " search for visual selection
-vnoremap <leader>cs :<C-U>call corpweb#CodeSearchLiteral(maktaba#buffer#GetVisualSelection())<CR>
+" TODO find equivalent for telescope search
+vnoremap <leader>ws :<C-U>call corpweb#CodeSearchLiteral(maktaba#buffer#GetVisualSelection())<CR>
 " open current position in code search
-map <leader>cf :CorpWebCsFile<CR>
+map <leader>wo :CorpWebCsFile<CR>
 " open cl in critique
 map <leader>cl :CorpWebCritiqueCl<CR>
+
+" run for current file
+" tests
+map <localleader>rt :lua TmuxExecuteR("blaze test " .. vim.fn.expand("%:r"))<CR>
+" build
+map <localleader>rb :lua TmuxExecuteR("blaze build " .. vim.fn.expand("%:r"))<CR>

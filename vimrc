@@ -14,6 +14,19 @@ endif
 " https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
+" === Nvim Specials ===
+if has('nvim')
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " Lua utils, dependency of telescope and others.
+  Plug 'nvim-lua/plenary.nvim'
+  " Fuzzyfinder
+  Plug 'nvim-telescope/telescope.nvim'
+  " Fast fzf sorting
+  Plug 'nvim-telescope/telescope-fzf-native.nvim'
+  " Frequent/recent file open
+  Plug 'nvim-telescope/telescope-frecency.nvim'
+endif
+
 " === Editing ===
 " make `.` work with tpope's plugins
 Plug 'tpope/vim-repeat'
@@ -43,15 +56,18 @@ endif
 " === Integration ===
 " git wrapper
 Plug 'tpope/vim-fugitive'
-" mercurial wrapper
-Plug 'ludovicchabant/vim-lawrencium'
 " fix tmux focus integration
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " tmux split navigation
 Plug 'christoomey/vim-tmux-navigator'
-if g:at_work && has('nvim')
+if has('nvim') && g:at_work
+  " mercurial wrapper
+  Plug 'ludovicchabant/vim-lawrencium'
   " Auto-refresh work credentials
   Plug 'sso://user/fentanes/gcert.nvim'
+  " codesearch integration
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'sso://user/vintharas/telescope-codesearch.nvim'
 endif
 if !has('nvim-0.10')
   " tmux remote clipboard
@@ -75,7 +91,6 @@ endif
 
 " === Language-specific ===
 if has('nvim')
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   " language server
   Plug 'neovim/nvim-lspconfig'
   if g:lsp == 'cmp'
@@ -109,8 +124,7 @@ Plug 'tpope/vim-characterize'
 " todo manager
 Plug 'davidoc/taskpaper.vim'
 if has('nvim')
-  " hotkey tooling
-  Plug 'nvim-lua/plenary.nvim'
+  " hotkey tooling, needs plenary
   Plug 'tris203/hawtkeys.nvim'
 endif
 
@@ -215,6 +229,8 @@ endif
 " work-specific tooling
 if g:at_work
   source $HOME/.vim/work.vim
+  " fix expand not showing a relative path
+  lcd .
 endif
 
 set number
