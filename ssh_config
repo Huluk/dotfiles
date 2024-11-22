@@ -12,6 +12,13 @@ Host remarkable.wifi
   PubkeyAcceptedKeyTypes=+ssh-rsa
   IdentityFile ~/.ssh/id_rsa_remarkable
 
+Host remarkable.iphone
+  User root
+  HostName 172.20.10.7
+  HostKeyAlgorithms=+ssh-rsa
+  PubkeyAcceptedKeyTypes=+ssh-rsa
+  IdentityFile ~/.ssh/id_rsa_remarkable
+
 Host *
   AddKeysToAgent yes
   IgnoreUnknown UseKeychain

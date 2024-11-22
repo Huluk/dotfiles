@@ -60,7 +60,7 @@ ARGV.each do |filepath|
     when /^rm2\-/,
         /^delve_/, /^a2ch/,
         /^Pokemon.*\.epub$/, /^\d{3}:? \w+\.epub$/, /^Alexandra.Q.*\.epub$/,
-        /^Zenith.*\.epub$/
+        /Zenith.*\.epub$/
       clean_filepath = filepath.sub('rm2-', '')
       system "mv '#{filepath}' '#{clean_filepath}'"
       system "/usr/local/bin/copy2remarkable '#{clean_filepath}'"

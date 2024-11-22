@@ -3,3 +3,5 @@ vim/plugged
 vim/local
 vim/colors
 vim/cache
+
+karabiner/automatic_backups
