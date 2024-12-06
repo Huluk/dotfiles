@@ -50,8 +50,10 @@ map <localleader>B :tabnew %:p:h/BUILD<CR>
 " CodeSearch telescope search and CodeSearch web search
 " search for file (path)
 nnoremap <leader>p :lua require('telescope').extensions.codesearch.find_files{}<CR>
+nnoremap <leader>P :tabnew<CR>:lua require('telescope').extensions.codesearch.find_files{}<CR>
 " search for text (query)
 nnoremap <leader>f :lua require('telescope').extensions.codesearch.find_query{}<CR>
+nnoremap <leader>F :tabnew<CR>:lua require('telescope').extensions.codesearch.find_query{}<CR>
 " search for word under cursor
 nnoremap <leader>cs :lua require('telescope').extensions.codesearch.find_query{default_text_expand='<cword>'}<CR>
 nnoremap <leader>ws :call corpweb#CodeSearchLiteral(expand("<cword>"))<CR>

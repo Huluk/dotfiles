@@ -50,7 +50,9 @@ Plug 'junegunn/vim-slash'
 " TODO Try this again when it is more stable.
 " Plug 'hiphish/rainbow-delimiters.nvim'
 if has('nvim')
-  Plug 'sahlte/timed-highlight.nvim'
+  " Temporary using fork to circumvent search error (issue #2)
+  Plug 'senilio/timed-highlight.nvim'
+  " Plug 'sahlte/timed-highlight.nvim'
 endif
 
 " === Integration ===
