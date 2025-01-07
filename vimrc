@@ -50,7 +50,8 @@ Plug 'junegunn/vim-slash'
 " TODO Try this again when it is more stable.
 " Plug 'hiphish/rainbow-delimiters.nvim'
 if has('nvim')
-  " Temporary using fork to circumvent search error (issue #2)
+  " auto-disable highlight after some time
+  " Note: Temporary using fork to circumvent search error (issue #2)
   Plug 'senilio/timed-highlight.nvim'
   " Plug 'sahlte/timed-highlight.nvim'
 endif
@@ -123,8 +124,6 @@ Plug 'tpope/vim-endwise', { 'for': ['ruby', 'lua'] }
 " === Other ===
 " extend char information `ga` with unicode names
 Plug 'tpope/vim-characterize'
-" todo manager
-Plug 'davidoc/taskpaper.vim'
 if has('nvim')
   " hotkey tooling, needs plenary
   Plug 'tris203/hawtkeys.nvim'
@@ -250,6 +249,9 @@ set virtualedit=block
 
 set mouse=a
 
+set scrolloff=4
+set sidescrolloff=5
+
 " enable with :set list
 " position in long non-wrap line: precedes:← extends:→
 set listchars=precedes:\\u2190,extends:\\u2192
@@ -262,12 +264,9 @@ set listchars+=tab:\\u22b3\\u22c5,trail:\\u2301
 set showbreak=↪
 
 set breakindent
-set breakindentopt=shift:4
-
-set scrolloff=4
-set sidescrolloff=5
-
 set textwidth=80
+" break line at specific chars
+set linebreak
 
 set tabstop=2
 set shiftwidth=2
@@ -279,14 +278,11 @@ set foldmethod=syntax
 set foldminlines=3
 set nofoldenable
 
-" do not redraw during macro execution
-set lazyredraw
-
-" break line at specific chars
-set linebreak
-
 " round indentation to nearest multiple of shiftwidth
 set shiftround
+
+" do not redraw during macro execution
+set lazyredraw
 
 if has('persistent_undo')
   set undodir=~/.vim-undo,/tmp/vim-undo/
@@ -308,6 +304,8 @@ function! s:Autosave()
         silent! write
     endif
 endfunction
+
+autocmd BufWritePre *.dart silent! lua vim.lsp.buf.format()
 
 " check for external changes on gaining focus on real file
 autocmd FocusGained,BufEnter */* checktime
@@ -332,8 +330,6 @@ endfunction
 " ===== PLUGIN CONFIG =====
 
 call lengthmatters#highlight_link_to('FoldColumn')
-
-let g:task_paper_search_hide_done = 1
 
 " airline statusline
 " don't display file encoding and file format if it is the expected value

@@ -102,7 +102,12 @@ end
 function M.treesitter_setup()
   treesitter_config.setup {
     indent = {
-      enable = true
+      ensure_installed = { "lua", "vim", "markdown" },
+      sync_install = true,
+      auto_install = false,
+      ignore_install = {},
+      enable = true,
+      disable = { "markdown" },
     }
   }
 end
