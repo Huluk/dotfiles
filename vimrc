@@ -66,8 +66,6 @@ Plug 'christoomey/vim-tmux-navigator'
 if has('nvim') && g:at_work
   " mercurial wrapper
   Plug 'ludovicchabant/vim-lawrencium'
-  " Auto-refresh work credentials
-  Plug 'sso://user/fentanes/gcert.nvim'
   " codesearch integration
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'sso://user/vintharas/telescope-codesearch.nvim'

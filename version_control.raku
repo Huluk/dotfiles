@@ -20,10 +20,10 @@ grammar Command {
         token cmd:sym<print> { 'p' }
         token cmd:sym<long_history> { 'l' }
         token cmd:sym<short_history> { 'x' }
-        token cmd:sym<diff> { 'd' <.sep> <arg> }
-        token cmd:sym<checkout> { 'c' <.sep> <arg> }
+        token cmd:sym<diff> { [ <sym> | 'd' ] <.sep> <arg> }
+        token cmd:sym<checkout> { [ <sym> | 'c' ] <.sep> <arg> }
         token cmd:sym<commit> { [ <sym> | 'm' ] <.sep> <arg> }
-        token cmd:sym<upload> { 'u' <.sep> <arg> }
+        token cmd:sym<upload> { [ <sym> | 'u' ] <.sep> <arg> }
         token cmd:sym<upload_tree> { 'ut' }
 
   proto token arg {*}
@@ -31,6 +31,7 @@ grammar Command {
         token arg:sym<parent> { <sym> }
         token arg:sym<child> { <sym> }
         token arg:sym<head> { <sym> }
+        token arg:sym<exported> { <sym> | 'upstream' | 'origin' | 'remote' }
         token arg:sym<sibling> { [ <sym> | 'sib' ] <int_> }
         token arg:sym<any> { <{ "<-[$ARGUMENT_SEPARATOR]>" }>+ }
 
@@ -77,6 +78,7 @@ class MercurialExecute is Execute {
   method arg:sym<parent> ($/) { make <p1(p1())>; }
   method arg:sym<child> ($/) { make <children(p1())>; } # TODO error-handling
   method arg:sym<head> ($/) { make <p4head>; } # TODO work-specific
+  method arg:sym<exported> ($/) { make <exported(.)>; } # TODO work-specific
   method arg:sym<sibling> ($/) {
     my @heads = reverse read-log <graphnode short(node)>, rev => 'heads(smart)';
     my $current = @heads.first: /^\@/, :k;
