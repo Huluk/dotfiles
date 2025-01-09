@@ -1,6 +1,5 @@
 " Use the 'google' package by default (see http://go/vim/packages).
 let g:disable_google_optional_settings = 1
-" TODO consider using core.vim for faster startup.
 source /usr/share/vim/google/default.vim
 
 " Load google's formatting plugins (http://go/vim/plugins/codefmt-google).
@@ -48,10 +47,6 @@ cnoremap Vvsl e vision/visualsearch/server/lens
 " NOTE: there is Glug relatedfiles plugin which could replace these
 map <localleader>b :e %:p:h/BUILD<CR>
 map <localleader>B :tabnew %:p:h/BUILD<CR>
-
-if has('nvim')
-  luafile $HOME/.vim/lua/work.lua
-endif
 
 " search for visual selection
 " TODO find equivalent for telescope search

@@ -9,7 +9,7 @@ end
 
 function relatedTestFile(path)
   -- Remove path prefix, if needed.
-  path = path:match("google3/(.*)") or path
+  path = path:gsub(".*google3/", "", 1)
   if path:match(".*_test$") ~= nil then
     return path
   end

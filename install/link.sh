@@ -17,7 +17,8 @@ ln -s $DIR/gitignore_global ~/.gitignore_global
 ln -s $DIR/hgrc ~/.hgrc
 
 mkdir -p ~/.config/nvim
-ln -s $DIR/nvim_init.vim ~/.config/nvim/init.vim
+ln -s $DIR/vim/init.lua ~/.config/nvim/init.lua
+ln -s $DIR/vim/lua ~/.config/nvim/lua
 
 ln -s $DIR/ssh_config ~/.ssh/config
 ln -s $DIR/tmux.conf ~/.tmux.conf

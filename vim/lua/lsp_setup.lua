@@ -1,5 +1,4 @@
 local nvim_lsp = require('lspconfig')
-local treesitter_config = require('nvim-treesitter.configs')
 
 local M = {}
 
@@ -99,19 +98,6 @@ function M.attach(client, bufnr)
   print("LSP started.");
 end
 
-function M.treesitter_setup()
-  treesitter_config.setup {
-    indent = {
-      ensure_installed = { "lua", "vim", "markdown" },
-      sync_install = true,
-      auto_install = false,
-      ignore_install = {},
-      enable = true,
-      disable = { "markdown" },
-    }
-  }
-end
-
 function M.register_diagnostics(server)
   nvim_lsp[server].handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -136,5 +122,4 @@ function M.setup(client_name, servers)
   if client.post then client.post(servers) else end
 end
 
-M.treesitter_setup()
 return M
