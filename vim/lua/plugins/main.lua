@@ -4,7 +4,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function () 
+    config = function()
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
@@ -33,7 +33,7 @@ return {
     "nvim-telescope/telescope-fzf-native.nvim",
     build = 'make',
     config = function()
-      require('telescope').setup{}
+      require('telescope').setup {}
       require('telescope').load_extension('fzf')
     end,
     dependencies = { 'nvim-telescope/telescope.nvim' },
@@ -101,10 +101,10 @@ return {
       "TmuxNavigatorProcessList",
     },
     keys = {
-      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
@@ -137,10 +137,10 @@ return {
   -- === Dev ===
   "dstein64/vim-startuptime",
   -- exreader
-  {
-    "~/Documents/exreader",
-    cond = function()
-      return vim.fn.isdirectory(vim.env.HOME .. "/Documents/exreader") == 1
-    end,
-  },
+  -- {
+  --   "~/Documents/exreader",
+  --   cond = function()
+  --     return vim.fn.isdirectory(vim.env.HOME .. "/Documents/exreader") == 1
+  --   end,
+  -- },
 }

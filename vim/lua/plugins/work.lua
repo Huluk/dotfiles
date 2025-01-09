@@ -1,4 +1,4 @@
-if not vim.g.at_work then return {} end
+if not (vim.g.at_work > 0) then return {} end
 
 local function goog(plugin, config)
   return {
@@ -21,5 +21,10 @@ return {
   -- cmp-nvim-ciderlsp
   {
     url = "sso://user/piloto/cmp-nvim-ciderlsp",
+    config = function()
+      require('lspconfig.configs').ciderlsp = {
+        default_config = require('server/ciderlsp')
+      }
+    end,
   },
 }

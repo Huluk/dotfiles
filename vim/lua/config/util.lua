@@ -1,18 +1,3 @@
-if vim.g.at_work > 0 then
-  require('lspconfig.configs').ciderlsp = { default_config = require('server/ciderlsp') }
-  vim.g.lsp_servers = { 'ciderlsp' }
-elseif vim.g.work_laptop > 0 then
-  vim.g.lsp_servers = {}
-else
-  vim.g.lsp_servers = { 'dartls', 'lua_ls' }
-end
-
-if #vim.g.lsp_servers then
-  require('lsp_setup').setup(vim.g.lsp, vim.g.lsp_servers)
-  -- TODO configure and enable
-  -- require('diagnostics')
-end
-
 if vim.fn.executable('tmux') == 1 then
   local function is_tmux_running()
     return vim.env.TMUX ~= nil
