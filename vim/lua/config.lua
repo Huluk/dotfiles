@@ -20,6 +20,46 @@ end
 
 require('timed-highlight').setup({ highlight_timeout_ms = 3500 })
 
+local theme = {
+  fill = 'TabLineFill',
+  head = 'TabLineFill',
+  current_tab = 'TabLineSel',
+  tab = 'TabLine',
+  win = 'TabLine',
+  tail = 'TabLine',
+}
+function home_path()
+  return vim.fn.getcwd()
+    :gsub('^' .. vim.env.HOME, '~', 1)
+    :gsub("^/google.*/([^/]+)/google3", "☿/%1/g3", 1)
+end
+require('tabby').setup({
+  line = function(line)
+    local current_tab =
+      line.tabs().filter(function(tab) return tab.is_current() end).tabs[1]
+    return {
+      {
+        { current_tab.close_btn('X'), hl = theme.head },
+        line.sep(' ', theme.head, theme.fill),
+      },
+      line.tabs().foreach(function(tab)
+        local hl = tab.is_current() and theme.current_tab or theme.tab
+        local windows = line.wins()
+        return {
+          #windows > 1 and #windows or '',
+          tab.name(),
+          line.sep('', hl, theme.fill),
+          hl = hl,
+          margin = ' ',
+        }
+      end),
+      line.spacer(),
+      { home_path(), hl = theme.tail },
+      hl = theme.fill,
+    }
+  end,
+})
+
 if vim.g.at_work > 0 then
   require('lspconfig.configs').ciderlsp = { default_config = require('server/ciderlsp') }
   vim.g.lsp_servers = { 'ciderlsp' }
