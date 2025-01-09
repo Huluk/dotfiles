@@ -17,7 +17,7 @@ return {
           disable = { "markdown" },
         }
       })
-    end
+    end,
   },
   -- Lua utils, dependency of telescope and others.
   "nvim-lua/plenary.nvim",
@@ -39,14 +39,15 @@ return {
     dependencies = { 'nvim-telescope/telescope.nvim' },
   },
   -- Frequent/recent file open
-  -- {
-  --   "nvim-telescope/telescope-frecency.nvim",
-  --   version = "*",
-  --   config = function()
-  --     require('telescope').load_extension('frecency')
-  --   end,
-  --   dependencies = { 'nvim-telescope/telescope.nvim' },
-  -- },
+  {
+    enabled = false,
+    "nvim-telescope/telescope-frecency.nvim",
+    version = "*",
+    config = function()
+      require('telescope').load_extension('frecency')
+    end,
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+  },
 
   -- === Editing ===
   -- make `.` work with tpope's plugins
@@ -77,11 +78,9 @@ return {
     -- Note: Temporary using fork to circumvent search error (issue #2)
     -- "sahlte/timed-highlight.nvim"
     "senilio/timed-highlight.nvim",
-    config = function()
-      require("timed-highlight").setup({
-        highlight_timeout_ms = 3500
-      })
-    end,
+    opts = {
+      highlight_timeout_ms = 3500
+    },
   },
 
   -- === Integration ===
@@ -137,10 +136,11 @@ return {
   -- === Dev ===
   "dstein64/vim-startuptime",
   -- exreader
-  -- {
-  --   "~/Documents/exreader",
-  --   cond = function()
-  --     return vim.fn.isdirectory(vim.env.HOME .. "/Documents/exreader") == 1
-  --   end,
-  -- },
+  {
+    enabled = false,
+    "~/Documents/exreader",
+    cond = function()
+      return vim.fn.isdirectory(vim.env.HOME .. "/Documents/exreader") == 1
+    end,
+  },
 }
