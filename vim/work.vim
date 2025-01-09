@@ -1,5 +1,7 @@
 " Use the 'google' package by default (see http://go/vim/packages).
-source /usr/share/vim/google/google.vim
+let g:disable_google_optional_settings = 1
+" TODO consider using core.vim for faster startup.
+source /usr/share/vim/google/default.vim
 
 " Load google's formatting plugins (http://go/vim/plugins/codefmt-google).
 " The default mapping is \= (or <leader>= if g:mapleader has a custom value),

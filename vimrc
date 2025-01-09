@@ -128,6 +128,7 @@ if has('nvim')
 endif
 
 " === Dev ===
+Plug 'dstein64/vim-startuptime'
 if isdirectory($HOME.'/Documents/exreader')
   " TODO requires UpdateRemotePlugins
   Plug '~/Documents/exreader'
