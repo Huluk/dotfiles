@@ -10,7 +10,7 @@ end
 if nvim_version.major >= 1 or nvim_version.minor >= 9 then
   vim.opt.diffopt:append('linematch:40')
 
-  require('hawtkeys').setup({})
+  require('hawtkeys').setup{}
 end
 
 -- Global statusline to reduce visual clutter.
@@ -18,7 +18,44 @@ if nvim_version.major >= 1 or nvim_version.minor >= 7 then
   vim.opt.laststatus = 3
 end
 
-require('timed-highlight').setup({ highlight_timeout_ms = 3500 })
+require('timed-highlight').setup{ highlight_timeout_ms = 3500 }
+
+vim.g.barbar_auto_setup = false
+require('barbar').setup{
+  animation = false,
+  auto_hide = 1,
+  tabpages = true, -- counter in top-right corner
+  focus_on_close = 'previous',
+
+  icons = {
+    -- Configure the base icons on the bufferline.
+    -- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
+    buffer_index = false,
+    buffer_number = false,
+    button = false,
+    diagnostics = {
+      [vim.diagnostic.severity.ERROR] = { enabled = true, icon = 'ﬀ' },
+      [vim.diagnostic.severity.WARN] = { enabled = false },
+      [vim.diagnostic.severity.INFO] = { enabled = false },
+      [vim.diagnostic.severity.HINT] = { enabled = false },
+    },
+    gitsigns = {
+      added = { enabled = false },
+      changed = { enabled = false },
+      deleted = { enabled = false },
+    },
+    filetype = { enabled = false },
+    separator = { left = '', right = '' },
+    inactive = { separator = { left = '', right = '' } },
+
+    modified = { button = '' },
+    pinned = { button = '', filename = true },
+  },
+
+  maximum_padding = 1,
+
+  no_name_title = '[No Name]',
+}
 
 if vim.g.at_work > 0 then
   require('lspconfig.configs').ciderlsp = { default_config = require('server/ciderlsp') }
