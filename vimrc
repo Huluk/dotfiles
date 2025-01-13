@@ -75,13 +75,10 @@ nmap <localleader>us :setlocal spell spelllang=en_us<CR>
 
 
 " ===== SETTINGS =====
-if has('nvim')
-  if g:at_work || g:work_laptop
-    colorscheme NeoSolarized
-  else
-    colorscheme ofirkai
-  endif
-else
+filetype plugin on
+filetype plugin indent on
+
+if !has('nvim')
   " nvim-compatibility for vim
   source ~/.vim/non-nvim.vim
 endif

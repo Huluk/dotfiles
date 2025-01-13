@@ -1,3 +1,5 @@
+local work_colorscheme = vim.g.at_work > 0 or vim.g.work_laptop > 0
+
 return {
   -- === Core Extensions ===
   -- Language-based syntax
@@ -40,7 +42,7 @@ return {
   },
   -- Frequent/recent file open
   {
-    enabled = false,
+    enabled = false, -- Needs nvim > 0.10
     "nvim-telescope/telescope-frecency.nvim",
     version = "*",
     config = function()
@@ -62,6 +64,13 @@ return {
   { "tpope/vim-endwise", ft = { "ruby", "lua" } },
   -- tree structure for undo/redo operations
   "mbbill/undotree",
+  -- automatically leave insert mode after inactivity
+  {
+    "csessh/stopinsert.nvim",
+    opts = {
+      idle_time_ms = 180000, -- 3 minutes
+    },
+  },
 
   -- === Highlighting ===
   -- highlight text outside of textwidth
@@ -121,8 +130,20 @@ return {
 
   -- === Optics ===
   -- themes
-  "icymind/NeoSolarized",
-  "ofirgall/ofirkai.nvim",
+  {
+    "icymind/NeoSolarized",
+    cond = work_colorscheme,
+    config = function()
+      vim.cmd([[colorscheme NeoSolarized]])
+    end,
+  },
+  {
+    "ofirgall/ofirkai.nvim",
+    cond = not work_colorscheme,
+    config = function()
+      vim.cmd([[colorscheme ofirkai]])
+    end,
+  },
 
   -- === Other ===
   -- extend char information `ga` with unicode names

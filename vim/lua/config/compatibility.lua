@@ -6,7 +6,6 @@ if nvim_version.major < 1 and nvim_version.minor < 10 then
 end
 
 -- Max line matching offset in diff mode.
--- Hawtkeys plugin to suggest unmapped hotkeys.
 if nvim_version.major >= 1 or nvim_version.minor >= 9 then
   vim.opt.diffopt:append('linematch:40')
 end

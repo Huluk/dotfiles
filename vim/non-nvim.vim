@@ -35,8 +35,6 @@ call plug#end()
 set nocompatible
 set encoding=utf-8
 syntax on
-filetype plugin on
-filetype plugin indent on
 set ruler
 set complete-=i
 set nrformats-=octal
