@@ -12,8 +12,6 @@ require('config.lazy')
 
 if vim.g.at_work > 0 then
   require('config.work')
-  -- fix expand not showing a relative path
-  vim.cmd([[lcd .]])
 end
 
 if vim.g.at_work > 0 then

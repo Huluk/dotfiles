@@ -255,11 +255,11 @@ if [ $WORK ]; then
     alias hayut='h ayut'
     alias hyut='h yut'
 
-    alias hd='chg diff'
+    alias hd='h diff'
     alias hpd='chg pdiff'
     alias hdp='chg pdiff'
-    alias hdu='chg diffexported'
-    alias hdsnap='chg diffexported'
+    alias hdu='h diff exported'
+    alias hdsnap='h diff exported'
 
     export LANGUAGE=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
