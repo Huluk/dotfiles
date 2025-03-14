@@ -58,7 +58,7 @@ ARGV.each do |filepath|
     when /^economist\-/
       "#{TEXT}/About/Current Affairs/News Articles/Economist/#{strip_prefix name}"
     when /^rm2\-/,
-        /^delve_/, /^a2ch/,
+        /^delve_/, /^a2ch/, /^DEGM.*\.epub$/,
         /^Pokemon.*\.epub$/, /^\d{3}:? \w+\.epub$/, /^Alexandra.Q.*\.epub$/,
         /Zenith.*\.epub$/
       clean_filepath = filepath.sub('rm2-', '')
