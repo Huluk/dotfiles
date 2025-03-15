@@ -4,16 +4,29 @@ defaults write com.apple.PowerChime ChimeOnAllHardware -bool false &&
     killall PowerChime
 
 brew install coreutils
-
-brew install smartmontools gnupg rsync ripgrep wget
-brew install pass fortune tldr jq
 brew install gnu-sed --with-default-names
+brew install rsync ripgrep fd wget
 
+brew install smartmontools gnupg
+brew install pass fortune tldr jq git
+
+# Mise-en-place
+brew install mise
+mise install ruby python node
+brew install libyaml # ruby dependency
+mise use -g ruby python node
+
+# Neovim
 brew install neovim
 mkdir -p ~/.config/nvim
+gem install neovim
 pip install neovim
+npm install -g neovim
+brew install lua-language-server
 
+# Optional stuff
 brew install rakudo
+brew install flutter
 brew install yt-dlp
 
 # gui apps
