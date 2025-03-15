@@ -3,30 +3,27 @@
 defaults write com.apple.PowerChime ChimeOnAllHardware -bool false &&
     killall PowerChime
 
-brew install smartmontools gnupg2 pass pwgen fortune rbenv
-brew install gnu-sed --with-default-names
-brew install keyboard-maestro
-brew install homebrew/cask/dash
+brew install coreutils
 
-# not working:
-brew install p7zip mas wd
+brew install smartmontools gnupg rsync ripgrep wget
+brew install pass fortune tldr jq
+brew install gnu-sed --with-default-names
 
 brew install neovim
-NEOVIM=~/.config/nvim/init.vim
 mkdir -p ~/.config/nvim
 pip install neovim
 
-# download vim package manager
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+brew install rakudo
+brew install yt-dlp
 
-rm -f $NEOVIM
-echo 'set runtimepath^=~/.vim runtimepath+=~/.vim/after' >> $NEOVIM
-echo 'let &packpath = &runtimepath' >> $NEOVIM
-echo 'source ~/.vimrc' >> $NEOVIM
-
-brew install karabiner-elements
-brew install alfred iterm2 firefox
+# gui apps
+brew install --cask karabiner-elements flux
+brew install --cask iterm2 firefox obsidian
+brew install --cask proton-mail-bridge nordvpn
+brew install --cask appcleaner cryptomator veracrypt gpg-suite
+brew install --cask skype telegram whatsapp signal
+brew install --cask transmission steam mediathekview
+brew install --cask vlc spotify calibre
 
 # oh my zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -34,9 +31,3 @@ rm -f ~/.zshrc
 ln -s ~/hide/dotfiles/zshrc ~/.zshrc
 cp xtrv_lars.zsh-theme ~/.oh-my-zsh/themes/
 cp -r completions ~/.oh-my-zsh/
-
-# gui apps
-brew install appcleaner skype telegram steam transmission vlc calibre veracrypt
-
-# Pixelmator
-mas install 407963104

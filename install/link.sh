@@ -29,6 +29,5 @@ ln -s $DIR/completions ~/.oh-my-zsh/
 # Mac OS only!
 if [[ $OSTYPE = darwin* ]]; then
     cp -r $DIR/mvim.app /Applications/mvim.app
-    ln -s $DIR/hammerspoon ~/.hammerspoon
     ln -s $DIR/karabiner ~/.config/karabiner
 fi
