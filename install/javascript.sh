@@ -3,4 +3,4 @@
 brew install npm
 
 # typescript for tsserver (supports js linting)
-npm install -g neovim typescript eslint
+npm install -g typescript eslint

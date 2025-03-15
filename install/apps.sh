@@ -26,7 +26,6 @@ brew install lua-language-server
 
 # Optional stuff
 brew install rakudo
-brew install flutter
 brew install yt-dlp
 
 # gui apps
