@@ -1,5 +1,3 @@
-local work_colorscheme = vim.g.at_work > 0 or vim.g.work_laptop > 0
-
 return {
   -- === Core Extensions ===
   -- Language-based syntax
@@ -131,15 +129,7 @@ return {
   -- === Optics ===
   -- themes
   {
-    "icymind/NeoSolarized",
-    cond = work_colorscheme,
-    config = function()
-      vim.cmd([[colorscheme NeoSolarized]])
-    end,
-  },
-  {
     "ofirgall/ofirkai.nvim",
-    cond = not work_colorscheme,
     config = function()
       vim.cmd([[colorscheme ofirkai]])
     end,

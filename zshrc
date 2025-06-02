@@ -4,7 +4,6 @@ export LANG=de_CH.UTF-8
 
 typeset -U PATH
 
-[[ -e /google ]] && export WORK=true
 [[ $(uname) == "Linux" ]] && LINUX=true
 [[ $(uname) == "Darwin" ]] && MACOS=true
 
@@ -168,135 +167,37 @@ if [ $LINUX ]; then
   alias open=xdg-open
 fi
 
-if [ $WORK ]; then
+alias s="raku $HOME/hide/dotfiles/version_control.raku"
 
-  function gcert() {
-      if [[ -n $TMUX ]]; then
-          eval $(tmux show-environment -s)
-      fi
-      command gcert "$@"
-  }
+export ANDROID_HOME=/Users/huluk/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$HOME/.pub-cache/bin
 
-  function tmx() {
-      tmx2 new -A -s work
-  }
+diary_open() {
+    (wd text && cd diary &&
+      ARG='' &&
+      for DATE in $*; do ARG="$ARG $DATE.md"; done &&
+      v $(echo "$ARG"))
+}
+diary() {
+  [[ $# -ge 1 ]] && DIFF=$1 || DIFF=0
+  [[ $DIFF -eq 0 ]] && DIFF=-0
+  diary_open $(date -v${DIFF}d +%Y/%m-%d)
+}
 
-  # connect to cloudtop in background
-  CLOUDTOP_SOCKET=~/.ssh/cloudtop
-  CLOUDTOP_REMOTE=$USER.c.googlers.com
-  DESKTOP_REMOTE=$USER.zrh.corp.google.com
-  function cloudtop_connect() {
-      ssh -S "$CLOUDTOP_SOCKET" "$CLOUDTOP_REMOTE" $*
-  }
-  function cloudtop_master() {
-      cloudtop_connect -MNf
-  }
-  function cloudtop_attach() {
-      cloudtop_connect -t "cd '$(pwd)'; zsh" $*
-  }
-  alias ca="ssh $CLOUDTOP_REMOTE -t 'tmx2 new -A -s work'"
-
-  function goodmorning() {
-      # uses go/roadwarrior
-      AUTH_SSH_CERTIFICATION=false
-      if [ $MACOS ]; then
-          rw "$CLOUDTOP_REMOTE" --no_prodssh --command zsh
-      else # linux
-          rw --no_prodssh --nossh_interactively
-      fi
-  }
-
-  if [ $LINUX ]; then
-
-    function workspace() {
-        g4d $1 &&
-            tmux split-window -hb -p 64 -c "$(pwd)" &&
-            tmux rename-window $1
+REMARKABLE_HOST=remarkable.wifi
+RESTART_XOCHITL_DEFAULT=1
+REMARKABLE_PARENT_DIR='4ec3a632-bbd8-445d-83e3-dd4897fc829d'
+remarkable_backup(){
+    rsync -auhP --rsync-path=/opt/bin/rsync \
+        --exclude='*.cache' \
+        --exclude='*.highlights' \
+        --exclude='*.textconversion' \
+        --exclude='*.thumbnails' \
+        --exclude='*.pagedata' \
+        "root@$REMARKABLE_HOST:/home/root/.local/share/remarkable/xochitl/*" \
+        /Volumes/kEb8ASeZOpEE/remarkable-backup/files/
     }
-    alias w=workspace
+# if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then
 
-    function cl() {
-        open "http://cl/$(hg exportedcl)"
-    }
-
-    # WORK-shortcuts
-    jeval='java/com/google/lens/eval'
-    jevals='java/com/google/lens/eval/evalservice'
-    jteval='javatests/com/google/lens/eval'
-    jtevals='javatests/com/google/lens/eval/evalservice'
-    vvsl='vision/visualsearch/server/lens'
-
-    source /etc/bash_completion.d/g4d
-    source /etc/bash_completion.d/hgd
-
-    alias intellij='/opt/intellij-ce-stable/bin/idea.sh'
-
-    alias gaiamint='/google/data/ro/projects/gaiamint/bin/get_mint  --type=loas --text --endusercreds --scopes=77900  --out=/tmp/auth.txt'
-
-    alias jarvis_cli='/google/bin/releases/ke-graph-exp/tools/jarvis_cli'
-    alias bs2='/google/bin/releases/blobstore2/tools/bs2/bs2'
-
-    unalias h
-    alias h="raku $HOME/hidden/dotfiles/version_control.raku"
-
-    alias hx='h x'
-    alias hs='h s'
-    alias hy='h y'
-    alias ha='h a'
-    alias hc='h c'
-    alias hch='h c head'
-    alias hct='h c tip'
-    alias hut='h ut'
-    alias haut='h aut'
-    alias hayut='h ayut'
-    alias hyut='h yut'
-
-    alias hd='h diff'
-    alias hpd='chg pdiff'
-    alias hdp='chg pdiff'
-    alias hdu='h diff exported'
-    alias hdsnap='h diff exported'
-
-    export LANGUAGE=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
-
-    # Setup go/hi #!>>HI<<!#
-    source /etc/bash.bashrc.d/shell_history_forwarder.sh #!>>HI<<!#
-  fi
-
-else # non-work
-
-  alias s="raku $HOME/hide/dotfiles/version_control.raku"
-
-  export ANDROID_HOME=/Users/huluk/Library/Android/sdk
-  export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-
-  diary_open() {
-      (wd text && cd diary &&
-        ARG='' &&
-        for DATE in $*; do ARG="$ARG $DATE.md"; done &&
-        v $(echo "$ARG"))
-  }
-  diary() {
-    [[ $# -ge 1 ]] && DIFF=$1 || DIFF=0
-    [[ $DIFF -eq 0 ]] && DIFF=-0
-    diary_open $(date -v${DIFF}d +%Y/%m-%d)
-  }
-
-  REMARKABLE_HOST=remarkable.wifi
-  RESTART_XOCHITL_DEFAULT=1
-  REMARKABLE_PARENT_DIR='4ec3a632-bbd8-445d-83e3-dd4897fc829d'
-  remarkable_backup(){
-      rsync -auhP --rsync-path=/opt/bin/rsync \
-          --exclude='*.cache' \
-          --exclude='*.highlights' \
-          --exclude='*.textconversion' \
-          --exclude='*.thumbnails' \
-          --exclude='*.pagedata' \
-          "root@$REMARKABLE_HOST:/home/root/.local/share/remarkable/xochitl/*" \
-          /Volumes/kEb8ASeZOpEE/remarkable-backup/files/
-      }
-  # if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then
-
-  eval "$(mise activate zsh)"
-fi
+eval "$(mise activate zsh)"

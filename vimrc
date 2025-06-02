@@ -11,7 +11,7 @@
 " <localleader>
 " • language-specific file actions or commands
 "
-" Additional maps may be defined in ftplugin/*, work.vim, and the lsp/ config.
+" Additional maps may be defined in ftplugin/* and the lsp/ config.
 
 " set leaders
 let mapleader = ","
@@ -84,10 +84,8 @@ if !has('nvim')
 endif
 
 set number
-if !g:at_work
-  set relativenumber
-  set cursorline
-endif
+set relativenumber
+set cursorline
 set signcolumn=number
 
 set ignorecase
@@ -144,7 +142,7 @@ set completeopt=menu,menuone,noselect
 
 " wildcard ignore expressions
 set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
-set wildignore+=bin/*,build/*,*/bin/*,*/build/*
+set wildignore+=build/*,*/build/*
 
 " save on losing focus
 autocmd FocusLost,Tableave,BufLeave * call <SID>Autosave()

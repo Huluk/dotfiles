@@ -1,3 +1,0 @@
-#compdef workspace
-
-_values $(ls -A /google/src/cloud/$(whoami))

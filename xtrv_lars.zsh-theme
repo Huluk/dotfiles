@@ -32,12 +32,8 @@ function thetime {
     date '+%H:%M:%S'
 }
 
-function hostname {
-    [ $WORK ] && [ $LINUX ] && echo '%3m' || echo '%m'
-}
-
 PROMPT='
-%{$fg_no_bold[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}$(hostname)%{$reset_color%} in %{$fg[blue]%}$(dir_info)%{$fg_bold[red]%}$(collapse_pwd)%{$reset_color%}
+%{$fg_no_bold[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%} in %{$fg[blue]%}$(dir_info)%{$fg_bold[red]%}$(collapse_pwd)%{$reset_color%}
 %{$fg[cyan]%}$(virtualenv_info)$(prompt_char)%{$reset_color%} '
 
 RPROMPT='$(battery_charge) %{$fg_no_bold[green]%}[$(thetime)]%{$reset_color%}'
