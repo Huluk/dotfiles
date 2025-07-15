@@ -25,15 +25,16 @@ npm install -g neovim
 brew install lua-language-server
 
 # Optional stuff
-brew install rakudo
+brew install rakudo-star
 brew install yt-dlp
 
 # gui apps
-brew install --cask karabiner-elements flux
+brew install --cask scroll-reverser
+brew install --cask karabiner-elements flux raycast
 brew install --cask iterm2 firefox obsidian
 brew install --cask proton-mail-bridge nordvpn
 brew install --cask appcleaner cryptomator veracrypt gpg-suite
-brew install --cask skype telegram whatsapp signal
+brew install --cask skype telegram whatsapp signal discord
 brew install --cask transmission steam mediathekview
 brew install --cask vlc spotify calibre
 

@@ -20,6 +20,7 @@ mkdir -p ~/.config/nvim
 ln -s $DIR/vim/init.lua ~/.config/nvim/init.lua
 ln -s $DIR/vim/lua ~/.config/nvim/lua
 
+mkdir -p ~/.ssh
 ln -s $DIR/ssh_config ~/.ssh/config
 ln -s $DIR/tmux.conf ~/.tmux.conf
 

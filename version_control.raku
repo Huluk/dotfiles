@@ -120,8 +120,11 @@ class GitExecute is Execute {
     return exec(<rev-parse --show-toplevel>).run(:out, :err).so;
   }
 
+  method cmd:sym<amend> ($/) { make exec <add --all>; }
   method cmd:sym<status> ($/) { make exec <status>; }
-  method cmd:sym<commit> ($/) { make exec <commit -am>, $<arg>.made, :say; }
+
+  method cmd:sym<upload> ($/) { make exec <push>, $<arg>.made; }
+  method cmd:sym<commit> ($/) { make exec <commit -m>, $<arg>.made, :say; }
 }
 
 sub MAIN(

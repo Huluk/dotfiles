@@ -167,7 +167,7 @@ if [ $LINUX ]; then
   alias open=xdg-open
 fi
 
-alias s="raku $HOME/hide/dotfiles/version_control.raku"
+alias g="raku $HOME/hide/dotfiles/version_control.raku"
 
 export ANDROID_HOME=/Users/huluk/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
