@@ -161,9 +161,12 @@ if [ $MACOS ]; then
   keyboard() {
       ~/Documents/scripts/karabiner-elements_switch_keyboard $*
   }
+  eval "$(mise activate zsh)"
 fi
 
 if [ $LINUX ]; then
+  export PATH=$PATH:/usr/sbin
+
   alias open=xdg-open
 fi
 
@@ -199,5 +202,3 @@ remarkable_backup(){
         /Volumes/kEb8ASeZOpEE/remarkable-backup/files/
     }
 # if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then
-
-eval "$(mise activate zsh)"
