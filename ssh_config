@@ -1,26 +1,32 @@
+Host netcup
+  User huluk
+  HostName 152.53.181.164
+  PubkeyAcceptedKeyTypes=+ssh-ed25519
+  IdentityFile ~/.ssh/id_ed25519
+
 Host remarkable
   User root
   HostName 10.11.99.1
-  HostKeyAlgorithms=+ssh-rsa
-  PubkeyAcceptedKeyTypes=+ssh-rsa
-  IdentityFile ~/.ssh/id_rsa_remarkable
+  HostKeyAlgorithms=+ssh-ed25519
+  PubkeyAcceptedKeyTypes=+ssh-ed25519
+  IdentityFile ~/.ssh/id_remarkable
 
 Host remarkable.wifi
   User root
   HostName 192.168.0.128
-  HostKeyAlgorithms=+ssh-rsa
-  PubkeyAcceptedKeyTypes=+ssh-rsa
-  IdentityFile ~/.ssh/id_rsa_remarkable
+  HostKeyAlgorithms=+ssh-ed25519
+  PubkeyAcceptedKeyTypes=+ssh-ed25519
+  IdentityFile ~/.ssh/id_remarkable
 
 Host remarkable.iphone
   User root
   HostName 172.20.10.7
-  HostKeyAlgorithms=+ssh-rsa
-  PubkeyAcceptedKeyTypes=+ssh-rsa
-  IdentityFile ~/.ssh/id_rsa_remarkable
+  HostKeyAlgorithms=+ssh-ed25519
+  PubkeyAcceptedKeyTypes=+ssh-ed25519
+  IdentityFile ~/.ssh/id_remarkable
 
-Host *
-  AddKeysToAgent yes
-  IgnoreUnknown UseKeychain
-  UseKeychain yes
-  IdentityFile ~/.ssh/id_rsa
+# Host *
+#   AddKeysToAgent yes
+#   IgnoreUnknown UseKeychain
+#   UseKeychain yes
+#   IdentityFile ~/.ssh/id_rsa

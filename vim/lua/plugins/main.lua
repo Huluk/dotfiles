@@ -1,4 +1,32 @@
 return {
+  -- === Optics ===
+  -- themes
+  {
+    "ofirgall/ofirkai.nvim",
+    enabled = true,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd [[colorscheme ofirkai]]
+      require('ofirkai').setup {
+        custom_hlgroups = {
+          -- These overrides are flaky :(
+          -- TabLineSel = { fg = "#f20aee", bg = "#343942" },
+          -- TabLine = { fg = "#78b6e8", bg = "#343942" },
+        },
+      }
+    end,
+  },
+  {
+    "craftzdog/solarized-osaka.nvim",
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd [[colorscheme solarized-osaka]]
+    end,
+  },
+
   -- === Core Extensions ===
   -- Language-based syntax
   {
@@ -65,6 +93,7 @@ return {
   -- automatically leave insert mode after inactivity
   {
     "csessh/stopinsert.nvim",
+    enabled = false,
     opts = {
       idle_time_ms = 180000, -- 3 minutes
     },
@@ -125,15 +154,6 @@ return {
   "wsdjeg/vim-fetch",
   -- jump to last line on file open
   "farmergreg/vim-lastplace",
-
-  -- === Optics ===
-  -- themes
-  {
-    "ofirgall/ofirkai.nvim",
-    config = function()
-      vim.cmd([[colorscheme ofirkai]])
-    end,
-  },
 
   -- === Other ===
   -- extend char information `ga` with unicode names
