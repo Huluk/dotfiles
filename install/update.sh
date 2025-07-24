@@ -3,4 +3,4 @@
 brew upgrade
 mise upgrade
 tldr --update
-omz update
+"$ZSH/tools/upgrade.sh"
