@@ -30,7 +30,8 @@ brew install yt-dlp
 
 # gui apps
 brew install --cask scroll-reverser
-brew install --cask karabiner-elements flux raycast
+brew install --cask karabiner-elements flux raycast quitter
+brew install --cask jordanbaird-ice
 brew install --cask iterm2 firefox obsidian
 brew install --cask proton-mail-bridge nordvpn
 brew install --cask appcleaner cryptomator veracrypt gpg-suite

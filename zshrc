@@ -88,7 +88,7 @@ export EDITOR='nvim'
 alias ex='nvim -E -u ~/.exrc'
 
 if [ $MACOS ]; then
-  unalias run-help
+  unalias run-help 2> /dev/null
   autoload run-help
   HELPDIR=/usr/local/share/zsh/help
   alias help=run-help
@@ -156,6 +156,10 @@ if [ $MACOS ]; then
   alias umount="diskutil unmount"
   alias shuf="gshuf"
   alias 7z="7za"
+  alias ls="eza"
+  alias tree="eza -T --hyperlink"
+
+  HOMEBREW_NO_ENV_HINTS=1
 
   # switch sierra karabiner-elements config depending on keyboard
   keyboard() {

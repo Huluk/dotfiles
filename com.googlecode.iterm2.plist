@@ -4325,6 +4325,8 @@
 	<false/>
 	<key>EnableRendezvous</key>
 	<false/>
+	<key>EnableUnderlineSemanticHistoryOnCmdHover</key>
+	<true/>
 	<key>FocusFollowsMouse</key>
 	<false/>
 	<key>FsTabDelay</key>
@@ -5734,6 +5736,8 @@
 	<false/>
 	<key>URLHandlersByGuid</key>
 	<dict/>
+	<key>UnderlineHyperlinks</key>
+	<false/>
 	<key>UseBorder</key>
 	<false/>
 	<key>UseCompactLabel</key>
