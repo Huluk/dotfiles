@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>512</string>
+	<string>528</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -295,7 +295,7 @@
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>4FC349E8-3802-4E46-A611-77BECBB1E77A</key>
+		<key>6D9CE668-66FD-4458-A434-5E86CF4B6645</key>
 		<dict>
 			<key>from</key>
 			<string>7E89F909-13F0-4A9B-A26C-E86D5120493C - 7E89F909-13F0-4A9B-A26C-E86D5120493C</string>

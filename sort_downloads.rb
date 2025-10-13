@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
 HOME = ENV['HOME']
-TEXT = "/Volumes/kEb8ASeZOpEE/Documents"
-IMG = "/Volumes/kEb8ASeZOpEE/Pictures"
+TEXT = "/Users/huluk/hide/mount/Huluk/Documents"
+IMG = "/Users/huluk/hide/mount/Huluk/Pictures"
+PAPER = "/Users/huluk/hide/mount/Huluk/Papers"
 IOTA = "i" # proper iota doesn't work :(
 
 def strip_prefix(str, prefix=/^\w+\-/)
@@ -57,14 +58,8 @@ ARGV.each do |filepath|
       "#{TEXT}/About/Current Affairs/News Articles/NZZ/#{strip_prefix name}"
     when /^economist\-/
       "#{TEXT}/About/Current Affairs/News Articles/Economist/#{strip_prefix name}"
-    when /^rm2\-/,
-        /^delve_/, /^a2ch/, /^DEGM.*\.epub$/,
-        /^Pokemon.*\.epub$/, /^\d{3}:? \w+\.epub$/, /^Alexandra.Q.*\.epub$/,
-        /Zenith.*\.epub$/
-      clean_filepath = filepath.sub('rm2-', '')
-      system "mv '#{filepath}' '#{clean_filepath}'"
-      system "/usr/local/bin/copy2remarkable '#{clean_filepath}'"
-      next
+    when /^paper\-/
+      "#{PAPER}/#{strip_prefix name}"
     else
       nil
     end
