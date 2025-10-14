@@ -127,6 +127,46 @@ class GitExecute is Execute {
   method cmd:sym<commit> ($/) { make exec <commit -m>, $<arg>.made, :say; }
 }
 
+class JjExecute is Execute {
+  # Currently assumes git backing.
+
+  sub exec(*@args, Bool :$say = False) {
+    Cmd.new('jj', |@args) :$say;
+  }
+
+  method arg:sym<head> ($/) { make Nil; }
+  method arg:sym<parent> ($/) { make <@->; }
+  method arg:sym<child> ($/) { make <@-+ & ~@>; } # TODO untested
+  # method arg:sym<sibling> ($/) {
+    # helper: jj log -T commit_id --no-graph -r 'visible_heads() & ~@'
+    # make ;
+  # }
+  # method arg:sym<exported> ($/) { }
+
+  method detect returns Bool {
+    return exec(<root>).run(:out, :err).so;
+  }
+
+  method cmd:sym<amend> ($/) { make exec <amend>; }
+  method cmd:sym<evolve> ($/) { make exec <rebase --interactive>; }
+  method cmd:sym<status> ($/) { make exec <status>; }
+  method cmd:sym<sync> ($/) { make exec <git fetch>; }
+  method cmd:sym<print> ($/) {
+    make exec <log -r @- -n1 --no-graph -T description>;
+  }
+  method cmd:sym<long_history> ($/) { make exec <log -r ::>; }
+  method cmd:sym<short_history> ($/) { make exec <log>; }
+  method cmd:sym<upload_tree> ($/) { make exec <git push -c @>; }
+
+  method cmd:sym<diff> ($/) {
+    my $arg = $<arg>.made;
+    make ($arg ?? exec <diff -r>, $arg !! exec <diff>);
+  }
+  method cmd:sym<checkout> ($/) { make exec <new>, $<arg>.made, :say; }
+  method cmd:sym<upload> ($/) { make exec <git push -r>, $<arg>.made; }
+  method cmd:sym<commit> ($/) { make exec <describe -m>, $<arg>.made, :say; }
+}
+
 sub MAIN(
   $cmd,  #= One or more letters representing a command. Use 'h' for help.
   *@args #= Arguments
@@ -136,15 +176,19 @@ sub MAIN(
   my $args = join $ARGUMENT_SEPARATOR, @args;
   my $is-mercurial = MercurialExecute.detect;
   my $is-git = GitExecute.detect;
-  if not $is-mercurial and not $is-git {
+  my $is-jj = JjExecute.detect;
+  if not ($is-mercurial or $is-git or $is-jj) {
     die 'No version control detected.';
   }
-  if $is-mercurial and $is-git {
+  # jj takes precedence because it may use the other systems as a backend.
+  if $is-mercurial and $is-git and not $is-jj {
     die 'Multiple version control systems detected. No idea what to do.';
   }
+  my $executor = $is-jj ?? JjExecute
+    !! ($is-git ?? GitExecute !! MercurialExecute);
   my $parsed = Command.parse(
     $args,
-    actions => $is-git ?? GitExecute !! MercurialExecute
+    actions => $executor
   );
   die 'Failed to parse input!' if not $parsed;
   for $parsed.made -> $cmd {

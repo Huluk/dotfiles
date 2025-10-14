@@ -8,7 +8,7 @@ brew install gnu-sed --with-default-names
 brew install rsync ripgrep fd wget
 
 brew install smartmontools gnupg
-brew install pass fortune tldr jq git
+brew install pass fortune tldr jq git jj
 
 # Mise-en-place
 brew install mise
