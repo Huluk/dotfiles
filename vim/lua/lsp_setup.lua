@@ -1,5 +1,3 @@
-local nvim_lsp = require('lspconfig')
-
 local M = {}
 
 local function preview_location_callback(_, result)
@@ -99,6 +97,8 @@ function M.attach(client, bufnr)
 end
 
 function M.register_diagnostics(server)
+  local nvim_lsp = require('lspconfig')
+
   nvim_lsp[server].handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = false,
@@ -108,7 +108,9 @@ function M.register_diagnostics(server)
   )
 end
 
-function M.setup(client_name, servers)
+function M.old_setup(client_name, servers)
+  local nvim_lsp = require('lspconfig')
+
   local client = require('client/' .. client_name)
   if client.pre then client.pre(servers) else end
   for _, server in ipairs(servers) do
@@ -120,6 +122,26 @@ function M.setup(client_name, servers)
     M.register_diagnostics(server)
   end
   if client.post then client.post(servers) else end
+end
+
+function M.new_setup(client_name, servers)
+  local client = require('client/' .. client_name)
+  if client.pre then client.pre(servers) else end
+  vim.lsp.config('*', {
+    capabilities = client.capabilities,
+    on_attach = M.attach,
+  })
+  vim.lsp.enable(servers)
+end
+
+function M.setup(client_name, servers)
+  local nvim_version = vim.version()
+
+  if nvim_version.major < 1 and nvim_version.minor < 10 then
+    M.old_setup(client_name, servers)
+  else
+    M.new_setup(client_name, servers)
+  end
 end
 
 return M

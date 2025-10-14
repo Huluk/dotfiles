@@ -19,6 +19,7 @@ ln -s $DIR/hgrc ~/.hgrc
 mkdir -p ~/.config/nvim
 ln -s $DIR/vim/init.lua ~/.config/nvim/init.lua
 ln -s $DIR/vim/lua ~/.config/nvim/lua
+ln -s $DIR/vim/lsp ~/.config/nvim/lsp
 
 mkdir -p ~/.ssh
 ln -s $DIR/ssh_config ~/.ssh/config
