@@ -170,6 +170,7 @@ fi
 
 if [ $LINUX ]; then
   export PATH=$PATH:/usr/sbin
+  export PATH=$PATH:$HOME/.cargo/bin
 
   alias open=xdg-open
 fi

@@ -137,7 +137,7 @@ end
 function M.setup(client_name, servers)
   local nvim_version = vim.version()
 
-  if nvim_version.major < 1 and nvim_version.minor < 10 then
+  if nvim_version.major < 1 and nvim_version.minor <= 10 then
     M.old_setup(client_name, servers)
   else
     M.new_setup(client_name, servers)
