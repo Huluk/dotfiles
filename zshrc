@@ -176,6 +176,10 @@ if [ $LINUX ]; then
 fi
 
 alias g="raku $HOME/hide/dotfiles/version_control.raku"
+if which raku > /dev/null; then
+  RAKU_SITE=$(raku -e 'say $*REPO.repo-chain[1].abspath')
+  export PATH=$PATH:$RAKU_SITE/bin
+fi
 
 export ANDROID_HOME=/Users/huluk/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
@@ -197,13 +201,13 @@ REMARKABLE_HOST=remarkable.wifi
 RESTART_XOCHITL_DEFAULT=1
 REMARKABLE_PARENT_DIR='4ec3a632-bbd8-445d-83e3-dd4897fc829d'
 remarkable_backup(){
-    rsync -auhP --rsync-path=/opt/bin/rsync \
+    rsync -auhP --rsync-path=/usr/bin/rsync \
         --exclude='*.cache' \
         --exclude='*.highlights' \
         --exclude='*.textconversion' \
         --exclude='*.thumbnails' \
         --exclude='*.pagedata' \
         "root@$REMARKABLE_HOST:/home/root/.local/share/remarkable/xochitl/*" \
-        /Volumes/kEb8ASeZOpEE/remarkable-backup/files/
+        ~/hide/mount/Huluk/remarkable-backup/files/
     }
 # if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then

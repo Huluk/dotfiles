@@ -147,7 +147,7 @@ class JjExecute is Execute {
     return exec(<root>).run(:out, :err).so;
   }
 
-  method cmd:sym<amend> ($/) { make exec <amend>; }
+  method cmd:sym<amend> ($/) { make exec <squash>; }
   method cmd:sym<evolve> ($/) { make exec <rebase --interactive>; }
   method cmd:sym<status> ($/) { make exec <status>; }
   method cmd:sym<sync> ($/) { make exec <git fetch>; }
@@ -164,7 +164,7 @@ class JjExecute is Execute {
   }
   method cmd:sym<checkout> ($/) { make exec <new>, $<arg>.made, :say; }
   method cmd:sym<upload> ($/) { make exec <git push -r>, $<arg>.made; }
-  method cmd:sym<commit> ($/) { make exec <describe -m>, $<arg>.made, :say; }
+  method cmd:sym<commit> ($/) { make exec <commit -m>, $<arg>.made, :say; }
 }
 
 sub MAIN(
