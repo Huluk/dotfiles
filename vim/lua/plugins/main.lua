@@ -122,6 +122,12 @@ return {
   -- === Integration ===
   -- git wrapper
   "tpope/vim-fugitive",
+  -- jj wrapper
+  {
+    "NicolasGB/jj.nvim",
+    opts = {},
+  },
+  "rafikdraoui/jj-diffconflicts",
   -- fix tmux focus integration
   "tmux-plugins/vim-tmux-focus-events",
   -- tmux split navigation
