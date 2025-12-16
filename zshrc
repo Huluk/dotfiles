@@ -74,7 +74,7 @@ ZSH_THEME="xtrv_lars"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # previous plugins: git github heroku irb macos rbenv ruby rvm vi-mode
-plugins=(brew colored-man-pages colorize history history-substring-search pass wd)
+plugins=(brew colored-man-pages colorize history history-substring-search pass wd jj)
 
 alias rm='rm -i'
 alias cp='cp -i'

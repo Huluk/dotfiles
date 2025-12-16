@@ -125,9 +125,9 @@ return {
   -- jj wrapper
   {
     "NicolasGB/jj.nvim",
+    -- dir = "~/Documents/neovim-vcs/jj.nvim",
     opts = {},
   },
-  "rafikdraoui/jj-diffconflicts",
   -- fix tmux focus integration
   "tmux-plugins/vim-tmux-focus-events",
   -- tmux split navigation
@@ -175,7 +175,7 @@ return {
   -- exreader
   {
     enabled = false,
-    "~/Documents/exreader",
+    dir = "~/Documents/exreader",
     cond = function()
       return vim.fn.isdirectory(vim.env.HOME .. "/Documents/exreader") == 1
     end,
