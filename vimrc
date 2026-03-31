@@ -147,7 +147,7 @@ set wildignore+=build/*,*/build/*
 " save on losing focus
 autocmd FocusLost,Tableave,BufLeave * call <SID>Autosave()
 function! s:Autosave()
-    if filereadable(expand("%:p"))
+    if &modified && filereadable(expand("%:p"))
         silent! write
     endif
 endfunction

@@ -125,6 +125,18 @@ alias vd='nvim -d -c "windo set wrap"'
 # for git
 alias -g create-upstream='--set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
+# for jj
+# open current diffs in nvim
+jd(){
+  local files=$(jj diff --summary $* |
+    awk '/^M / {print substr($0, 3)}')
+  if [ -n "$files" ]; then
+    nvim -c 'tabdo Jdiff' -p ${(f)files}
+  else
+    echo "No modified files found."
+  fi
+}
+
 osm() {
   telnet mapscii.me
 }

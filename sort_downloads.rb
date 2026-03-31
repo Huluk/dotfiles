@@ -18,12 +18,12 @@ ARGV.each do |filepath|
       "#{TEXT}/Money/PostFinance/"
     when /^Revolut.*\.pdf/
       "#{TEXT}/Money/Revolut/"
-    when /^default_\d{1,2}_\d{4}.pdf/
+    when /^default_\d{1,2}_\d{4}.*\.pdf/
       "#{TEXT}/Money/PKZ"
     when /^css-kranken.*.pdf/
       "#{TEXT}/Versicherung/Kranken/CSS/Monatsrechnung/"
     when /^ekz-elektr/
-      "#{TEXT}/Wohnen/ZH Baumgartenweg/Nebenkosten/"
+      "#{TEXT}/Wohnen/_ZH Baumgartenweg/Nebenkosten/"
     when /^CI.NEWS/, /^CI.MAG/
       "#{TEXT}/Versicherung/Cryonics/Newsletter/"
     when /^FLT_/, /^FLIX-/

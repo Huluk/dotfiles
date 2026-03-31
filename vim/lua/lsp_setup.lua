@@ -68,9 +68,9 @@ function M.attach(client, bufnr)
 
   -- DIAGNOSTIC
   -- previous error
-  map('(', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+  map('(', '<cmd>lua vim.diagnostic.jump({count = -1})<CR>')
   -- next error
-  map(')', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+  map(')', '<cmd>lua vim.diagnostic.jump({count = 1})<CR>')
   -- display diagnostics (S-A-d)
   map('δ', '<cmd>lua vim.diagnostic.open_float()<CR>')
   -- display all errors (S-A-a)
