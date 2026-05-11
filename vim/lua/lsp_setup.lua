@@ -1,33 +1,20 @@
 local M = {}
 
-local function preview_location_callback(_, result)
-  if result == nil or vim.tbl_isempty(result) then
-    return nil
+function M.jump_diagnostic(count)
+  vim.diagnostic.jump({ count = count })
+  local diags = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+  if #diags > 0 then
+    local msg = diags[1].message:match("([^\n]+)")
+    vim.api.nvim_echo({ { msg, "Normal" } }, false, {})
   end
-  vim.lsp.util.preview_location(result[1])
 end
-
-local function peek(f)
-  local params = vim.lsp.util.make_position_params()
-  return vim.lsp.buf_request(0, f, params, preview_location_callback)
-end
-
 
 function M.attach(client, bufnr)
   local map = function(key, value)
     vim.api.nvim_buf_set_keymap(bufnr, "n", key, value, { noremap = true, silent = true });
   end
 
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  if vim.lsp.formatexpr then -- Neovim v0.6.0+ only.
-    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr")
-  end
-  if vim.lsp.tagfunc then -- Neovim v0.6.0+ only.
-    -- Tag functionality via LSP. See `:help tag-commands`. Use <c-]> to
-    -- go-to-definition.
-    vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
-  end
+  vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', { buf = bufnr })
 
   -- INFO
   -- hover for current word
@@ -68,9 +55,9 @@ function M.attach(client, bufnr)
 
   -- DIAGNOSTIC
   -- previous error
-  map('(', '<cmd>lua vim.diagnostic.jump({count = -1})<CR>')
+  map('(', '<cmd>lua require("lsp_setup").jump_diagnostic(-1)<CR>')
   -- next error
-  map(')', '<cmd>lua vim.diagnostic.jump({count = 1})<CR>')
+  map(')', '<cmd>lua require("lsp_setup").jump_diagnostic(1)<CR>')
   -- display diagnostics (S-A-d)
   map('δ', '<cmd>lua vim.diagnostic.open_float()<CR>')
   -- display all errors (S-A-a)
@@ -96,18 +83,6 @@ function M.attach(client, bufnr)
   print("LSP started.");
 end
 
-function M.register_diagnostics(server)
-  local nvim_lsp = require('lspconfig')
-
-  nvim_lsp[server].handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = false,
-      signs = true,
-      update_in_insert = true,
-    }
-  )
-end
-
 function M.old_setup(client_name, servers)
   local nvim_lsp = require('lspconfig')
 
@@ -119,7 +94,6 @@ function M.old_setup(client_name, servers)
     if not status then opts = {} end
     opts.on_attach = M.attach
     nvim_lsp[server].setup(client.ensure_capabilities(server, opts))
-    M.register_diagnostics(server)
   end
   if client.post then client.post(servers) else end
 end

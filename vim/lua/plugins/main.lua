@@ -8,13 +8,18 @@ return {
     priority = 1000,
     config = function()
       vim.cmd [[colorscheme ofirkai]]
-      require('ofirkai').setup {
-        custom_hlgroups = {
-          -- These overrides are flaky :(
-          -- TabLineSel = { fg = "#f20aee", bg = "#343942" },
-          -- TabLine = { fg = "#78b6e8", bg = "#343942" },
-        },
-      }
+      require('ofirkai').setup({})
+
+      -- Invert tab colors: current tab pink, others blue
+      local set_tab_colors = function()
+        vim.api.nvim_set_hl(0, 'TabLineSel', { fg = '#f20aee', bg = '#343942' })
+        vim.api.nvim_set_hl(0, 'TabLine', { fg = '#78b6e8', bg = '#343942' })
+      end
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        pattern = 'ofirkai',
+        callback = set_tab_colors,
+      })
+      set_tab_colors()
     end,
   },
   {
@@ -32,19 +37,17 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function()
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
-        indent = {
-          ensure_installed = { "lua", "vim", "markdown" },
-          sync_install = true,
-          auto_install = false,
-          ignore_install = {},
-          enable = true,
-          disable = { "markdown" },
-        }
-      })
+    branch = "main",
+    lazy = false,
+    init = function()
+      local ensureInstalled = { 'lua', 'vim', 'markdown' }
+      local alreadyInstalled = require('nvim-treesitter.config').get_installed()
+      local parsersToInstall = vim.iter(ensureInstalled)
+          :filter(function(parser)
+            return not vim.tbl_contains(alreadyInstalled, parser)
+          end)
+          :totable()
+      require('nvim-treesitter').install(parsersToInstall)
     end,
   },
   -- Lua utils, dependency of telescope and others.
@@ -87,7 +90,9 @@ return {
   -- increment/decrement dates/times etc, same as normal numbers
   "tpope/vim-speeddating",
   -- auto-add end statements of indented code blocks
-  { "tpope/vim-endwise", ft = { "ruby", "lua" } },
+  { "tpope/vim-endwise",           ft = { "ruby", "lua" } },
+  -- Applescript highlighting
+  { "vim-scripts/applescript.vim", ft = { "applescript" } },
   -- tree structure for undo/redo operations
   "mbbill/undotree",
   -- automatically leave insert mode after inactivity

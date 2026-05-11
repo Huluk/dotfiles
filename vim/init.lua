@@ -4,6 +4,12 @@ vim.cmd([[source ~/.vimrc]])
 
 require('config.lazy')
 
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  update_in_insert = true,
+})
+
 vim.g.lsp_servers = { 'dartls', 'lua_ls', 'serverpod' }
 
 if #vim.g.lsp_servers then
