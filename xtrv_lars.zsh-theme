@@ -8,8 +8,14 @@ function prompt_char {
 }
 
 function dir_info {
-    git branch >/dev/null 2>/dev/null && echo 'git '
-    hg root >/dev/null 2>/dev/null && echo '☿ '
+    # jj repos often have a git backing store, so check jj first
+    if jj root >/dev/null 2>/dev/null; then
+        echo 'jj '
+    elif git branch >/dev/null 2>/dev/null; then
+        echo 'git '
+    elif hg root >/dev/null 2>/dev/null; then
+        echo '☿ '
+    fi
 }
 
 function battery_charge {
