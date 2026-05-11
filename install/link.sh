@@ -15,6 +15,7 @@ ln -s $DIR/bash_profile ~/.bash_profile
 ln -s $DIR/gitconfig ~/.gitconfig
 ln -s $DIR/gitignore_global ~/.gitignore_global
 ln -s $DIR/hgrc ~/.hgrc
+ln -s $DIR/codebuff_knowledge.md ~/.knowledge.md
 
 mkdir -p ~/.config/nvim
 ln -s $DIR/vim/init.lua ~/.config/nvim/init.lua
