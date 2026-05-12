@@ -63,22 +63,29 @@ function M.attach(client, bufnr)
   -- display all errors (S-A-a)
   map('<leader>α', '<cmd>lua vim.diagnostic.get_all()<CR>')
 
-  vim.api.nvim_command("augroup LSP")
-  vim.api.nvim_command("autocmd!")
-  if client.server_capabilities.documentHighlightingProvider then
-    vim.api.nvim_command("autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()")
-    vim.api.nvim_command("autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()")
-    vim.api.nvim_command("autocmd CursorMoved <buffer> lua vim.lsp.util.buf_clear_references()")
+  -- Per-buffer augroup so attaching LSP to one buffer doesn't wipe autocmds
+  -- on another buffer.
+  local group = vim.api.nvim_create_augroup('LSP_' .. bufnr, { clear = true })
+  if client.server_capabilities.documentHighlightProvider then
+    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+      group = group,
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.document_highlight() end,
+    })
+    vim.api.nvim_create_autocmd('CursorMoved', {
+      group = group,
+      buffer = bufnr,
+      callback = function() vim.lsp.util.buf_clear_references() end,
+    })
   end
   if client.server_capabilities.documentFormattingProvider then
     -- Use ›:noa w‹ to skip autocommand
-    if vim.lsp.buf.format then -- Neovim v0.8.0+ only.
-      vim.api.nvim_command("autocmd! BufWritePre * lua vim.lsp.buf.format()")
-    else
-      vim.api.nvim_command("autocmd! BufWritePre * lua vim.lsp.buf.formatting_sync()")
-    end
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = group,
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.format() end,
+    })
   end
-  vim.api.nvim_command("augroup END")
 
   print("LSP started.");
 end

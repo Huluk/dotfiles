@@ -144,21 +144,27 @@ set completeopt=menu,menuone,noselect
 set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
 set wildignore+=build/*,*/build/*
 
-" save on losing focus
-autocmd FocusLost,Tableave,BufLeave * call <SID>Autosave()
 function! s:Autosave()
     if &modified && filereadable(expand("%:p"))
         silent! write
     endif
 endfunction
 
-autocmd BufWritePre *.dart silent! lua vim.lsp.buf.format()
+" Wrap all autocmds in an augroup so re-sourcing doesn't duplicate them.
+augroup UserVimrc
+  autocmd!
+  " save on losing focus
+  autocmd FocusLost,TabLeave,BufLeave * call <SID>Autosave()
 
-" check for external changes on gaining focus on real file
-autocmd FocusGained,BufEnter */* checktime
+  autocmd BufWritePre *.dart silent! lua vim.lsp.buf.format()
 
-" large file compatibility mode
-autocmd BufReadPre * call <SID>LargeFile(expand("<afile>"))
+  " check for external changes on gaining focus on real file
+  autocmd FocusGained,BufEnter */* checktime
+
+  " large file compatibility mode
+  autocmd BufReadPre * call <SID>LargeFile(expand("<afile>"))
+augroup END
+
 function! s:LargeFile(fname)
   let size = getfsize(a:fname)
   if size > -2 && size <= 1000000
