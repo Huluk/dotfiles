@@ -52,7 +52,7 @@ return {
   },
   -- Lua utils, dependency of telescope and others.
   "nvim-lua/plenary.nvim",
-  "kyazdani42/nvim-web-devicons",
+  "nvim-tree/nvim-web-devicons",
   -- Fuzzyfinder
   {
     "nvim-telescope/telescope.nvim",
@@ -165,6 +165,25 @@ return {
   "wsdjeg/vim-fetch",
   -- jump to last line on file open
   "farmergreg/vim-lastplace",
+  -- edit the filesystem as a buffer (replaces netrw)
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false, -- needs to hijack netrw at startup to open directories
+    opts = {
+      default_file_explorer = true,
+      columns = {
+        "size",
+      },
+      view_options = {
+        show_hidden = true,
+      },
+    },
+    keys = {
+      -- em-dash
+      { "—", "<cmd>Oil<cr>", desc = "Open parent directory" },
+    },
+  },
 
   -- === Other ===
   -- extend char information `ga` with unicode names
