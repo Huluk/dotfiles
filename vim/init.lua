@@ -1,6 +1,7 @@
 require('config.compatibility')
 require('config.util')
 vim.cmd([[source ~/.vimrc]])
+require('config.statusline') -- side-effect: sets vim.o.statusline
 
 require('config.lazy')
 
