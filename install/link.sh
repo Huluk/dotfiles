@@ -4,7 +4,6 @@ DIR=~/hide/dotfiles
 
 ln -s $DIR/vim ~/.vim
 ln -s $DIR/vimrc ~/.vimrc
-ln -s $DIR/gvimrc ~/.gvimrc
 ln -s $DIR/zprofile ~/.zprofile
 ln -s $DIR/zshrc ~/.zshrc
 ln -s $DIR/inputrc ~/.inputrc

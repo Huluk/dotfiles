@@ -45,7 +45,7 @@ nmap <leader>d :lcd %:p:h<CR>
 nmap <leader>e :FZF<CR>
 
 " make
-map <leader>m :make<CR>
+nmap <leader>m :make<CR>
 " add execution environment comment to top of file
 nmap <leader>! :execute "normal ggO#!/usr/bin/env ".&filetype<CR>
 " make current file unix executable
@@ -78,7 +78,10 @@ nmap <localleader>us :setlocal spell spelllang=en_us<CR>
 filetype plugin on
 filetype plugin indent on
 
-if !has('nvim')
+if has('nvim')
+  " Global statusline to reduce visual clutter.
+  set laststatus=3
+else
   " nvim-compatibility for vim
   source ~/.vim/non-nvim.vim
 endif
@@ -100,12 +103,7 @@ set scrolloff=4
 set sidescrolloff=5
 
 " enable with :set list
-" position in long non-wrap line: precedes:← extends:→
-set listchars=precedes:\\u2190,extends:\\u2192
-" line break:¬ non-breaking space:␣
-set listchars+=eol:\\xAC,nbsp:\\\u2423
-" tab:⊳⋅⋅⋅ trailing space:⌁
-set listchars+=tab:\\u22b3\\u22c5,trail:\\u2301
+set listchars=precedes:←,extends:→,eol:¬,nbsp:␣,tab:⊳⋅,trail:⌁
 
 " shows symbol on line wrap
 set showbreak=↪
@@ -144,21 +142,27 @@ set completeopt=menu,menuone,noselect
 set wildignore+=*.o,*.pyc,*.a,Session.vim,*.obj,*.make,*.cmake
 set wildignore+=build/*,*/build/*
 
-" save on losing focus
-autocmd FocusLost,Tableave,BufLeave * call <SID>Autosave()
 function! s:Autosave()
     if &modified && filereadable(expand("%:p"))
         silent! write
     endif
 endfunction
 
-autocmd BufWritePre *.dart silent! lua vim.lsp.buf.format()
+" Wrap all autocmds in an augroup so re-sourcing doesn't duplicate them.
+augroup UserVimrc
+  autocmd!
+  " save on losing focus
+  autocmd FocusLost,TabLeave,BufLeave * call <SID>Autosave()
 
-" check for external changes on gaining focus on real file
-autocmd FocusGained,BufEnter */* checktime
+  autocmd BufWritePre *.dart silent! lua vim.lsp.buf.format()
 
-" large file compatibility mode
-autocmd BufReadPre * call <SID>LargeFile(expand("<afile>"))
+  " check for external changes on gaining focus on real file
+  autocmd FocusGained,BufEnter */* checktime
+
+  " large file compatibility mode
+  autocmd BufReadPre * call <SID>LargeFile(expand("<afile>"))
+augroup END
+
 function! s:LargeFile(fname)
   let size = getfsize(a:fname)
   if size > -2 && size <= 1000000

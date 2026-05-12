@@ -1,5 +1,6 @@
 require('config.compatibility')
 require('config.util')
+vim.opt.runtimepath:prepend('~/.vim')
 vim.cmd([[source ~/.vimrc]])
 require('config.statusline') -- side-effect: sets vim.o.statusline
 
@@ -13,10 +14,8 @@ vim.diagnostic.config({
 
 vim.g.lsp_servers = { 'dartls', 'lua_ls', 'serverpod' }
 
-if #vim.g.lsp_servers then
+if #vim.g.lsp_servers > 0 then
   require('lsp_setup').setup(vim.g.lsp, vim.g.lsp_servers)
   -- TODO configure and enable
   -- require('diagnostics')
 end
-
-vim.opt.runtimepath:prepend('~/.vim')
