@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 export LANG=de_CH.UTF-8
 
-typeset -U PATH
+typeset -U path PATH
 
 [[ $(uname) == "Linux" ]] && LINUX=true
 [[ $(uname) == "Darwin" ]] && MACOS=true
@@ -87,10 +87,10 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='nvim'
 alias ex='nvim -E -u ~/.exrc'
 
-if [ $MACOS ]; then
+if [[ -n $MACOS ]]; then
   unalias run-help 2> /dev/null
   autoload run-help
-  HELPDIR=/usr/local/share/zsh/help
+  HELPDIR="$(brew --prefix)/share/zsh/help"
   alias help=run-help
 else
   HELPDIR=/usr/share/zsh/help
@@ -101,16 +101,15 @@ zstyle ':completion:*' menu yes select
 zstyle ':completion::complete:*' use-cache 1        #enables completion caching
 zstyle ':completion::complete:*' cache-path ~/.zsh/cache
 zstyle ':completion:*' users root $USER             #fix lag in google3
-autoload -Uz compinit && compinit -i
 # source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# Switch to vim keybindings, then re-define some emacs keybindings.
+bindkey -v
 # bindkey "[D" backward-word
 # bindkey "[C" forward-word
 bindkey "^[a" beginning-of-line
 bindkey "^[e" end-of-line
 bindkey "^[w" backward-kill-word
-
-bindkey -v
 
 v(){
   if [[ ( $# -eq 1 ) && ( "$*" =~ ^(.+):([[:digit:]]+)$ ) ]]; then
@@ -159,7 +158,7 @@ reload(){
 export FZF_DEFAULT_COMMAND='rg --files'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [ $MACOS ]; then
+if [[ -n $MACOS ]]; then
 
   # stty stop '' -ixoff; - ctrl is not intercepted by terminal
   # `Frozing' tty, so after any command terminal settings will be restored
@@ -180,7 +179,7 @@ if [ $MACOS ]; then
   eval "$(mise activate zsh)"
 fi
 
-if [ $LINUX ]; then
+if [[ -n $LINUX ]]; then
   export PATH=$PATH:/usr/sbin
   export PATH=$PATH:$HOME/.cargo/bin
 
@@ -188,12 +187,21 @@ if [ $LINUX ]; then
 fi
 
 alias g="raku $HOME/hide/dotfiles/version_control.raku"
-if which raku > /dev/null; then
-  RAKU_SITE=$(raku -e 'say $*REPO.repo-chain[1].abspath')
+# Cache RAKU_SITE since `raku -e` is slow (~300-500ms).
+# Invalidate the cache if the raku binary is newer than the cache file.
+if (( $+commands[raku] )); then
+  RAKU_SITE_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/raku_site"
+  RAKU_BIN=$commands[raku]
+  if [[ ! -s $RAKU_SITE_CACHE || $RAKU_BIN -nt $RAKU_SITE_CACHE ]]; then
+    mkdir -p ${RAKU_SITE_CACHE:h}
+    raku -e 'say $*REPO.repo-chain[1].abspath' > $RAKU_SITE_CACHE
+  fi
+  RAKU_SITE=$(<$RAKU_SITE_CACHE)
   export PATH=$PATH:$RAKU_SITE/bin
+  unset RAKU_SITE_CACHE RAKU_BIN
 fi
 
-export ANDROID_HOME=/Users/huluk/Library/Android/sdk
+export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$HOME/.pub-cache/bin
 
@@ -202,6 +210,9 @@ diary_open() {
       ARG='' &&
       for DATE in $*; do ARG="$ARG $DATE.md"; done &&
       v $(echo "$ARG"))
+}
+diary_open() {
+  (wd text && cd diary && v "${@/%/.md}")
 }
 diary() {
   [[ $# -ge 1 ]] && DIFF=$1 || DIFF=0
@@ -222,4 +233,3 @@ remarkable_backup(){
         "root@$REMARKABLE_HOST:/home/root/.local/share/remarkable/xochitl/*" \
         ~/hide/mount/Huluk/remarkable-backup/files/
     }
-# if rsync -rv -zz --rsync-path=$remarkable_rsync_path --exclude='*.cache' --exclude='*.highlights' --exclude='*.textconversion' --exclude='*.thumbnails' --exclude='*.pagedata' $hostname:$remarkable_data_dir $local_backup_dir ; then

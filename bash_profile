@@ -1,5 +1,6 @@
 ERLANG_HOME=/usr/share/erlang
-export PATH=$PATH:$ERLANG_HOME/bin
+[ -d "$ERLANG_HOME/bin" ] && export PATH=$PATH:$ERLANG_HOME/bin
+
 export PATH=$PATH:/opt/local/bin
 
 lsg(){
