@@ -1,8 +1,5 @@
 #!/usr/bin/env sh
 
-defaults write com.apple.PowerChime ChimeOnAllHardware -bool false &&
-    killall PowerChime
-
 brew install coreutils
 brew install gnu-sed --with-default-names
 brew install rsync ripgrep fd wget
@@ -38,10 +35,3 @@ brew install --cask appcleaner cryptomator veracrypt gpg-suite
 brew install --cask skype telegram whatsapp signal discord
 brew install --cask transmission steam mediathekview
 brew install --cask vlc spotify calibre
-
-# oh my zsh
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-rm -f ~/.zshrc
-ln -s ~/hide/dotfiles/zshrc ~/.zshrc
-cp xtrv_lars.zsh-theme ~/.oh-my-zsh/themes/
-cp -r completions ~/.oh-my-zsh/
