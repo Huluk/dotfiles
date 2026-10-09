@@ -64,6 +64,8 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+autoload -Uz zmv # For zmv, the cooler move command.
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -96,7 +98,19 @@ bindkey "^[e" end-of-line
 bindkey "^[w" backward-kill-word
 
 v(){
-  if [[ $# -eq 1 && $1 =~ ^(.+):([[:digit:]]+)$ ]]; then
+  if [[ $1 == -rg ]]; then
+    local pat=$2; shift 2
+    local -a hits files cmds
+    local h i=0
+    hits=(${(f)"$(rg -n -m1 --no-heading --with-filename \
+      -e $pat ${@/#/-g} .)"})
+    (( $#hits )) || { echo "No matches." >&2; return 1 }
+    for h in $hits; do
+      files+=${h%%:*}
+      cmds+="$((++i))tabn|call cursor(${${h#*:}%%:*},1)"
+    done
+    nvim -p $files -c "${(j:|:)cmds}|1tabn"
+  elif [[ $# -eq 1 && $1 =~ ^(.+):([[:digit:]]+)$ ]]; then
     nvim +${match[2]} ${match[1]}
   else
     nvim -p "$@"
@@ -113,7 +127,7 @@ gd(){
   root=$(git rev-parse --show-toplevel) || return
   files=$(git diff --name-only --diff-filter=M "$@")
   if [ -n "$files" ]; then
-    nvim -c 'tabdo Gvdiffsplit' -p $root/${^${(f)files}}
+    nvim -c 'tabdo Gvdiffsplit' -c tabfirst -p $root/${^${(f)files}}
   else
     echo "No modified files found."
   fi
@@ -122,10 +136,21 @@ gd(){
 # for jj
 # open current diffs in nvim
 jd(){
-  local files=$(jj diff --summary "$@" |
-    awk '/^M / {print substr($0, 3)}')
+  local id files
+  if [[ $1 == -r ]]; then
+    id=$(jj log --no-graph -r $2 -T 'change_id ++ "\n"') || return
+    if [[ $id == *$'\n'* ]]; then
+      echo "Revision '$2' is ambiguous." >&2
+      return 1
+    fi
+    files=$(cd "$(jj root)" && jj diff --summary -r $id |
+      awk '/^M / {print substr($0, 3)}')
+  else
+    files=$(jj diff --summary "$@" |
+      awk '/^M / {print substr($0, 3)}')
+  fi
   if [ -n "$files" ]; then
-    nvim -c 'tabdo Jdiff' -p ${(f)files}
+    nvim -c 'tabdo Jdiff' -c tabfirst -p ${id:+jj://$id/}${^${(f)files}}
   else
     echo "No modified files found."
   fi
@@ -161,7 +186,7 @@ if [[ -n $MACOS ]]; then
   alias shuf="gshuf"
   alias 7z="7za"
   alias ls="eza"
-  alias tree="eza -T --hyperlink"
+  alias tree="eza -T --hyperlink=auto"
 
   export HOMEBREW_NO_ENV_HINTS=1
 
@@ -207,6 +232,8 @@ path=(
   ~/Library/Application\ Support/Dart/install/bin(N/)
 )
 
+export OLLAMA_NOHISTORY=1
+
 if [[ -x ~/.config/github-app/token.sh ]]; then
   gh() { GH_TOKEN=$(~/.config/github-app/token.sh) command gh "$@" }
 fi
@@ -233,3 +260,7 @@ remarkable_backup(){
     "root@$REMARKABLE_HOST:/home/root/.local/share/remarkable/xochitl/*" \
     ~/hide/mount/Huluk/remarkable-backup/files/
 }
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/huluk/.local/bin:$PATH"

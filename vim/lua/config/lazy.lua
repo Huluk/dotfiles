@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -21,7 +21,7 @@ require("lazy").setup({
     { import = "plugins" },
   },
   ui = {
-   icons = {
+    icons = {
       cmd = "",
       config = "",
       event = "",
@@ -44,8 +44,13 @@ require("lazy").setup({
   checker = {
     enabled = false,
     concurrency = nil,
-    notify = true, -- get a notification when new updates are found
-    frequency = 864000, -- check for updates every day
+    notify = true,        -- get a notification when new updates are found
+    frequency = 864000,   -- check for updates every day
     check_pinned = false, -- check for pinned packages that can't be updated
+  },
+  performance = {
+    rtp = {
+      paths = { vim.fn.expand("~/.vim") },
+    },
   },
 })

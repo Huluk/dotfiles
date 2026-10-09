@@ -1,2 +1,2 @@
 " make all commands phony
-nmap <leader>! :execute "normal ggOMAKEFLAGS += --always-make"<CR>
+nmap <buffer> <leader>! :execute "normal ggOMAKEFLAGS += --always-make"<CR>
