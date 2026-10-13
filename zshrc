@@ -180,8 +180,10 @@ if [[ -n $MACOS ]]; then
 fi
 
 if [[ -n $LINUX ]]; then
-  export PATH=$PATH:/usr/sbin
-  export PATH=$PATH:$HOME/.cargo/bin
+  path+=(
+    /usr/sbin(N/)
+    ~/.cargo/bin(N/)
+  )
 
   alias open=xdg-open
 fi
@@ -197,13 +199,24 @@ if (( $+commands[raku] )); then
     raku -e 'say $*REPO.repo-chain[1].abspath' > $RAKU_SITE_CACHE
   fi
   RAKU_SITE=$(<$RAKU_SITE_CACHE)
-  export PATH=$PATH:$RAKU_SITE/bin
+  path+=($RAKU_SITE/bin(N/))
   unset RAKU_SITE_CACHE RAKU_BIN
 fi
 
 export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-export PATH=$PATH:$HOME/.pub-cache/bin
+path=(
+  ~/.local/bin(N/)
+  ~/hide/flutter/bin(N/)
+  $path
+  $ANDROID_HOME/tools(N/)
+  $ANDROID_HOME/platform-tools(N/)
+  ~/.pub-cache/bin(N/)
+  ~/Library/Application\ Support/Dart/install/bin(N/)
+)
+
+if [[ -x ~/.config/github-app/token.sh ]]; then
+  gh() { GH_TOKEN=$(~/.config/github-app/token.sh) command gh "$@" }
+fi
 
 diary_open() {
     (wd text && cd diary &&

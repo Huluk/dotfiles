@@ -1,0 +1,3 @@
+[credential "https://github.com"]
+	helper =
+	helper = "!f() { test \"$1\" = get || return 0; t=$(~/.config/github-app/token.sh) || return 0; echo username=x-access-token; echo \"password=$t\"; }; f"
