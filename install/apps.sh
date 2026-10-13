@@ -14,7 +14,7 @@ brew install libyaml # ruby dependency
 mise use -g ruby python node
 
 # Neovim
-brew install neovim
+brew install neovim tree-sitter-cli
 mkdir -p ~/.config/nvim
 gem install neovim
 pip install neovim
