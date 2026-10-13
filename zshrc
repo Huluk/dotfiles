@@ -214,6 +214,10 @@ path=(
   ~/Library/Application\ Support/Dart/install/bin(N/)
 )
 
+if [[ -x ~/.config/github-app/token.sh ]]; then
+  gh() { GH_TOKEN=$(~/.config/github-app/token.sh) command gh "$@" }
+fi
+
 diary_open() {
     (wd text && cd diary &&
       ARG='' &&
