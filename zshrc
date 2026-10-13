@@ -205,10 +205,13 @@ fi
 
 export ANDROID_HOME=$HOME/Library/Android/sdk
 path=(
+  ~/.local/bin(N/)
+  ~/hide/flutter/bin(N/)
   $path
   $ANDROID_HOME/tools(N/)
   $ANDROID_HOME/platform-tools(N/)
   ~/.pub-cache/bin(N/)
+  ~/Library/Application\ Support/Dart/install/bin(N/)
 )
 
 diary_open() {
