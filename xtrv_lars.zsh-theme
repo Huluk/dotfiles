@@ -1,17 +1,9 @@
 # theme based on extravagant.zsh-theme
-function collapse_pwd {
-    echo $(pwd | sed -e "s,^$HOME,~,")
-}
-
-function prompt_char {
-    echo '≫' # orig: ➔
-}
 
 # dir_info: cheap VCS indicator with a zstat-based cache.
 #
-# The prompt calls `$(dir_info)`, which runs in a subshell, so any cache
-# state assigned inside dir_info would be lost.  Instead we refresh the
-# cache in a precmd hook (main shell) and dir_info just echoes.
+# The cache is refreshed in a precmd hook and the prompt reads
+# $_dir_info_cache directly, avoiding a subshell per prompt.
 #
 # The cache key is $PWD plus the mtime of the first VCS marker found in
 # $PWD (.jj/.git/.hg).  As long as that key is unchanged we skip the slow
@@ -61,34 +53,8 @@ function _dir_info_update {
 add-zsh-hook precmd _dir_info_update
 _dir_info_update  # initial populate for the first prompt
 
-function dir_info {
-    echo $_dir_info_cache
-}
-
-function battery_charge {
-    echo `$BAT_CHARGE` 2>/dev/null
-}
-
-function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
-}
-
-function hg_prompt_info {
-    hg prompt --angle-brackets "\
-< on %{$fg[magenta]%}<branch>%{$reset_color%}>\
-< at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>\
-%{$fg[green]%}<status|modified|unknown><update>%{$reset_color%}<
-patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>>" 2>/dev/null
-}
-
 PROMPT='
-%{$fg_no_bold[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%} in %{$fg[blue]%}$(dir_info)%{$fg_bold[red]%}$(collapse_pwd)%{$reset_color%}
-%{$fg[cyan]%}$(virtualenv_info)$(prompt_char)%{$reset_color%} '
+%{$fg_no_bold[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%} in %{$fg[blue]%}${_dir_info_cache}%{$fg_bold[red]%}%~%{$reset_color%}
+%{$fg[cyan]%}${VIRTUAL_ENV:+(${VIRTUAL_ENV:t}) }≫%{$reset_color%} '
 
-RPROMPT='$(battery_charge) %{$fg_no_bold[green]%}[%D{%H:%M:%S}]%{$reset_color%}'
-
-ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[magenta]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[green]%}!"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[green]%}?"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
+RPROMPT='%{$fg_no_bold[green]%}[%D{%H:%M:%S}]%{$reset_color%}'

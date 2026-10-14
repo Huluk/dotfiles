@@ -3,9 +3,9 @@
 DIR=~/hide/dotfiles
 APP=~/.config/github-app
 
-mkdir -p $APP
-ln -s $DIR/github-app/token.sh $APP/token.sh
-ln -s $DIR/github-app/gitconfig $APP/gitconfig
+mkdir -p "$APP"
+ln -sn "$DIR/github-app/token.sh" "$APP/token.sh"
+ln -sn "$DIR/github-app/gitconfig" "$APP/gitconfig"
 
-[ -f $APP/env ] || echo "Missing $APP/env with CLIENT_ID and INSTALLATION_ID"
-[ -f $APP/private-key.pem ] || echo "Missing $APP/private-key.pem"
+[ -f "$APP/env" ] || echo "Missing $APP/env with CLIENT_ID and INSTALLATION_ID"
+[ -f "$APP/private-key.pem" ] || echo "Missing $APP/private-key.pem"

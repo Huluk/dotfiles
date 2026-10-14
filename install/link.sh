@@ -2,31 +2,33 @@
 
 DIR=~/hide/dotfiles
 
-ln -s $DIR/vim ~/.vim
-ln -s $DIR/vimrc ~/.vimrc
-ln -s $DIR/zprofile ~/.zprofile
-ln -s $DIR/zshrc ~/.zshrc
-ln -s $DIR/inputrc ~/.inputrc
-ln -s $DIR/irbrc ~/.irbrc
-ln -s $DIR/bashrc ~/.bashrc
-ln -s $DIR/bash_profile ~/.bash_profile
+link() {
+    ln -sn "$DIR/$1" "$2"
+}
 
-ln -s $DIR/gitconfig ~/.gitconfig
-ln -s $DIR/gitignore_global ~/.gitignore_global
-ln -s $DIR/hgrc ~/.hgrc
-ln -s $DIR/codebuff_knowledge.md ~/.knowledge.md
+link vim ~/.vim
+link vimrc ~/.vimrc
+link zshrc ~/.zshrc
+link inputrc ~/.inputrc
+link irbrc ~/.irbrc
+link bashrc ~/.bashrc
+link bash_profile ~/.bash_profile
+
+link gitconfig ~/.gitconfig
+link gitignore_global ~/.gitignore_global
+link hgrc ~/.hgrc
+link codebuff_knowledge.md ~/.knowledge.md
 
 mkdir -p ~/.config/nvim
-ln -s $DIR/vim/init.lua ~/.config/nvim/init.lua
-ln -s $DIR/vim/lua ~/.config/nvim/lua
-ln -s $DIR/vim/lsp ~/.config/nvim/lsp
+link vim/init.lua ~/.config/nvim/init.lua
+link vim/lua ~/.config/nvim/lua
+link vim/lsp ~/.config/nvim/lsp
 
 mkdir -p ~/.ssh
-ln -s $DIR/ssh_config ~/.ssh/config
-ln -s $DIR/tmux.conf ~/.tmux.conf
+link ssh_config ~/.ssh/config
+link tmux.conf ~/.tmux.conf
 
-# Mac OS only!
-if [[ $OSTYPE = darwin* ]]; then
-    cp -r $DIR/mvim.app /Applications/mvim.app
-    ln -s $DIR/karabiner ~/.config/karabiner
+if [ "$(uname)" = Darwin ]; then
+    cp -R "$DIR/mvim.app" /Applications/
+    link karabiner ~/.config/karabiner
 fi

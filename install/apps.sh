@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 brew install coreutils
-brew install gnu-sed --with-default-names
+brew install gnu-sed
 brew install rsync ripgrep fd wget
 
 brew install smartmontools gnupg
@@ -9,7 +9,6 @@ brew install pass fortune tldr jq git jj
 
 # Mise-en-place
 brew install mise
-mise install ruby python node
 brew install libyaml # ruby dependency
 mise use -g ruby python node
 
@@ -17,7 +16,7 @@ mise use -g ruby python node
 brew install neovim tree-sitter-cli
 mkdir -p ~/.config/nvim
 gem install neovim
-pip install neovim
+pip install pynvim
 npm install -g neovim
 brew install lua-language-server
 

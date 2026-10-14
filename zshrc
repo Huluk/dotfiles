@@ -4,31 +4,15 @@ export LANG=de_CH.UTF-8
 
 typeset -U path PATH
 
-[[ $(uname) == "Linux" ]] && LINUX=true
-[[ $(uname) == "Darwin" ]] && MACOS=true
+[[ $OSTYPE == linux* ]] && LINUX=true
+[[ $OSTYPE == darwin* ]] && MACOS=true
 
-# Set name of the theme to load ––– if set to "random", if will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="xtrv_lars"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "xtrv_lars" "extravagant" "clean" "gnzh" "remiii" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -63,7 +47,7 @@ ZSH_THEME="xtrv_lars"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -90,7 +74,7 @@ alias ex='nvim -E -u ~/.exrc'
 if [[ -n $MACOS ]]; then
   unalias run-help 2> /dev/null
   autoload run-help
-  HELPDIR="$(brew --prefix)/share/zsh/help"
+  HELPDIR="${HOMEBREW_PREFIX:-$(brew --prefix)}/share/zsh/help"
   alias help=run-help
 else
   HELPDIR=/usr/share/zsh/help
@@ -112,10 +96,10 @@ bindkey "^[e" end-of-line
 bindkey "^[w" backward-kill-word
 
 v(){
-  if [[ ( $# -eq 1 ) && ( "$*" =~ ^(.+):([[:digit:]]+)$ ) ]]; then
+  if [[ $# -eq 1 && $1 =~ ^(.+):([[:digit:]]+)$ ]]; then
     nvim +${match[2]} ${match[1]}
   else
-    nvim -p $*
+    nvim -p "$@"
   fi
 }
 alias vdiff='nvim -d'
@@ -123,11 +107,22 @@ alias vd='nvim -d -c "windo set wrap"'
 
 # for git
 alias -g create-upstream='--set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
+# open current diffs in nvim
+gd(){
+  local root files
+  root=$(git rev-parse --show-toplevel) || return
+  files=$(git diff --name-only --diff-filter=M "$@")
+  if [ -n "$files" ]; then
+    nvim -c 'tabdo Gvdiffsplit' -p $root/${^${(f)files}}
+  else
+    echo "No modified files found."
+  fi
+}
 
 # for jj
 # open current diffs in nvim
 jd(){
-  local files=$(jj diff --summary $* |
+  local files=$(jj diff --summary "$@" |
     awk '/^M / {print substr($0, 3)}')
   if [ -n "$files" ]; then
     nvim -c 'tabdo Jdiff' -p ${(f)files}
@@ -144,15 +139,13 @@ vtip() {
   curl -s -m 3 https://vtip.43z.one
 }
 
-# generate passwort of length $1
+# generate password of length $1 (default 16)
 passgen(){
-    [ $# -eq 0 ] && 1="16"
-    gtr -dc "[A-Za-z0-9]" < /dev/random |
-    head -c $1; echo
+  LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c ${1:-16}; echo
 }
 
 reload(){
-  clear && fortune $*
+  clear && fortune "$@"
 }
 
 export FZF_DEFAULT_COMMAND='rg --files'
@@ -170,11 +163,11 @@ if [[ -n $MACOS ]]; then
   alias ls="eza"
   alias tree="eza -T --hyperlink"
 
-  HOMEBREW_NO_ENV_HINTS=1
+  export HOMEBREW_NO_ENV_HINTS=1
 
   # switch sierra karabiner-elements config depending on keyboard
   keyboard() {
-      ~/Documents/scripts/karabiner-elements_switch_keyboard $*
+      ~/Documents/scripts/karabiner-elements_switch_keyboard "$@"
   }
   eval "$(mise activate zsh)"
 fi
@@ -219,30 +212,24 @@ if [[ -x ~/.config/github-app/token.sh ]]; then
 fi
 
 diary_open() {
-    (wd text && cd diary &&
-      ARG='' &&
-      for DATE in $*; do ARG="$ARG $DATE.md"; done &&
-      v $(echo "$ARG"))
-}
-diary_open() {
   (wd text && cd diary && v "${@/%/.md}")
 }
 diary() {
-  [[ $# -ge 1 ]] && DIFF=$1 || DIFF=0
-  [[ $DIFF -eq 0 ]] && DIFF=-0
-  diary_open $(date -v${DIFF}d +%Y/%m-%d)
+  local diff=${1:-0}
+  (( diff == 0 )) && diff=-0
+  diary_open $(date -v${diff}d +%Y/%m-%d)
 }
 
-REMARKABLE_HOST=remarkable.wifi
-RESTART_XOCHITL_DEFAULT=1
-REMARKABLE_PARENT_DIR='4ec3a632-bbd8-445d-83e3-dd4897fc829d'
+export REMARKABLE_HOST=remarkable.wifi
+export RESTART_XOCHITL_DEFAULT=1
+export REMARKABLE_PARENT_DIR='4ec3a632-bbd8-445d-83e3-dd4897fc829d'
 remarkable_backup(){
-    rsync -auhP --rsync-path=/usr/bin/rsync \
-        --exclude='*.cache' \
-        --exclude='*.highlights' \
-        --exclude='*.textconversion' \
-        --exclude='*.thumbnails' \
-        --exclude='*.pagedata' \
-        "root@$REMARKABLE_HOST:/home/root/.local/share/remarkable/xochitl/*" \
-        ~/hide/mount/Huluk/remarkable-backup/files/
-    }
+  rsync -auhP --rsync-path=/usr/bin/rsync \
+    --exclude='*.cache' \
+    --exclude='*.highlights' \
+    --exclude='*.textconversion' \
+    --exclude='*.thumbnails' \
+    --exclude='*.pagedata' \
+    "root@$REMARKABLE_HOST:/home/root/.local/share/remarkable/xochitl/*" \
+    ~/hide/mount/Huluk/remarkable-backup/files/
+}
